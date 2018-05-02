@@ -1,4 +1,8 @@
-FROM debian:scratch
+FROM debian:stretch
+
+WORKDIR /etc/nginx
+
+USER root
 
 RUN apt-get update && apt-get install --no-install-recommends -qy \
     nginx

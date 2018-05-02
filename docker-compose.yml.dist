@@ -3,7 +3,7 @@ version: '2'
 services:
     app:
         build:
-            context: ./docker/app
+            context: ./docker/${DEPLOY_ENV}/app
         links:
             - db
         depends_on:
@@ -22,7 +22,8 @@ services:
             - "5432:5432"
 
     nginx:
-        build: nginx
+        build:
+            context: ./docker/${DEPLOY_ENV}/app
         links:
             - php-fpm
         depends_on:
@@ -37,7 +38,7 @@ services:
     # todo: mount logs (nginx as example)
     php-fpm:
         build:
-            context: ./docker/php-fpm
+            context: ./docker/${DEPLOY_ENV}/php-fpm
             args:
                 TIMEZONE: ${TIMEZONE}
         volumes_from:
