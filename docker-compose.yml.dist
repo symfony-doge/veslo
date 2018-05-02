@@ -3,7 +3,7 @@ version: '2'
 services:
     app:
         build:
-            context: ./docker/${DEPLOY_ENV}/app
+            context: ./docker/${DOCKER_COMPOSE_ENV}/app
         links:
             - db
         depends_on:
@@ -23,7 +23,7 @@ services:
 
     nginx:
         build:
-            context: ./docker/${DEPLOY_ENV}/app
+            context: ./docker/${DOCKER_COMPOSE_ENV}/nginx
         links:
             - php-fpm
         depends_on:
@@ -35,10 +35,9 @@ services:
         volumes:
             - ./var/logs/nginx/:/var/log/nginx
 
-    # todo: mount logs (nginx as example)
     php-fpm:
         build:
-            context: ./docker/${DEPLOY_ENV}/php-fpm
+            context: ./docker/${DOCKER_COMPOSE_ENV}/php-fpm
             args:
                 TIMEZONE: ${TIMEZONE}
         volumes_from:
