@@ -16,3 +16,7 @@
 /vendor/
 /web/bundles/
 .idea
+
+# docker
+.env
+docker-compose.yml

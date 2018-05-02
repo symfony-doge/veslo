@@ -10,33 +10,35 @@ services:
             - db
         volumes:
             - ${SYMFONY_APP_PATH}:/var/www/veslo.it
-        environment:
-            XDEBUG_CONFIG: idekey=PHPSTORM remote_enable=1 remote_connect_back=1
         hostname: veslo-it
-        extra_hosts:
-            - "test:127.0.0.1"
 
     db:
-        build:
-            context: ./docker/db
+        image: postgres:10.3
+        environment:
+            POSTGRES_DB: ${POSTGRES_DB}
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
         ports:
             - "5432:5432"
 
+    nginx:
+        build: nginx
+        links:
+            - php-fpm
+        depends_on:
+            - php-fpm
+        ports:
+            - "8080:80"
+        volumes_from:
+            - app
+        volumes:
+            - ./var/logs/nginx/:/var/log/nginx
+
+    # todo: mount logs (nginx as example)
     php-fpm:
         build:
             context: ./docker/php-fpm
             args:
                 TIMEZONE: ${TIMEZONE}
-        environment:
-            XDEBUG_CONFIG: idekey=PHPSTORM remote_enable=1 remote_connect_back=1
         volumes_from:
             - app
-
-    nginx:
-        build: nginx
-        ports:
-            - 90:80
-        volumes_from:
-            - app
-        volumes:
-            - ./var/logs/nginx/:/var/log/nginx
