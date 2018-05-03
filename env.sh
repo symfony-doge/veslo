@@ -1,6 +1,6 @@
 #!/bin/bash
 # Tested on: Debian 9.4
-# Linux ppetrov-prod1 4.9.0-6-amd64 #1 SMP Debian 4.9.82-1+deb9u3 (2018-03-02) x86_64 GNU/Linux
+# 4.9.0-6-amd64 #1 SMP Debian 4.9.82-1+deb9u3 (2018-03-02) x86_64 GNU/Linux
 
 # start
 sudo apt update
