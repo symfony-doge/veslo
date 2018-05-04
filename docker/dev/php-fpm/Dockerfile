@@ -34,5 +34,6 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
     docker-php-ext-install pdo pdo_pgsql pgsql
 
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY php.ini /usr/local/etc/php/conf.d/php.ini
 
 USER www-data
