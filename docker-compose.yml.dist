@@ -12,6 +12,7 @@ services:
             - ${SYMFONY_APP_PATH}:/var/www/veslo.it
             - ${SYMFONY_APP_PATH}/var/.composer:/var/www/.composer
             - ${SYMFONY_APP_PATH}/var/.yarn/cache:/var/www/.cache/yarn
+            - ${SYMFONY_APP_PATH}/var/.yarn/.yarnrc:/var/www/.yarnrc
         hostname: veslo-it
 
     db:
