@@ -10,8 +10,8 @@
     "jquery": "^3.3.1"
   },
   "scripts": {
-    "dev": "./node_modules/.bin/encore dev",
-    "watch": "./node_modules/.bin/encore dev --watch",
-    "prod": "./node_modules/.bin/encore production"
+    "build:dev": "./node_modules/.bin/encore dev",
+    "build:dev:watch": "./node_modules/.bin/encore dev --watch",
+    "build:prod": "./node_modules/.bin/encore production"
   }
 }
