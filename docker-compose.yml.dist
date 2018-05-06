@@ -10,6 +10,7 @@ services:
             - db
         volumes:
             - ${SYMFONY_APP_PATH}:/var/www/veslo.it
+            - ${SYMFONY_APP_PATH}/var/.composer:/var/www/.composer
         hostname: veslo-it
 
     db:

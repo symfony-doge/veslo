@@ -1,10 +1,10 @@
 {
-    "name": "ppetrov/blog",
-    "license": "proprietary",
+    "name": "symfony-doge/veslo",
+    "license": "GPL-3.0-or-later",
     "type": "project",
     "autoload": {
         "psr-4": {
-            "AppBundle\\": "src/AppBundle"
+            "": "src/"
         },
         "classmap": [
             "app/AppKernel.php",
