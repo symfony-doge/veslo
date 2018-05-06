@@ -40,4 +40,5 @@ var/.yarn/cache/*
 docker-compose.yml
 
 # nodejs & yarn
+/node_modules/
 yarn-error.log
