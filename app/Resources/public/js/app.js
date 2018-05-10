@@ -1,3 +1,5 @@
+require('../scss/app.scss');
+
 const $ = require('jquery');
 
 let module1 = require('../../../../src/AppBundle/Resources/public/js/module1.js');
