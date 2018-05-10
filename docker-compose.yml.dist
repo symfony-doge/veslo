@@ -11,6 +11,7 @@ services:
         volumes:
             - ${SYMFONY_APP_PATH}:/var/www/veslo.it
             - ${SYMFONY_APP_PATH}/var/.composer:/var/www/.composer
+            - ${SYMFONY_APP_PATH}/var/.yarn:/var/www/.yarn
             - ${SYMFONY_APP_PATH}/var/.yarn/cache:/var/www/.cache/yarn
             - ${SYMFONY_APP_PATH}/var/.yarn/.yarnrc:/var/www/.yarnrc
         hostname: veslo-it
@@ -21,8 +22,11 @@ services:
             POSTGRES_DB: ${POSTGRES_DB}
             POSTGRES_USER: ${POSTGRES_USER}
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+            PGDATA: /var/lib/postgresql/data
         ports:
             - "5432:5432"
+        volumes:
+            - ${SYMFONY_APP_PATH}/var/postgresql:/var/lib/postgresql
 
     nginx:
         build:
@@ -36,7 +40,7 @@ services:
         volumes_from:
             - app
         volumes:
-            - ./var/logs/nginx/:/var/log/nginx
+            - ${SYMFONY_APP_PATH}/var/logs/nginx:/var/log/nginx
 
     php-fpm:
         build:
