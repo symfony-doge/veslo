@@ -38,7 +38,7 @@ COPY php.ini /usr/local/etc/php/conf.d/php.ini
 
 USER www-data
 
-COPY app-entrypoint.sh /usr/local/bin/app-entrypoint
-ENTRYPOINT ["app-entrypoint"]
+COPY php-fpm-entrypoint.sh /usr/local/bin/php-fpm-entrypoint
+ENTRYPOINT ["php-fpm-entrypoint"]
 
 CMD ["php-fpm"]
