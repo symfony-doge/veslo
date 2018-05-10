@@ -52,3 +52,5 @@ USER www-data
 
 COPY app-entrypoint.sh /usr/local/bin/app-entrypoint
 ENTRYPOINT ["app-entrypoint"]
+
+CMD ["php", "-a"]

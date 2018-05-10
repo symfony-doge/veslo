@@ -14,7 +14,7 @@
 !var/.yarn/.gitkeep
 !var/.yarn/.yarnrc
 !var/.yarn/cache
-var/.yarn/cache/*
+/var/.yarn/cache/*
 !var/.yarn/cache/.gitkeep
 
 !/var/postgresql
