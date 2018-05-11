@@ -35,3 +35,7 @@ docker-compose run --no-deps app ./bin/console doctrine:cache:clear-query --env=
 
 echo 'Starting docker-compose services...'
 docker-compose up -d
+
+echo 'Clearing old environment...'
+docker rm `docker ps -qa --no-trunc --filter "status=exited"`
+docker rmi `docker images -f "dangling=true" -q`
