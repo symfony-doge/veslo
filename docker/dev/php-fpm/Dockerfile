@@ -2,7 +2,7 @@ FROM php:7.2-fpm
 
 ARG TIMEZONE
 
-WORKDIR /usr/local/etc/php-fpm.d/
+WORKDIR /usr/local/etc/php-fpm.d
 
 USER root
 
@@ -35,6 +35,8 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
 
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY php.ini /usr/local/etc/php/conf.d/php.ini
+
+RUN usermod -u 1000 www-data
 
 USER www-data
 

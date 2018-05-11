@@ -8,6 +8,7 @@ services:
             - db
         depends_on:
             - db
+            - supervisor
         volumes:
             - ${SYMFONY_APP_PATH}:/var/www/veslo.it
             - ${SYMFONY_APP_PATH}/var/.composer:/var/www/.composer
@@ -49,6 +50,14 @@ services:
                 TIMEZONE: ${TIMEZONE}
         volumes_from:
             - app
+
+    supervisor:
+        build:
+            context: ./docker/${DOCKER_COMPOSE_ENV}/supervisor
+        volumes_from:
+            - app
+        volumes:
+            - ${SYMFONY_APP_PATH}/var/logs/supervisord:/var/log/supervisord
 
 volumes:
     db_data:

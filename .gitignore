@@ -27,6 +27,12 @@
 !/var/logs
 /var/logs/*
 !var/logs/.gitkeep
+!var/logs/nginx
+/var/logs/nginx/*
+!var/logs/nginx/.gitkeep
+!var/logs/supervisord
+/var/logs/supervisord/*
+!var/logs/supervisord/.gitkeep
 
 !/var/sessions
 /var/sessions/*

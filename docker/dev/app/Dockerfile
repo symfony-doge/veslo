@@ -48,6 +48,8 @@ RUN composer --version
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
     docker-php-ext-install pdo pdo_pgsql pgsql
 
+RUN usermod -u 1000 www-data
+
 USER www-data
 
 COPY app-entrypoint.sh /usr/local/bin/app-entrypoint
