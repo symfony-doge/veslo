@@ -4,11 +4,13 @@ services:
     app:
         build:
             context: ./docker/${DOCKER_COMPOSE_ENV}/app
+            args:
+                HOST_UID: ${HOST_UID}
+                TIMEZONE: ${TIMEZONE}
         links:
             - db
         depends_on:
             - db
-            - supervisor
         volumes:
             - ${SYMFONY_APP_PATH}:/var/www/veslo.it
             - ${SYMFONY_APP_PATH}/var/.composer:/var/www/.composer
@@ -32,6 +34,8 @@ services:
     nginx:
         build:
             context: ./docker/${DOCKER_COMPOSE_ENV}/nginx
+            args:
+                HOST_UID: ${HOST_UID}
         links:
             - php-fpm
         depends_on:
@@ -47,6 +51,7 @@ services:
         build:
             context: ./docker/${DOCKER_COMPOSE_ENV}/php-fpm
             args:
+                HOST_UID: ${HOST_UID}
                 TIMEZONE: ${TIMEZONE}
         volumes_from:
             - app
@@ -54,6 +59,13 @@ services:
     supervisor:
         build:
             context: ./docker/${DOCKER_COMPOSE_ENV}/supervisor
+            args:
+                HOST_UID: ${HOST_UID}
+                TIMEZONE: ${TIMEZONE}
+        links:
+            - db
+        depends_on:
+            - db
         volumes_from:
             - app
         volumes:

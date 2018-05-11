@@ -1,5 +1,6 @@
 FROM php:7.2-fpm
 
+ARG HOST_UID
 ARG TIMEZONE
 
 WORKDIR /usr/local/etc/php-fpm.d
@@ -36,11 +37,11 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY php.ini /usr/local/etc/php/conf.d/php.ini
 
-RUN usermod -u 1000 www-data
+RUN usermod -u ${HOST_UID} www-data
 
 USER www-data
 
 COPY php-fpm-entrypoint.sh /usr/local/bin/php-fpm-entrypoint
 ENTRYPOINT ["php-fpm-entrypoint"]
 
-CMD ["php-fpm"]
+CMD ["php-fpm", "-F"]

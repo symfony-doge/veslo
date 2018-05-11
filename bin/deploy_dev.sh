@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo 'Stopping docker-compose services...'
 cp .env.dist .env
@@ -8,7 +8,8 @@ docker-compose down
 mkdir -p ./var/postgresql/data
 
 echo 'Fixing permissions...'
-sudo chown www-data:www-data -R . && sudo chmod g+w -R .
+source .env
+sudo chown `id -nu $HOST_UID`:www-data -R . && sudo chmod g+w -R .
 
 echo 'Copying latest configs and parameters...'
 cp ./app/config/parameters.yml.dist ./app/config/parameters.yml

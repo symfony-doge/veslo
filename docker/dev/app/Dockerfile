@@ -1,5 +1,6 @@
 FROM php:7.2-cli
 
+ARG HOST_UID
 ARG TIMEZONE
 
 WORKDIR /var/www/veslo.it
@@ -48,7 +49,7 @@ RUN composer --version
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
     docker-php-ext-install pdo pdo_pgsql pgsql
 
-RUN usermod -u 1000 www-data
+RUN usermod -u ${HOST_UID} www-data
 
 USER www-data
 
