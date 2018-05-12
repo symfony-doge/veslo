@@ -1,0 +1,6 @@
+services:
+    veslo.anthill.vacancy_controller:
+        class: Veslo\AnthillBundle\Controller\VacancyController
+        public: true
+        arguments:
+            - '@templating'

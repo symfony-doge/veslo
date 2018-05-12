@@ -1,0 +1,19 @@
+anthill_vacancy_index:
+    path: /
+    defaults:
+        _controller: veslo.anthill.vacancy_controller:listAction
+    methods: [GET]
+
+anthill_vacancy_list:
+    path: vacancy/list
+    defaults:
+        _controller: veslo.anthill.vacancy_controller:listAction
+    methods: [GET]
+
+anthill_vacancy_view:
+    path: vacancy/{vacancyId}
+    defaults:
+        _controller: veslo.anthill.vacancy_controller:viewAction
+    methods: [GET]
+    requirements:
+        id: \d+
