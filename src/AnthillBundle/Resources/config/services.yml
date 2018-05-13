@@ -1,1 +1,10 @@
 services:
+    veslo.anthill.vacancy.dung_beetle:
+        class: Veslo\AnthillBundle\Vacancy\DungBeetle
+        arguments:
+            - '@logger'
+
+    veslo.anthill.vacancy.ant_worker:
+        class: Veslo\AnthillBundle\Vacancy\AntWorker
+        arguments:
+            - '@logger'

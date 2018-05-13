@@ -32,7 +32,7 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
 WORKDIR /etc/supervisor/conf.d
 
 COPY supervisord.conf /etc/supervisor/supervisord.conf
-COPY test.conf /etc/supervisor/conf.d/test.conf
+COPY anthill.conf /etc/supervisor/conf.d/anthill.conf
 
 RUN usermod -u ${HOST_UID} www-data
 

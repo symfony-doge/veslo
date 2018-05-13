@@ -20,7 +20,7 @@ class VacancyController
     /**
      * VacancyController constructor.
      *
-     * @param EngineInterface $templateEngine
+     * @param EngineInterface $templateEngine Template engine
      */
     public function __construct(EngineInterface $templateEngine)
     {
