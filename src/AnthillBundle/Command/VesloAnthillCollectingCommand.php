@@ -44,6 +44,6 @@ class VesloAnthillCollectingCommand extends ContainerAwareCommand
             $antWorker->collect();
         }
 
-        $output->writeln('Digging complete.');
+        $output->writeln('Collecting complete.');
     }
 }
