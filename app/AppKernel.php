@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Veslo\AppBundle\VesloAppBundle(),
             new Veslo\AnthillBundle\VesloAnthillBundle(),
+            new Veslo\SanityBundle\VesloSanityBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
