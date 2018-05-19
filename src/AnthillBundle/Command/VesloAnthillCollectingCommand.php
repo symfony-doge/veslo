@@ -40,9 +40,7 @@ class VesloAnthillCollectingCommand extends ContainerAwareCommand
 
         $iterations = $input->getOption('iterations');
 
-        for ($iteration = 0; $iteration < $iterations; ++$iteration) {
-            $antWorker->collect();
-        }
+        $antWorker->collect($iterations);
 
         $output->writeln('Collecting complete.');
     }

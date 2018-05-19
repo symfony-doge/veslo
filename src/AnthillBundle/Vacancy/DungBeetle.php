@@ -45,11 +45,13 @@ class DungBeetle
     }
 
     /**
-     * Performs dung (vacancies) digging iteration
+     * Performs dung (vacancies) digging iterations
+     *
+     * @param int $iterations Digging iterations count
      *
      * @return void
      */
-    public function dig(): void
+    public function dig(int $iterations = 1): void
     {
         // TODO: digging hard...
         sleep(1);

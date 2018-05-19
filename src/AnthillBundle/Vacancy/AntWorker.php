@@ -42,9 +42,11 @@ class AntWorker
     /**
      * Performs dung (vacancies) collecting iteration
      *
+     * @param int $iterations Collecting iterations count
+     *
      * @return void
      */
-    public function collect(): void
+    public function collect(int $iterations = 1): void
     {
         // TODO: collecting diligently...
         sleep(1);
