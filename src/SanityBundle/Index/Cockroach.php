@@ -50,7 +50,7 @@ class Cockroach
     public function deliver(): void
     {
         // TODO: deliver faithfully...
-        sleep(1);
+        sleep(5);
 
         $this->logger->log('info', 'Delivering iteration complete.');
     }

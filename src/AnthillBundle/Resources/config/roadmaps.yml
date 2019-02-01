@@ -1,0 +1,5 @@
+services:
+    veslo.anthill.vacancy.roadmap.head_hunter:
+        class: Veslo\AnthillBundle\Vacancy\Roadmap\HeadHunter
+        tags:
+            - { name: !php/const Veslo\AnthillBundle\Vacancy\RoadmapInterface::TAG, roadmapName: 'hh' }

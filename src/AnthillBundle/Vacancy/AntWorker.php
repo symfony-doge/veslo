@@ -49,7 +49,7 @@ class AntWorker
     public function collect(int $iterations = 1): void
     {
         // TODO: collecting diligently...
-        sleep(1);
+        sleep(5);
 
         $this->logger->log('info', 'Collecting iteration complete.');
     }

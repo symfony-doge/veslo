@@ -1,0 +1,8 @@
+services:
+    veslo.anthill.command.digging:
+        class: Veslo\AnthillBundle\Command\DiggingCommand
+        arguments:
+            - '@veslo.anthill.vacancy.roadmap_storage'
+            - '@veslo.anthill.vacancy.dung_beetle'
+        tags:
+            - { name: 'console.command', command: 'veslo:anthill:digging' }

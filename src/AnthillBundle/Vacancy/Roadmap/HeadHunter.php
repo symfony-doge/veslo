@@ -15,6 +15,8 @@ class HeadHunter implements RoadmapInterface
     public function hasNext(): bool
     {
         // TODO: Implement hasNext() method.
+
+        return false;
     }
 
     /**
