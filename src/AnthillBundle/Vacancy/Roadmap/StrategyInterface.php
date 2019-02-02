@@ -34,7 +34,7 @@ interface StrategyInterface
      *
      * @param ConfigurableRoadmapInterface $roadmap Roadmap in which iteration should be performed
      *
-     * @return string
+     * @return void
      */
-    public function iterate(ConfigurableRoadmapInterface $roadmap): ?string;
+    public function iterate(ConfigurableRoadmapInterface $roadmap): void;
 }

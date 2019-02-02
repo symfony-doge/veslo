@@ -29,7 +29,7 @@ class Query implements StrategyInterface
     /**
      * {@inheritdoc}
      */
-    public function iterate(ConfigurableRoadmapInterface $roadmap): ?string
+    public function iterate(ConfigurableRoadmapInterface $roadmap): void
     {
         // TODO: Implement iterate() method.
     }

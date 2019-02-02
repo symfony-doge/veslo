@@ -5,11 +5,12 @@ namespace Veslo\AppBundle\Exception;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
+use Veslo\AppBundle\Entity\Repository\BaseRepository;
 
 /**
  * Will be thrown if entity is not found
  *
- * @see AbstractRepository
+ * @see BaseRepository
  */
 class EntityNotFoundException extends RuntimeException implements AppBundleExceptionInterface
 {
