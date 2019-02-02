@@ -1,8 +1,15 @@
 services:
+    veslo.anthill.command.roadmap.list:
+        class: Veslo\AnthillBundle\Command\Roadmap\ListCommand
+        arguments:
+            - '@veslo.anthill.vacancy.ant_queen'
+        tags:
+            - { name: 'console.command', command: 'veslo:anthill:roadmap:list' }
+
     veslo.anthill.command.digging:
         class: Veslo\AnthillBundle\Command\DiggingCommand
         arguments:
-            - '@veslo.anthill.vacancy.roadmap_storage'
+            - '@veslo.anthill.vacancy.ant_queen'
             - '@veslo.anthill.vacancy.dung_beetle'
         tags:
             - { name: 'console.command', command: 'veslo:anthill:digging' }

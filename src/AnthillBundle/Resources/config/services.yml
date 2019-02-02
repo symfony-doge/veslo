@@ -1,4 +1,7 @@
 services:
+    veslo.anthill.vacancy.ant_queen:
+        class: Veslo\AnthillBundle\Vacancy\AntQueen
+
     veslo.anthill.vacancy.dung_beetle:
         class: Veslo\AnthillBundle\Vacancy\DungBeetle
         arguments:
@@ -9,5 +12,5 @@ services:
         arguments:
             - '@logger'
 
-    veslo.anthill.vacancy.roadmap_storage:
-        class: Veslo\AnthillBundle\Vacancy\RoadmapStorage
+    veslo.anthill.vacancy.roadmap.strategy.query:
+        class: Veslo\AnthillBundle\Vacancy\Roadmap\Strategy\Query

@@ -2,8 +2,12 @@
 
 namespace Veslo\AnthillBundle\Vacancy;
 
+use Veslo\AnthillBundle\Enum\Vacancy\Roadmap;
+
 /**
  * Should be implemented by service that holds context and parsing plan for specific site
+ *
+ * @see Roadmap
  */
 interface RoadmapInterface
 {

@@ -17,7 +17,7 @@ class VacancyRoadmapPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $roadmapStorageDefinition = $container->getDefinition('veslo.anthill.vacancy.roadmap_storage');
+        $antQueenDefinition = $container->getDefinition('veslo.anthill.vacancy.ant_queen');
 
         $roadmapIds = $container->findTaggedServiceIds(RoadmapInterface::TAG);
 
@@ -26,7 +26,7 @@ class VacancyRoadmapPass implements CompilerPassInterface
                 $roadmapName = $attributes['roadmapName'];
                 $reference   = new Reference($id);
 
-                $roadmapStorageDefinition->addMethodCall('addRoadmap', [$roadmapName, $reference]);
+                $antQueenDefinition->addMethodCall('addRoadmap', [$roadmapName, $reference]);
             }
         }
     }

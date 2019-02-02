@@ -25,8 +25,11 @@ class RoadmapNotFoundException extends RuntimeException implements AnthillBundle
     /**
      * {@inheritdoc}
      */
-    public function __construct(string $message = self::MESSAGE, int $code = 0, Throwable $previous = null)
-    {
+    public function __construct(
+        string $message = self::MESSAGE,
+        int $code = Response::HTTP_INTERNAL_SERVER_ERROR,
+        Throwable $previous = null
+    ) {
         parent::__construct($message, $code, $previous);
     }
 
@@ -41,6 +44,6 @@ class RoadmapNotFoundException extends RuntimeException implements AnthillBundle
     {
         $message = str_replace('{roadmapName}', $roadmapName, self::MESSAGE_WITH_NAME);
 
-        return new static($message, Response::HTTP_INTERNAL_SERVER_ERROR);
+        return new static($message);
     }
 }

@@ -7,6 +7,7 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Digs some dung (vacancies) from internet and sends to queue for processing
+ * He wants some roadmap, so he can know what to dig and where to dig
  *
  *              _,=(_)=,_
  *           ,;`         `;,
@@ -25,6 +26,8 @@ use Psr\Log\LoggerInterface;
  *          |\            /|
  *           \\          //
  *           /_>        <_\
+ *
+ * @see RoadmapInterface
  */
 class DungBeetle
 {

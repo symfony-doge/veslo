@@ -7,20 +7,28 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Veslo\AnthillBundle\Command\Roadmap\ListCommand;
 use Veslo\AnthillBundle\Vacancy\DungBeetle;
-use Veslo\AnthillBundle\Vacancy\RoadmapStorage;
+use Veslo\AnthillBundle\Vacancy\AntQueen;
 
 /**
  * Represents dung (vacancies) digging process.
+ *
+ * Usage example:
+ * ```
+ * bin/console veslo:anthill:digging hh php --iterations=10
+ * ```
+ *
+ * @see ListCommand
  */
 class DiggingCommand extends Command
 {
     /**
      * Aggregates all available roadmap services for vacancy parsing
      *
-     * @var RoadmapStorage
+     * @var AntQueen
      */
-    private $roadmapStorage;
+    private $antQueen;
 
     /**
      * Digs some dung (vacancies) from internet and sends to queue for processing
@@ -32,14 +40,14 @@ class DiggingCommand extends Command
     /**
      * DiggingCommand constructor.
      *
-     * @param RoadmapStorage $roadmapStorage Aggregates all available roadmap services for vacancy parsing
-     * @param DungBeetle     $dungBeetle     Digs some dung (vacancies) from internet and sends to queue for processing
-     * @param string|null    $name           The name of the command; passing null means it must be set in configure()
+     * @param AntQueen    $antQueen   Aggregates all available roadmap services for vacancy parsing
+     * @param DungBeetle  $dungBeetle Digs some dung (vacancies) from internet and sends to queue for processing
+     * @param string|null $name       The name of the command; passing null means it must be set in configure()
      */
-    public function __construct(RoadmapStorage $roadmapStorage, DungBeetle $dungBeetle, ?string $name = null)
+    public function __construct(AntQueen $antQueen, DungBeetle $dungBeetle, ?string $name = null)
     {
-        $this->roadmapStorage = $roadmapStorage;
-        $this->dungBeetle     = $dungBeetle;
+        $this->antQueen   = $antQueen;
+        $this->dungBeetle = $dungBeetle;
 
         parent::__construct($name);
     }
@@ -57,9 +65,9 @@ class DiggingCommand extends Command
                 'Digging plan during which vacancies will be parsed from specified source'
             )
             ->addArgument(
-                'query',
-                InputArgument::REQUIRED,
-                'Digging criteria by which vacancies will be selected for parsing'
+                'settingsKey',
+                InputArgument::OPTIONAL,
+                'Settings for roadmap with digging criteria by which vacancies will be selected for parsing'
             )
             ->addOption(
                 'iterations',
@@ -77,10 +85,10 @@ class DiggingCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $roadmapName = $input->getArgument('roadmapName');
-        //$query       = $input->getArgument('query');
+        $settingsKey = $input->getArgument('settingsKey');
         $iterations  = $input->getOption('iterations');
 
-        $roadmap = $this->roadmapStorage->require($roadmapName);
+        $roadmap = $this->antQueen->requireRoadmap($roadmapName, $settingsKey);
 
         $this->dungBeetle->dig($roadmap, $iterations);
 
