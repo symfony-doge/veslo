@@ -2,6 +2,7 @@
 
 namespace Veslo\AnthillBundle\Vacancy;
 
+use Veslo\AnthillBundle\Exception\RoadmapConfigurationNotSupportedException;
 use Veslo\AnthillBundle\Exception\RoadmapNotFoundException;
 
 /**
@@ -67,14 +68,15 @@ class AntQueen
     /**
      * Returns roadmap by name if it's supported
      *
-     * @param string $roadmapName Roadmap name
-     * @param string $settingsKey Settings key, roadmap should implement configurable interface to use this feature
+     * @param string $roadmapName      Roadmap name
+     * @param string $configurationKey A configuration key, roadmap should support configurable interface
      *
      * @return RoadmapInterface
      *
      * @throws RoadmapNotFoundException
+     * @throws RoadmapConfigurationNotSupportedException
      */
-    public function requireRoadmap(string $roadmapName, ?string $settingsKey = null): RoadmapInterface
+    public function requireRoadmap(string $roadmapName, ?string $configurationKey = null): RoadmapInterface
     {
         if (!array_key_exists($roadmapName, $this->_roadmaps)) {
             throw RoadmapNotFoundException::withName($roadmapName);
@@ -82,8 +84,13 @@ class AntQueen
 
         $roadmap = $this->_roadmaps[$roadmapName];
 
-        if (!empty($settingsKey)) {
-            $this->_roadmapConfigurator->configure($roadmap, $settingsKey);
+        if (!empty($configurationKey)) {
+            if (!$roadmap instanceof ConfigurableRoadmapInterface) {
+                throw RoadmapConfigurationNotSupportedException::withName($roadmapName);
+            }
+
+            $configuration = $roadmap->getConfiguration();
+            $configuration->apply($configurationKey);
         }
 
         return $roadmap;

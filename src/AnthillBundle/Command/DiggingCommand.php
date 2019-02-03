@@ -60,14 +60,14 @@ class DiggingCommand extends Command
         $this
             ->setDescription('Digs some dung (vacancies) from internet and sends to queue for processing')
             ->addArgument(
-                'roadmapName',
+                'roadmap',
                 InputArgument::REQUIRED,
-                'Digging plan during which vacancies will be parsed from specified source'
+                'Name of digging plan during which vacancies will be parsed from specified source'
             )
             ->addArgument(
-                'settingsKey',
+                'configuration',
                 InputArgument::OPTIONAL,
-                'Settings for roadmap with digging criteria by which vacancies will be selected for parsing'
+                'Key of configuration record for roadmap, determines vacancy searching criteria'
             )
             ->addOption(
                 'iterations',
@@ -84,11 +84,11 @@ class DiggingCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $roadmapName = $input->getArgument('roadmapName');
-        $settingsKey = $input->getArgument('settingsKey');
-        $iterations  = $input->getOption('iterations');
+        $roadmapName      = $input->getArgument('roadmap');
+        $configurationKey = $input->getArgument('configuration');
+        $iterations       = $input->getOption('iterations');
 
-        $roadmap = $this->antQueen->requireRoadmap($roadmapName, $settingsKey);
+        $roadmap = $this->antQueen->requireRoadmap($roadmapName, $configurationKey);
 
         $this->dungBeetle->dig($roadmap, $iterations);
 

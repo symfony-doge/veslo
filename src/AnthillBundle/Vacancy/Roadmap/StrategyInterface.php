@@ -2,39 +2,26 @@
 
 namespace Veslo\AnthillBundle\Vacancy\Roadmap;
 
-use Veslo\AnthillBundle\Vacancy\ConfigurableRoadmapInterface;
-
 /**
- * Represents vacancy searching algorithm
- *
- * @see Strategy
+ * Represents vacancy searching algorithm for specific website-provider
  */
 interface StrategyInterface
 {
     /**
-     * Performs preparatory actions before roadmap traversing
+     * Executes an actual lookup algorithm using specified configuration and returns vacancy URL
      *
-     * @param ConfigurableRoadmapInterface $roadmap Roadmap for initialization
-     *
-     * @return void
-     */
-    public function init(ConfigurableRoadmapInterface $roadmap): void;
-
-    /**
-     * Executes an actual lookup algorithm for specified roadmap and returns vacancy URL
-     *
-     * @param ConfigurableRoadmapInterface $roadmap Roadmap in which lookup should be performed
+     * @param ConfigurationInterface $configuration Roadmap configuration with parameters for searching algorithm
      *
      * @return string
      */
-    public function lookup(ConfigurableRoadmapInterface $roadmap): ?string;
+    public function lookup(ConfigurationInterface $configuration): ?string;
 
     /**
-     * Moves roadmap cursor to the next vacancy
+     * Moves roadmap cursor to the next vacancy that fits specified searching configuration
      *
-     * @param ConfigurableRoadmapInterface $roadmap Roadmap in which iteration should be performed
+     * @param ConfigurationInterface $configuration Roadmap configuration with parameters for searching algorithm
      *
      * @return void
      */
-    public function iterate(ConfigurableRoadmapInterface $roadmap): void;
+    public function iterate(ConfigurationInterface $configuration): void;
 }

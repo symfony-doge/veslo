@@ -11,6 +11,3 @@ services:
         class: Veslo\AnthillBundle\Vacancy\AntWorker
         arguments:
             - '@logger'
-
-    veslo.anthill.vacancy.roadmap.strategy.query:
-        class: Veslo\AnthillBundle\Vacancy\Roadmap\Strategy\Query
