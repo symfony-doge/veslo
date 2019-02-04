@@ -20,9 +20,9 @@ class VesloAnthillExtension extends Extension
         $locator = new FileLocator(__DIR__ . implode(DIRECTORY_SEPARATOR, ['', '..', 'Resources']));
         $loader  = new YamlFileLoader($container, $locator);
 
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'services.yml');
         $loader->load('config' . DIRECTORY_SEPARATOR . 'commands.yml');
         $loader->load('config' . DIRECTORY_SEPARATOR . 'controllers.yml');
+        $loader->load('config' . DIRECTORY_SEPARATOR . 'services.yml');
         $loader->load('config' . DIRECTORY_SEPARATOR . 'roadmaps.yml');
 
         $configuration = new Configuration();

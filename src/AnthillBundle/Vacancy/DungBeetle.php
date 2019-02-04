@@ -93,11 +93,10 @@ class DungBeetle
             return;
         }
 
-        $vacancyUrl = $roadmap->next();
+        $locationDto = $roadmap->next();
 
         try {
-            // $vacancyDto = $this->vacancyParser->parse($vacancyUrl);  // + DTO: VacancyDto
-            // $this->conveyor->send(?) ($vacancyDto, queue(?))         // + rabbitmq, wrapper(?)
+            // $this->conveyor->send(?) ($locationDto, queue(?))         // + rabbitmq, wrapper(?)
         } catch (Exception $e) {
             // TODO
         }

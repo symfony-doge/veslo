@@ -1,6 +1,6 @@
 <?php
 
-namespace Veslo\AnthillBundle\Vacancy\Roadmap\Strategy\HeadHunter;
+namespace Veslo\AnthillBundle\Vacancy\Roadmap\Strategy\HeadHunter\Api;
 
 use Veslo\AnthillBundle\Vacancy\Roadmap\ConfigurationInterface;
 use Veslo\AnthillBundle\Vacancy\Roadmap\StrategyInterface;
@@ -9,7 +9,7 @@ use Veslo\AnthillBundle\Vacancy\Roadmap\StrategyInterface;
  * Represents vacancy searching algorithm for HeadHunter site based on public API
  * https://github.com/hhru/api/blob/master/docs/general.md
  */
-class Api implements StrategyInterface
+class Version20190204 implements StrategyInterface
 {
     /**
      * {@inheritdoc}
@@ -17,6 +17,8 @@ class Api implements StrategyInterface
     public function lookup(ConfigurationInterface $configuration): ?string
     {
         // TODO: Implement lookup() method.
+
+        return null;
     }
 
     /**

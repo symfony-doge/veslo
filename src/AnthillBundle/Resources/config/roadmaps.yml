@@ -1,17 +1,2 @@
-services:
-    # HeadHunter
-    veslo.anthill.vacancy.roadmap.head_hunter:
-        class: Veslo\AnthillBundle\Vacancy\Roadmap\BaseConfigurableRoadmap
-        arguments:
-            - '@veslo.anthill.vacancy.roadmap.strategy.head_hunter.api'
-            - '@veslo.anthill.vacancy.roadmap.configuration.head_hunter'
-        tags:
-            -
-                name: !php/const Veslo\AnthillBundle\Vacancy\RoadmapInterface::TAG
-                roadmapName: !php/const Veslo\AnthillBundle\Enum\Vacancy\Roadmap::HEAD_HUNTER
-
-    veslo.anthill.vacancy.roadmap.strategy.head_hunter.api:
-        class: Veslo\AnthillBundle\Vacancy\Roadmap\Strategy\HeadHunter\Api
-
-    veslo.anthill.vacancy.roadmap.configuration.head_hunter:
-        class: Veslo\AnthillBundle\Vacancy\Roadmap\Configuration\HeadHunter
+imports:
+    - { resource: roadmaps/headhunter.yml }

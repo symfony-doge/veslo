@@ -3,12 +3,9 @@
 namespace Veslo\AnthillBundle\Vacancy\Roadmap\Configuration;
 
 use Veslo\AnthillBundle\Vacancy\Roadmap\ConfigurationInterface;
-use Veslo\AnthillBundle\Vacancy\Roadmap\Strategy\HeadHunter\Api;
 
 /**
  * Represents configuraton of vacancy searching algorithms for HeadHunter
- *
- * @see Api
  */
 class HeadHunter implements ConfigurationInterface
 {
