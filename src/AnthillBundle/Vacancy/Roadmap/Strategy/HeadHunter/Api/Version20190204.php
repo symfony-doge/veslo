@@ -18,6 +18,8 @@ class Version20190204 implements StrategyInterface
     {
         // TODO: Implement lookup() method.
 
+        // if page > pages STOP.
+
         return null;
     }
 
@@ -27,5 +29,8 @@ class Version20190204 implements StrategyInterface
     public function iterate(ConfigurationInterface $configuration): void
     {
         // TODO: Implement iterate() method.
+
+        // update "pages" (it can be lowered)
+        // page = page + 1
     }
 }

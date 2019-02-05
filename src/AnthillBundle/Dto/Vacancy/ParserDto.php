@@ -3,21 +3,21 @@
 namespace Veslo\AnthillBundle\Dto\Vacancy;
 
 /**
- * Context of roadmap by which the vacancy was found
+ * Context of parser for vacancy URL
  */
-class RoadmapDto
+class ParserDto
 {
     /**
-     * Roadmap name
+     * Parser name
      *
      * @var string
      */
     private $name;
 
     /**
-     * Sets roadmap name
+     * Sets parser name
      *
-     * @param string $name Roadmap name
+     * @param string $name Parser name
      *
      * @return void
      */
@@ -27,7 +27,7 @@ class RoadmapDto
     }
 
     /**
-     * Returns roadmap name
+     * Returns parser name
      *
      * @return string
      */

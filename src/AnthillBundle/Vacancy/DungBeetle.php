@@ -4,9 +4,10 @@ namespace Veslo\AnthillBundle\Vacancy;
 
 use Exception;
 use Psr\Log\LoggerInterface;
+use Veslo\AnthillBundle\Vacancy\Roadmap\ConveyorAwareRoadmap;
 
 /**
- * Digs some dung (vacancies) from internet and sends to queue for processing
+ * Digs some dung (vacancies) from internet and sends to conveyor for processing
  * He wants some roadmap, so he can know what to dig and where to dig
  *
  *              _,=(_)=,_
@@ -51,12 +52,12 @@ class DungBeetle
     /**
      * Performs dung (vacancies) digging iterations
      *
-     * @param RoadmapInterface $roadmap    Provides URL of vacancies
-     * @param int              $iterations Digging iterations count, at least one
+     * @param ConveyorAwareRoadmap $roadmap    Provides URL of vacancies
+     * @param int                  $iterations Digging iterations count, at least one
      *
      * @return void
      */
-    public function dig(RoadmapInterface $roadmap, int $iterations = 1): void
+    public function dig(ConveyorAwareRoadmap $roadmap, int $iterations = 1): void
     {
         $iterationRemains = max(1, $iterations);
 
@@ -78,11 +79,11 @@ class DungBeetle
     /**
      * Encapsulates digging algorithm
      *
-     * @param RoadmapInterface $roadmap Provides URL of vacancies
+     * @param ConveyorAwareRoadmap $roadmap Provides URL of vacancies
      *
      * @return void
      */
-    private function digIteration(RoadmapInterface $roadmap): void
+    private function digIteration(ConveyorAwareRoadmap $roadmap): void
     {
         // TODO: digging hard...
         sleep(5);

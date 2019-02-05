@@ -88,7 +88,7 @@ class DiggingCommand extends Command
         $configurationKey = $input->getArgument('configuration');
         $iterations       = $input->getOption('iterations');
 
-        $roadmap = $this->antQueen->requireRoadmap($roadmapName, $configurationKey);
+        $roadmap = $this->antQueen->buildRoadmap($roadmapName, $configurationKey);
 
         $this->dungBeetle->dig($roadmap, $iterations);
 

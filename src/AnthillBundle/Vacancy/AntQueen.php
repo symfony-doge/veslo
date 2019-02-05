@@ -4,9 +4,10 @@ namespace Veslo\AnthillBundle\Vacancy;
 
 use Veslo\AnthillBundle\Exception\RoadmapConfigurationNotSupportedException;
 use Veslo\AnthillBundle\Exception\RoadmapNotFoundException;
+use Veslo\AnthillBundle\Vacancy\Roadmap\ConveyorAwareRoadmap;
 
 /**
- * Aggregates all available roadmap services for vacancy parsing
+ * Aggregates and builds roadmaps for vacancy parsing
  * It means that each beetle should ask her what to do and how to do, yup
  *
  *              *
@@ -53,6 +54,24 @@ class AntQueen
     }
 
     /**
+     * Returns roadmap by name or throws an exception if roadmap is not supported
+     *
+     * @param string $roadmapName Roadmap name
+     *
+     * @return RoadmapInterface
+     *
+     * @throws RoadmapNotFoundException
+     */
+    public function requireRoadmap(string $roadmapName): RoadmapInterface
+    {
+        if (!array_key_exists($roadmapName, $this->_roadmaps)) {
+            throw RoadmapNotFoundException::withName($roadmapName);
+        }
+
+        return $this->_roadmaps[$roadmapName];
+    }
+
+    /**
      * Adds roadmap service in list of supported roadmaps
      *
      * @param string           $roadmapName Roadmap name
@@ -66,23 +85,18 @@ class AntQueen
     }
 
     /**
-     * Returns roadmap by name if it's supported
+     * Builds roadmap for conveyor process
      *
      * @param string $roadmapName      Roadmap name
      * @param string $configurationKey A configuration key, roadmap should support configurable interface
      *
-     * @return RoadmapInterface
+     * @return ConveyorAwareRoadmap
      *
-     * @throws RoadmapNotFoundException
      * @throws RoadmapConfigurationNotSupportedException
      */
-    public function requireRoadmap(string $roadmapName, ?string $configurationKey = null): RoadmapInterface
+    public function buildRoadmap(string $roadmapName, ?string $configurationKey = null): ConveyorAwareRoadmap
     {
-        if (!array_key_exists($roadmapName, $this->_roadmaps)) {
-            throw RoadmapNotFoundException::withName($roadmapName);
-        }
-
-        $roadmap = $this->_roadmaps[$roadmapName];
+        $roadmap = $this->requireRoadmap($roadmapName);
 
         if (!empty($configurationKey)) {
             if (!$roadmap instanceof ConfigurableRoadmapInterface) {
@@ -93,6 +107,6 @@ class AntQueen
             $configuration->apply($configurationKey);
         }
 
-        return $roadmap;
+        return new ConveyorAwareRoadmap($roadmap, $roadmapName);
     }
 }

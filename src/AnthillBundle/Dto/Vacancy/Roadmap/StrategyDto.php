@@ -3,7 +3,7 @@
 namespace Veslo\AnthillBundle\Dto\Vacancy\Roadmap;
 
 /**
- * Represents context of searching algorithm used by roadmap
+ * Context of searching algorithm used by roadmap
  */
 class StrategyDto
 {
@@ -18,6 +18,8 @@ class StrategyDto
      * Sets name for searching algorithm used by roadmap
      *
      * @param string $name Roadmap name
+     *
+     * @return void
      */
     public function setName(string $name): void
     {

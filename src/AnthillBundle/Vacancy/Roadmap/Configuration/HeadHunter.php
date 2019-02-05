@@ -9,6 +9,8 @@ use Veslo\AnthillBundle\Vacancy\Roadmap\ConfigurationInterface;
  */
 class HeadHunter implements ConfigurationInterface
 {
+    // parametersRepository : HeadHunterParametersRepository
+
     /**
      * {@inheritdoc}
      */
