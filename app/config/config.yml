@@ -1,8 +1,8 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: services.yml }
     - { resource: doctrine.yml }
+    - { resource: services.yml }
     - { resource: bundles/veslo_anthill.yml }
     - { resource: bundles/veslo_sanity.yml }
 

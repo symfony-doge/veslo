@@ -7,6 +7,9 @@ doctrine:
                 naming_strategy: doctrine.orm.naming_strategy.underscore
                 default_repository_class: Veslo\AppBundle\Entity\Repository\BaseRepository
                 mappings:
+                    # is_bundle is considered a legacy option, so we use "Outside of a Bundle" style
+                    # all bundles can potentially be moved to project dependencies category
+                    # https://symfony.com/doc/current/reference/configuration/doctrine.html#is-bundle
                     VesloAnthillBundle:
                         type: annotation
                         dir: '%kernel.project_dir%/src/AnthillBundle/Entity'

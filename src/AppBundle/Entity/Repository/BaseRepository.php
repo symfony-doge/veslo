@@ -2,8 +2,8 @@
 
 namespace Veslo\AppBundle\Entity\Repository;
 
-use Veslo\AppBundle\Exception\EntityNotFoundException;
 use Doctrine\ORM\EntityRepository;
+use Veslo\AppBundle\Exception\EntityNotFoundException;
 
 /**
  * Provides additional contract-based methods for standard repository api.
