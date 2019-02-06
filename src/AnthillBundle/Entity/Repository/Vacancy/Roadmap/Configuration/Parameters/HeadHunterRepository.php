@@ -2,6 +2,8 @@
 
 namespace Veslo\AnthillBundle\Entity\Repository\Vacancy\Roadmap\Configuration\Parameters;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters\HeadHunter as HeadHunterParameters;
 use Veslo\AppBundle\Entity\Repository\BaseRepository;
 
@@ -16,11 +18,19 @@ class HeadHunterRepository extends BaseRepository
      * @param string $configurationKey Roadmap configuration key
      *
      * @return HeadHunterParameters
+     *
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function requireByConfigurationKey(string $configurationKey): HeadHunterParameters
     {
-        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+        $queryBuilder = $this->createQueryBuilder('p');
 
-        // TODO
+        $queryBuilder
+            ->andWhere($queryBuilder->expr()->eq('p.configurationKey', ':configurationKey'))
+            ->setParameter('configurationKey', $configurationKey)
+        ;
+
+        return $queryBuilder->getQuery()->getSingleResult();
     }
 }

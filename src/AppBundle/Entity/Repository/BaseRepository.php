@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityRepository;
 /**
  * Provides additional contract-based methods for standard repository api.
  */
-abstract class BaseRepository extends EntityRepository
+class BaseRepository extends EntityRepository
 {
     /**
      * Returns an entity by its identifier or throws exception

@@ -22,6 +22,7 @@ class VesloAnthillExtension extends Extension
 
         $loader->load('config' . DIRECTORY_SEPARATOR . 'commands.yml');
         $loader->load('config' . DIRECTORY_SEPARATOR . 'controllers.yml');
+        $loader->load('config' . DIRECTORY_SEPARATOR . 'repositories.yml');
         $loader->load('config' . DIRECTORY_SEPARATOR . 'services.yml');
         $loader->load('config' . DIRECTORY_SEPARATOR . 'roadmaps.yml');
 

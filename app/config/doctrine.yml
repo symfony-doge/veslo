@@ -1,0 +1,34 @@
+doctrine:
+    orm:
+        default_entity_manager: anthill
+        entity_managers:
+            anthill:
+                connection: anthill
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                default_repository_class: Veslo\AppBundle\Entity\Repository\BaseRepository
+                mappings:
+                    VesloAnthillBundle:
+                        type: annotation
+                        dir: '%kernel.project_dir%/src/AnthillBundle/Entity'
+                        prefix: Veslo\AnthillBundle\Entity
+                        alias: VesloAnthill
+
+    dbal:
+        default_connection: anthill
+        connections:
+            anthill:
+                driver: pdo_pgsql
+                host: '%doctrine.dbal.connections.anthill.database_host%'
+                port: '%doctrine.dbal.connections.anthill.database_port%'
+                dbname: '%doctrine.dbal.connections.anthill.database_name%'
+                user: '%doctrine.dbal.connections.anthill.database_user%'
+                password: '%doctrine.dbal.connections.anthill.database_password%'
+                charset: UTF8
+
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/Resources/migrations/doctrine"
+    namespace: Veslo\Migrations
+    table_name: migration_versions
+    name: Application Migrations
+    organize_migrations: false # Version >= 1.2, possible values are: "BY_YEAR", "BY_YEAR_AND_MONTH", false
+    custom_template: ~ # Version >= 1.2, path to your custom migrations template
