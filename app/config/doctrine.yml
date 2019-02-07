@@ -6,6 +6,15 @@ doctrine:
                 connection: anthill
                 naming_strategy: doctrine.orm.naming_strategy.underscore
                 default_repository_class: Veslo\AppBundle\Entity\Repository\BaseRepository
+                metadata_cache_driver:
+                    type: predis
+                    host: '%veslo.app.redis.host%'
+                    port: '%veslo.app.redis.port%'
+                    database: 0
+                result_cache_driver:
+                    cache_provider: doctrine.orm.anthill_metadata_cache
+                query_cache_driver:
+                    cache_provider: doctrine.orm.anthill_metadata_cache
                 mappings:
                     # is_bundle is considered a legacy option, so we use "Outside of a Bundle" style
                     # all bundles can potentially be moved to project dependencies category

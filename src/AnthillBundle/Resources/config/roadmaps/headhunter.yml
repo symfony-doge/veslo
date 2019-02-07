@@ -6,9 +6,8 @@ services:
             - '@veslo.anthill.vacancy.roadmap.strategy.head_hunter.api.version20190204'
             - '@veslo.anthill.vacancy.roadmap.configuration.head_hunter'
         tags:
-            -
-                name: !php/const Veslo\AnthillBundle\Vacancy\RoadmapInterface::TAG
-                roadmapName: !php/const Veslo\AnthillBundle\Enum\Vacancy\Roadmap::HEAD_HUNTER
+            - name: !php/const Veslo\AnthillBundle\Vacancy\RoadmapInterface::TAG
+              roadmapName: !php/const Veslo\AnthillBundle\Enum\Vacancy\Roadmap::HEAD_HUNTER
 
     # Search strategies
     veslo.anthill.vacancy.roadmap.strategy.head_hunter.api.version20190204:

@@ -24,6 +24,9 @@ framework:
     serializer: { enable_annotations: true }
     templating:
         engines: ['twig']
+    cache:
+        app: cache.adapter.redis
+        default_redis_provider: 'redis://%veslo.app.redis.host%:%veslo.app.redis.port%'
     default_locale: '%locale%'
     trusted_hosts: ~
     session:

@@ -19,6 +19,16 @@
 !/var/postgresql
 /var/postgresql/*
 !var/postgresql/.gitkeep
+!/var/postgresql/data
+/var/postgresql/data/*
+!var/postgresql/data/.gitkeep
+
+!/var/redis
+/var/redis/*
+!var/redis/.gitkeep
+!/var/redis/data
+/var/redis/data/*
+!var/redis/data/.gitkeep
 
 !/var/cache
 /var/cache/*
