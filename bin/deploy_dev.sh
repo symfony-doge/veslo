@@ -19,7 +19,7 @@ echo 'Building docker-compose services...'
 docker-compose build --force-rm
 
 echo 'Updating composer dependencies...'
-docker-compose run --no-deps app composer install --no-interaction
+docker-compose run app composer install --no-interaction
 
 echo 'Updating yarn dependencies...'
 docker-compose run --no-deps app yarn install --non-interactive
@@ -29,10 +29,10 @@ echo 'Applying migrations...'
 docker-compose run app ./bin/console doctrine:migrations:migrate --env=dev --no-interaction --allow-no-migration
 
 echo 'Clearing up cache...'
-docker-compose run --no-deps app ./bin/console doctrine:cache:clear-metadata --env=dev
-docker-compose run --no-deps app ./bin/console doctrine:cache:clear-result --env=dev
-docker-compose run --no-deps app ./bin/console doctrine:cache:clear-query --env=dev
-docker-compose run --no-deps app ./bin/console cache:clear --env=dev --no-warmup
+docker-compose run app ./bin/console doctrine:cache:clear-metadata --env=dev
+docker-compose run app ./bin/console doctrine:cache:clear-result --env=dev
+docker-compose run app ./bin/console doctrine:cache:clear-query --env=dev
+docker-compose run app ./bin/console cache:clear --env=dev --no-warmup
 
 echo 'Warming up cache...'
 docker-compose run app ./bin/console cache:warmup --env=dev
