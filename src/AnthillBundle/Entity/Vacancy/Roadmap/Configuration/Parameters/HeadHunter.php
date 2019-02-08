@@ -6,7 +6,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Parameters for searching vacancies on HeadHunter website
+ * Parameters for vacancy searching on HeadHunter website
  *
  * @ORM\Table(name="anthill_vacancy_roadmap_headhunter")
  * @ORM\Entity(repositoryClass="Veslo\AnthillBundle\Entity\Repository\Vacancy\Roadmap\Configuration\Parameters\HeadHunterRepository")

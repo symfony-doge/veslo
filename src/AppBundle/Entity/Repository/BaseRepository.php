@@ -2,7 +2,11 @@
 
 namespace Veslo\AppBundle\Entity\Repository;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\ORMInvalidArgumentException;
 use Veslo\AppBundle\Exception\EntityNotFoundException;
 
 /**
@@ -34,5 +38,30 @@ class BaseRepository extends EntityRepository
         }
 
         return $entity;
+    }
+
+    /**
+     * Calls related EntityManager to persist entity and, optionally, flush
+     *
+     * @param object $entity  The instance to make managed and persistent.
+     * @param bool   $isFlush Whenever EntityManager should perform flush
+     *
+     * @return void
+     *
+     * @throws OptimisticLockException If a version check on an entity that
+     *         makes use of optimistic locking fails on flush.
+     * @throws ORMException
+     *
+     * @see EntityManagerInterface::persist()
+     * @see EntityManagerInterface::flush()
+     */
+    public function save(object $entity, bool $isFlush = true): void
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($entity);
+
+        if ($isFlush) {
+            $entityManager->flush();
+        }
     }
 }

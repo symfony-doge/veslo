@@ -37,9 +37,9 @@ interface ConfigurationInterface
     public function setParameters($parameters): void;
 
     /**
-     * Updates configuration for last applied key
+     * Saves configuration for last applied key
      *
      * @return void
      */
-    public function update(): void;
+    public function save(): void;
 }

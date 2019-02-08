@@ -1,1 +1,6 @@
 services:
+    veslo.anthill.vacancy.roadmap.configuration.parameters.head_hunter_repository:
+        class: Veslo\AnthillBundle\Entity\Repository\Vacancy\Roadmap\Configuration\Parameters\HeadHunterRepository
+        factory: ['@doctrine.orm.anthill_entity_manager', getRepository]
+        arguments:
+            - 'Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters\HeadHunter'

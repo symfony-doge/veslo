@@ -18,6 +18,8 @@ class Version20190204 implements StrategyInterface
     {
         // TODO: Implement lookup() method.
 
+        $parameters = $configuration->getParameters();
+
         // if page > pages STOP.
 
         return null;

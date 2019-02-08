@@ -86,7 +86,7 @@ class DungBeetle
     private function digIteration(ConveyorAwareRoadmap $roadmap): void
     {
         // TODO: digging hard...
-        sleep(5);
+        sleep(1);
 
         if (!$roadmap->hasNext()) {
             $this->logger->log('info', 'No more vacancies to parse.', ['roadmap' => $roadmap]);
