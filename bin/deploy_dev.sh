@@ -43,3 +43,7 @@ docker-compose up -d
 echo 'Clearing old environment...'
 docker rm `docker ps -qa --no-trunc --filter "status=exited"`
 docker rmi `docker images -f "dangling=true" -q`
+
+docker-compose run --no-deps php-fpm $DEPLOYMENT_PATH/bin/symfony_requirements
+docker-compose run --no-deps app ./bin/console security:check
+docker-compose run --no-deps app ./bin/console about

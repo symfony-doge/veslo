@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\Debug\Debug;
+use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
 
 // If you don't want to setup permissions the proper way, just uncomment the following PHP line
@@ -16,12 +17,25 @@ if (!getenv('APP_DEBUG')) {
 }
 
 require __DIR__ . '/../vendor/autoload.php';
+
 Debug::enable();
 
-$kernel = new AppKernel('dev', true);
+if (!isset($_SERVER['APP_ENV'])) {
+    if (!class_exists(Dotenv::class)) {
+        throw new \RuntimeException(
+            'APP_ENV environment variable is not defined.'
+            . ' You need to define environment variables for configuration or add "symfony/dotenv"'
+            . ' as a Composer dependency to load variables from a .env file.'
+        );
+    }
+    (new Dotenv())->load(__DIR__ . '/../.env');
+}
+
+$kernel = new AppKernel($_SERVER['APP_ENV'], true);
 if (PHP_VERSION_ID < 70000) {
     $kernel->loadClassCache();
 }
+
 $request  = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();

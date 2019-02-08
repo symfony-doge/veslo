@@ -3,7 +3,7 @@ version: '2'
 services:
     app:
         build:
-            context: ./docker/${DOCKER_COMPOSE_ENV}/app
+            context: ./docker/${APP_ENV}/app
             args:
                 HOST_UID: ${HOST_UID}
                 TIMEZONE: ${TIMEZONE}
@@ -32,13 +32,13 @@ services:
             - db_data:/var/lib/postgresql/data
 
     redis:
-        build: ./docker/${DOCKER_COMPOSE_ENV}/redis
+        build: ./docker/${APP_ENV}/redis
         volumes:
             - redis_data:/data
 
     nginx:
         build:
-            context: ./docker/${DOCKER_COMPOSE_ENV}/nginx
+            context: ./docker/${APP_ENV}/nginx
             args:
                 HOST_UID: ${HOST_UID}
         links:
@@ -54,7 +54,7 @@ services:
 
     php-fpm:
         build:
-            context: ./docker/${DOCKER_COMPOSE_ENV}/php-fpm
+            context: ./docker/${APP_ENV}/php-fpm
             args:
                 HOST_UID: ${HOST_UID}
                 TIMEZONE: ${TIMEZONE}
@@ -63,7 +63,7 @@ services:
 
     supervisor:
         build:
-            context: ./docker/${DOCKER_COMPOSE_ENV}/supervisor
+            context: ./docker/${APP_ENV}/supervisor
             args:
                 HOST_UID: ${HOST_UID}
                 TIMEZONE: ${TIMEZONE}

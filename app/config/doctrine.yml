@@ -8,9 +8,9 @@ doctrine:
                 default_repository_class: Veslo\AppBundle\Entity\Repository\BaseRepository
                 metadata_cache_driver:
                     type: predis
-                    host: '%veslo.app.redis.host%'
-                    port: '%veslo.app.redis.port%'
-                    database: 0
+                    host: '%app.redis.host%'
+                    port: '%app.redis.port%'
+                    database: 1
                 result_cache_driver:
                     cache_provider: doctrine.orm.anthill_metadata_cache
                 query_cache_driver:
@@ -24,7 +24,6 @@ doctrine:
                         dir: '%kernel.project_dir%/src/AnthillBundle/Entity'
                         prefix: Veslo\AnthillBundle\Entity
                         alias: VesloAnthill
-
     dbal:
         default_connection: anthill
         connections:

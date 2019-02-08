@@ -2,20 +2,20 @@
 # Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
 # https://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
-    doctrine.dbal.connections.anthill.database_host: db
-    doctrine.dbal.connections.anthill.database_port: 5432
-    doctrine.dbal.connections.anthill.database_name: postgres
-    doctrine.dbal.connections.anthill.database_user: postgres
-    doctrine.dbal.connections.anthill.database_password: postgres
+    doctrine.dbal.connections.anthill.database_host: '%env(string:POSTGRES_HOST)%'
+    doctrine.dbal.connections.anthill.database_port: '%env(int:POSTGRES_PORT)%'
+    doctrine.dbal.connections.anthill.database_name: '%env(string:POSTGRES_DB)%'
+    doctrine.dbal.connections.anthill.database_user: '%env(string:POSTGRES_USER)%'
+    doctrine.dbal.connections.anthill.database_password: '%env(string:POSTGRES_PASSWORD)%'
 
-    mailer_transport: smtp
-    mailer_host: 127.0.0.1
-    mailer_user: ~
-    mailer_password: ~
+    app.mailer_transport: smtp
+    app.mailer_host: 127.0.0.1
+    app.mailer_user: ~
+    app.mailer_password: ~
 
     # A secret key that's used to generate certain security-related tokens
-    secret: ThisTokenIsNotSoSecretChangeIt
+    app.secret: '%env(string:APP_SECRET)%'
 
     # Cache
-    veslo.app.redis.host: redis
-    veslo.app.redis.port: 6379
+    app.redis.host: '%env(string:REDIS_HOST)%'
+    app.redis.port: '%env(int:REDIS_PORT)%'
