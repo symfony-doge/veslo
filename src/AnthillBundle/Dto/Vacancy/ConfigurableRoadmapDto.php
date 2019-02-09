@@ -46,9 +46,9 @@ class ConfigurableRoadmapDto
     /**
      * Returns context of searching algorithm
      *
-     * @return StrategyDto
+     * @return StrategyDto|null
      */
-    public function getStrategy(): StrategyDto
+    public function getStrategy(): ?StrategyDto
     {
         return $this->strategy;
     }
@@ -68,9 +68,9 @@ class ConfigurableRoadmapDto
     /**
      * Returns context of configuration for searching algorithm
      *
-     * @return ConfigurationDto
+     * @return ConfigurationDto|null
      */
-    public function getConfiguration(): ConfigurationDto
+    public function getConfiguration(): ?ConfigurationDto
     {
         return $this->configuration;
     }
@@ -90,9 +90,9 @@ class ConfigurableRoadmapDto
     /**
      * Returns base roadmap data
      *
-     * @return RoadmapDto
+     * @return RoadmapDto|null
      */
-    public function getRoadmap(): RoadmapDto
+    public function getRoadmap(): ?RoadmapDto
     {
         return $this->roadmap;
     }

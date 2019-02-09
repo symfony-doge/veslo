@@ -104,9 +104,9 @@ class RawDto
     /**
      * Returns vacancy URL
      *
-     * @return string
+     * @return string|null
      */
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -126,9 +126,9 @@ class RawDto
     /**
      * Returns vacancy region name
      *
-     * @return string
+     * @return string|null
      */
-    public function getRegionName(): string
+    public function getRegionName(): ?string
     {
         return $this->regionName;
     }
@@ -148,9 +148,9 @@ class RawDto
     /**
      * Returns vacancy company name
      *
-     * @return string
+     * @return string|null
      */
-    public function getCompanyName(): string
+    public function getCompanyName(): ?string
     {
         return $this->companyName;
     }
@@ -170,9 +170,9 @@ class RawDto
     /**
      * Returns vacancy company logo URL
      *
-     * @return string
+     * @return string|null
      */
-    public function getCompanyLogoUrl(): string
+    public function getCompanyLogoUrl(): ?string
     {
         return $this->companyLogoUrl;
     }
@@ -192,9 +192,9 @@ class RawDto
     /**
      * Returns vacancy company URL
      *
-     * @return string
+     * @return string|null
      */
-    public function getCompanyUrl(): string
+    public function getCompanyUrl(): ?string
     {
         return $this->companyUrl;
     }
@@ -214,9 +214,9 @@ class RawDto
     /**
      * Returns vacancy title
      *
-     * @return string
+     * @return string|null
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -236,9 +236,9 @@ class RawDto
     /**
      * Returns vacancy preview text
      *
-     * @return string
+     * @return string|null
      */
-    public function getSnippet(): string
+    public function getSnippet(): ?string
     {
         return $this->snippet;
     }
@@ -258,9 +258,9 @@ class RawDto
     /**
      * Returns vacancy text
      *
-     * @return string
+     * @return string|null
      */
-    public function getText(): string
+    public function getText(): ?string
     {
         return $this->text;
     }
@@ -280,9 +280,9 @@ class RawDto
     /**
      * Returns vacancy salary amount from
      *
-     * @return int
+     * @return int|null
      */
-    public function getSalaryFrom(): int
+    public function getSalaryFrom(): ?int
     {
         return $this->salaryFrom;
     }
@@ -302,9 +302,9 @@ class RawDto
     /**
      * Returns vacancy salary amount to
      *
-     * @return int
+     * @return int|null
      */
-    public function getSalaryTo(): int
+    public function getSalaryTo(): ?int
     {
         return $this->salaryTo;
     }
@@ -324,9 +324,9 @@ class RawDto
     /**
      * Returns vacancy publication date
      *
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getPublicationDate(): DateTime
+    public function getPublicationDate(): ?DateTime
     {
         return $this->publicationDate;
     }

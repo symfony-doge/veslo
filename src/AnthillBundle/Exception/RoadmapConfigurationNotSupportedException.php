@@ -5,7 +5,13 @@ namespace Veslo\AnthillBundle\Exception;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
+use Veslo\AnthillBundle\Vacancy\ConfigurableRoadmapInterface;
 
+/**
+ * Will be thrown if roadmap doesn't support configuration
+ *
+ * @see ConfigurableRoadmapInterface
+ */
 class RoadmapConfigurationNotSupportedException extends RuntimeException implements AnthillBundleExceptionInterface
 {
     /**

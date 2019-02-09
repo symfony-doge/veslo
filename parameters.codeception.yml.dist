@@ -1,0 +1,10 @@
+# https://codeception.com/docs/reference/Configuration
+parameters:
+    settings:
+        memory_limit: 1024M
+
+    suite:
+        acceptance:
+            web_driver:
+                url: 'http://veslo.test'
+                host: selenium-hub

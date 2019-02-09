@@ -50,9 +50,9 @@ class ParsedDto
     /**
      * Returns context of parsed vacancy data for analysis
      *
-     * @return RawDto
+     * @return RawDto|null
      */
-    public function getVacancy(): RawDto
+    public function getVacancy(): ?RawDto
     {
         return $this->vacancy;
     }
@@ -72,9 +72,9 @@ class ParsedDto
     /**
      * Returns context of executed parser
      *
-     * @return ParserDto
+     * @return ParserDto|null
      */
-    public function getParser(): ParserDto
+    public function getParser(): ?ParserDto
     {
         return $this->parser;
     }
@@ -94,9 +94,9 @@ class ParsedDto
     /**
      * Returns context of vacancy location from internet
      *
-     * @return LocationDto
+     * @return LocationDto|null
      */
-    public function getLocation(): LocationDto
+    public function getLocation(): ?LocationDto
     {
         return $this->location;
     }

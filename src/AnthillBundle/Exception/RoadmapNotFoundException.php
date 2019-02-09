@@ -6,6 +6,9 @@ use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
+/**
+ * Will be thrown if roadmap is not found
+ */
 class RoadmapNotFoundException extends RuntimeException implements AnthillBundleExceptionInterface
 {
     /**

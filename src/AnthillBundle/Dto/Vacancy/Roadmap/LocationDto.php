@@ -39,9 +39,9 @@ class LocationDto
     /**
      * Returns vacancy URL
      *
-     * @return string
+     * @return string|null
      */
-    public function getVacancyUrl(): string
+    public function getVacancyUrl(): ?string
     {
         return $this->vacancyUrl;
     }
@@ -61,9 +61,9 @@ class LocationDto
     /**
      * Returns context of roadmap by which the vacancy was found
      *
-     * @return RoadmapDto
+     * @return RoadmapDto|null
      */
-    public function getRoadmap(): RoadmapDto
+    public function getRoadmap(): ?RoadmapDto
     {
         return $this->roadmap;
     }

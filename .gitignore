@@ -1,5 +1,6 @@
 /.web-server-pid
 /app/config/parameters.yml
+/parameters.codeception.yml
 /build/
 /phpunit.xml
 
@@ -48,6 +49,7 @@
 /web/build/*
 !web/build/.gitkeep
 /web/bundles/
+/web/tests/
 .idea
 
 # docker
@@ -57,3 +59,11 @@ docker-compose.yml
 # nodejs & yarn
 /node_modules/
 yarn-error.log
+
+# tests
+!/tests/_output
+/tests/_output/*
+!tests/_output/.gitkeep
+!/tests/_support/_generated
+/tests/_support/_generated/*
+!tests/_support/_generated/.gitkeep

@@ -7,6 +7,7 @@ cp docker-compose.yml.dist docker-compose.yml
 
 mkdir -p ./var/postgresql/data
 mkdir -p ./var/redis/data
+[ ! -d web/tests ] && ln -s ../tests web/tests
 
 echo 'Fixing permissions...'
 source .env

@@ -7,9 +7,9 @@ services:
             args:
                 HOST_UID: ${HOST_UID}
                 TIMEZONE: ${TIMEZONE}
-        links:
-            - db
-            - redis
+        networks:
+            backend:
+                ipv4_address: 172.101.1.1
         depends_on:
             - db
             - redis
@@ -19,10 +19,14 @@ services:
             - ${SYMFONY_APP_PATH}/var/.yarn:/var/www/.yarn
             - ${SYMFONY_APP_PATH}/var/.yarn/cache:/var/www/.cache/yarn
             - ${SYMFONY_APP_PATH}/var/.yarn/.yarnrc:/var/www/.yarnrc
-        hostname: veslo-it
 
     db:
-        image: postgres:10.3
+        image: postgres:${POSTGRES_VERSION}
+        networks:
+            frontend:
+                ipv4_address: 172.100.3.1
+            backend:
+                ipv4_address: 172.101.3.1
         environment:
             POSTGRES_DB: ${POSTGRES_DB}
             POSTGRES_USER: ${POSTGRES_USER}
@@ -33,6 +37,11 @@ services:
 
     redis:
         build: ./docker/${APP_ENV}/redis
+        networks:
+            frontend:
+                ipv4_address: 172.100.4.1
+            backend:
+                ipv4_address: 172.101.4.1
         volumes:
             - redis_data:/data
 
@@ -41,8 +50,13 @@ services:
             context: ./docker/${APP_ENV}/nginx
             args:
                 HOST_UID: ${HOST_UID}
-        links:
-            - php-fpm
+        networks:
+            frontend:
+                ipv4_address: 172.100.1.1
+            backend:
+                ipv4_address: 172.101.7.1
+                aliases:
+                    - veslo.test
         depends_on:
             - php-fpm
         ports:
@@ -58,6 +72,9 @@ services:
             args:
                 HOST_UID: ${HOST_UID}
                 TIMEZONE: ${TIMEZONE}
+        networks:
+            frontend:
+                ipv4_address: 172.100.2.1
         volumes_from:
             - app
 
@@ -67,9 +84,9 @@ services:
             args:
                 HOST_UID: ${HOST_UID}
                 TIMEZONE: ${TIMEZONE}
-        links:
-            - db
-            - redis
+        networks:
+            backend:
+                ipv4_address: 172.101.2.1
         depends_on:
             - db
             - redis
@@ -77,6 +94,54 @@ services:
             - app
         volumes:
             - ${SYMFONY_APP_PATH}/var/logs/supervisord:/var/log/supervisord
+
+    selenium-hub:
+        image: selenium/hub:3.141.59
+        networks:
+            backend:
+                ipv4_address: 172.101.5.1
+#                aliases:
+#                    - hub
+#        ports:
+#            - "4444:4444"
+        environment:
+            GRID_MAX_SESSION: 200
+            GRID_NEW_SESSION_WAIT_TIMEOUT: -1
+            GRID_TIMEOUT: 120
+            GRID_BROWSER_TIMEOUT: 120
+
+    selenium-node-chrome:
+        image: selenium/node-chrome:3.141.59
+        networks:
+            backend:
+                ipv4_address: 172.101.6.1
+        volumes:
+            - /dev/shm:/dev/shm
+        depends_on:
+            - selenium-hub
+        environment:
+            HUB_HOST: selenium-hub
+            NODE_MAX_INSTANCES: 100
+            NODE_MAX_SESSION: 100
+        privileged: true
+
+networks:
+    # Entrypoints: nginx
+    frontend:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.100.0.0/16
+                  gateway: 172.100.0.1
+    # Entrypoints: app, supervisor (background tasks)
+    backend:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.101.0.0/16
+                  gateway: 172.101.0.1
 
 volumes:
     db_data:

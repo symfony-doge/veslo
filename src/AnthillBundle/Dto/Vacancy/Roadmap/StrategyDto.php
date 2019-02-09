@@ -29,9 +29,9 @@ class StrategyDto
     /**
      * Returns name of searching algorithm used by roadmap
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

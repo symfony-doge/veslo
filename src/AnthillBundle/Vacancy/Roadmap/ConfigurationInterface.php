@@ -28,7 +28,7 @@ interface ConfigurationInterface
     public function getParameters();
 
     /**
-     * Returns set of parameters with format, specific for strategy that using it
+     * Sets parameters with format, specific for strategy that using it
      *
      * @param mixed $parameters Set of parameters with format, specific for strategy that using it
      *

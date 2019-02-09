@@ -49,6 +49,8 @@ RUN composer --version
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
     docker-php-ext-install pdo pdo_pgsql pgsql
 
+COPY php.ini /usr/local/etc/php/conf.d/php.ini
+
 RUN usermod -u ${HOST_UID} www-data
 
 USER www-data
