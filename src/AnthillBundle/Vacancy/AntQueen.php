@@ -54,6 +54,19 @@ class AntQueen
     }
 
     /**
+     * Adds roadmap service in list of supported roadmaps
+     *
+     * @param string           $roadmapName Roadmap name
+     * @param RoadmapInterface $roadmap     Service for roadmap support
+     *
+     * @return void
+     */
+    public function addRoadmap(string $roadmapName, RoadmapInterface $roadmap): void
+    {
+        $this->_roadmaps[$roadmapName] = $roadmap;
+    }
+
+    /**
      * Returns roadmap by name or throws an exception if roadmap is not supported
      *
      * @param string $roadmapName Roadmap name
@@ -69,19 +82,6 @@ class AntQueen
         }
 
         return $this->_roadmaps[$roadmapName];
-    }
-
-    /**
-     * Adds roadmap service in list of supported roadmaps
-     *
-     * @param string           $roadmapName Roadmap name
-     * @param RoadmapInterface $roadmap     Service for roadmap support
-     *
-     * @return void
-     */
-    public function addRoadmap(string $roadmapName, RoadmapInterface $roadmap): void
-    {
-        $this->_roadmaps[$roadmapName] = $roadmap;
     }
 
     /**

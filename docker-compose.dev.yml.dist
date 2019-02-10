@@ -96,7 +96,7 @@ services:
             - ${SYMFONY_APP_PATH}/var/logs/supervisord:/var/log/supervisord
 
     selenium-hub:
-        image: selenium/hub:3.141.59
+        image: selenium/hub:${SELENIUM_HUB_VERSION}
         networks:
             backend:
                 ipv4_address: 172.101.5.1
@@ -111,7 +111,7 @@ services:
             GRID_BROWSER_TIMEOUT: 120
 
     selenium-node-chrome:
-        image: selenium/node-chrome:3.141.59
+        image: selenium/node-chrome:${SELENIUM_NODE_CHROME_VERSION}
         networks:
             backend:
                 ipv4_address: 172.101.6.1

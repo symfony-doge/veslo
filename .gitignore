@@ -48,8 +48,9 @@
 /vendor/
 /web/build/*
 !web/build/.gitkeep
-/web/bundles/
-/web/tests/
+/web/bundles/*
+!/web/bundles/.gitkeep
+/web/tests
 .idea
 
 # docker

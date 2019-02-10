@@ -2,19 +2,19 @@
 
 echo 'Stopping docker-compose services...'
 docker-compose down
-cp .env.dist .env
-cp docker-compose.yml.dist docker-compose.yml
+cp .env.dev.dist .env
+cp docker-compose.dev.yml.dist docker-compose.yml
 
 mkdir -p ./var/postgresql/data
 mkdir -p ./var/redis/data
-[ ! -d web/tests ] && ln -s ../tests web/tests
+[ ! -d web/tests ] && mkdir -p web/tests && ln -s ../../tests/_output web/tests/_output
 
 echo 'Fixing permissions...'
 source .env
 sudo chown `id -nu $HOST_UID`:www-data -R . && sudo chmod g+w -R .
 
 echo 'Copying latest configs and parameters...'
-cp ./app/config/parameters.yml.dist ./app/config/parameters.yml
+cp ./app/config/parameters.dev.yml.dist ./app/config/parameters.yml
 
 echo 'Building docker-compose services...'
 docker-compose build --force-rm
@@ -45,6 +45,6 @@ echo 'Clearing old environment...'
 docker rm `docker ps -qa --no-trunc --filter "status=exited"`
 docker rmi `docker images -f "dangling=true" -q`
 
-docker-compose run --no-deps php-fpm $DEPLOYMENT_PATH/bin/symfony_requirements
+docker-compose exec php-fpm php $DEPLOYMENT_PATH/bin/symfony_requirements
 docker-compose run --no-deps app ./bin/console security:check
-docker-compose run --no-deps php-fpm $DEPLOYMENT_PATH/bin/console about
+docker-compose exec php-fpm php $DEPLOYMENT_PATH/bin/console about
