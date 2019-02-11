@@ -29,6 +29,8 @@ class HeadHunterRepository extends BaseRepository
         $queryBuilder
             ->andWhere($queryBuilder->expr()->eq('p.configurationKey', ':configurationKey'))
             ->setParameter('configurationKey', $configurationKey)
+            //->setCacheMode(Cache::MODE_NORMAL)
+            //->setCacheable(true)
         ;
 
         return $queryBuilder->getQuery()->getSingleResult();

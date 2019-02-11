@@ -15,6 +15,18 @@ doctrine:
                     cache_provider: doctrine.orm.anthill_metadata_cache
                 query_cache_driver:
                     cache_provider: doctrine.orm.anthill_metadata_cache
+                second_level_cache:
+                    region_cache_driver:
+                        cache_provider: doctrine.orm.anthill_metadata_cache
+                    region_lifetime: 86400
+                    regions:
+                        roadmap_parameters_head_hunter:
+                            type: filelock
+                            cache_driver:
+                                type: predis
+                                host: '%app.redis.host%'
+                                port: '%app.redis.port%'
+                                database: 2
                 mappings:
                     # is_bundle is considered a legacy option, so we use "Outside of a Bundle" style
                     # all bundles can potentially be moved to project dependencies category

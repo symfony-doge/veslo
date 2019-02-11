@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="anthill_vacancy_roadmap_headhunter")
  * @ORM\Entity(repositoryClass="Veslo\AnthillBundle\Entity\Repository\Vacancy\Roadmap\Configuration\Parameters\HeadHunterRepository")
+ * @ORM\Cache(usage="READ_WRITE", region="roadmap_parameters_head_hunter")
  */
 class HeadHunter
 {
