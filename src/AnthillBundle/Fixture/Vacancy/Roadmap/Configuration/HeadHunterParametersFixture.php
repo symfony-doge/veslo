@@ -1,0 +1,82 @@
+<?php
+
+namespace Veslo\AnthillBundle\Fixture\Vacancy\Roadmap\Configuration;
+
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+use Nelmio\Alice\FileLoaderInterface;
+use Symfony\Component\Config\FileLocatorInterface;
+use Veslo\AnthillBundle\Enum\Fixture\Group as AnthillGroup;
+use Veslo\AppBundle\Enum\Fixture\Group as ApplicationGroup;
+
+/**
+ * Configuration parameters fixture for HeadHunter vacancy searching algorithms
+ */
+class HeadHunterParametersFixture extends Fixture implements FixtureGroupInterface
+{
+    /**
+     * Locates file by physical or logic '@' path
+     *
+     * @var FileLocatorInterface
+     */
+    private $fileLocator;
+
+    /**
+     * Loads a fixture files
+     *
+     * @var FileLoaderInterface
+     */
+    private $fixtureLoader;
+
+    /**
+     * Fixture path to load
+     *
+     * @var string
+     */
+    private $fixturePath;
+
+    /**
+     * HeadHunterParametersFixture constructor.
+     *
+     * @param FileLocatorInterface $fileLocator
+     * @param FileLoaderInterface  $fixtureLoader Loads a fixture files
+     * @param string               $fixturePath   Fixture path to load
+     */
+    public function __construct(
+        FileLocatorInterface $fileLocator,
+        FileLoaderInterface $fixtureLoader,
+        string $fixturePath
+    ) {
+        $this->fileLocator   = $fileLocator;
+        $this->fixtureLoader = $fixtureLoader;
+        $this->fixturePath   = $fixturePath;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function load(ObjectManager $manager)
+    {
+        $fixtureRealPath = $this->fileLocator->locate($this->fixturePath);
+        $objectSet       = $this->fixtureLoader->loadFile($fixtureRealPath);
+        $entities        = $objectSet->getObjects();
+
+        foreach ($entities as $entity) {
+            $manager->persist($entity);
+        }
+
+        $manager->flush();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getGroups(): array
+    {
+        return [
+            AnthillGroup::ROADMAP_CONFIGURATION_PARAMETERS,
+            ApplicationGroup::PRODUCTION,
+        ];
+    }
+}

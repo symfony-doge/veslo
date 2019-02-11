@@ -2,7 +2,7 @@
 
 namespace Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters;
 
-use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,6 +14,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class HeadHunter
 {
+    /**
+     * DateTime format
+     *
+     * @const string
+     */
+    public const DATETIME_FORMAT = 'Y-m-d\TH:i:s';
+
     /**
      * Parameters record identifier
      *
@@ -55,7 +62,7 @@ class HeadHunter
     /**
      * Publication date from
      *
-     * @var DateTime
+     * @var DateTimeInterface
      *
      * @ORM\Column(name="date_from", type="datetime")
      */
@@ -64,7 +71,7 @@ class HeadHunter
     /**
      * Publication date to
      *
-     * @var DateTime
+     * @var DateTimeInterface
      *
      * @ORM\Column(name="date_to", type="datetime")
      */
@@ -118,6 +125,18 @@ class HeadHunter
     }
 
     /**
+     * Sets configuration key to which parameters belongs to
+     *
+     * @param string $configurationKey Configuration key to which parameters belongs to
+     *
+     * @return void
+     */
+    public function setConfigurationKey(string $configurationKey): void
+    {
+        $this->configurationKey = $configurationKey;
+    }
+
+    /**
      * Returns search query text
      *
      * @return string
@@ -125,6 +144,18 @@ class HeadHunter
     public function getText(): string
     {
         return $this->text;
+    }
+
+    /**
+     * Sets search query text
+     *
+     * @param string $text Search query text
+     *
+     * @return void
+     */
+    public function setText(string $text): void
+    {
+        $this->text = $text;
     }
 
     /**
@@ -138,11 +169,23 @@ class HeadHunter
     }
 
     /**
+     * Sets vacancy area
+     *
+     * @param string $area Vacancy area
+     *
+     * @return void
+     */
+    public function setArea(string $area): void
+    {
+        $this->area = $area;
+    }
+
+    /**
      * Returns publication date "from" part for searching vacancies within range
      *
-     * @return DateTime
+     * @return DateTimeInterface
      */
-    public function getDateFrom(): DateTime
+    public function getDateFrom(): DateTimeInterface
     {
         return $this->dateFrom;
     }
@@ -150,11 +193,11 @@ class HeadHunter
     /**
      * Sets publication date from
      *
-     * @param DateTime $dateFrom Publication date "from" part for searching vacancies within range
+     * @param DateTimeInterface $dateFrom Publication date "from" part for searching vacancies within range
      *
      * @return void
      */
-    public function setDateFrom(DateTime $dateFrom): void
+    public function setDateFrom(DateTimeInterface $dateFrom): void
     {
         $this->dateFrom = $dateFrom;
     }
@@ -162,9 +205,9 @@ class HeadHunter
     /**
      * Returns publication date "to" part for searching vacancies within range
      *
-     * @return DateTime
+     * @return DateTimeInterface
      */
-    public function getDateTo(): DateTime
+    public function getDateTo(): DateTimeInterface
     {
         return $this->dateTo;
     }
@@ -172,11 +215,11 @@ class HeadHunter
     /**
      * Sets publication date to
      *
-     * @param DateTime $dateTo Publication date "to" part for searching vacancies within range
+     * @param DateTimeInterface $dateTo Publication date "to" part for searching vacancies within range
      *
      * @return void
      */
-    public function setDateTo(DateTime $dateTo): void
+    public function setDateTo(DateTimeInterface $dateTo): void
     {
         $this->dateTo = $dateTo;
     }
@@ -192,6 +235,18 @@ class HeadHunter
     }
 
     /**
+     * Sets order by criteria
+     *
+     * @param string $orderBy Order by criteria
+     *
+     * @return void
+     */
+    public function setOrderBy(string $orderBy): void
+    {
+        $this->orderBy = $orderBy;
+    }
+
+    /**
      * Returns number of vacancies to fetch for a single page
      *
      * @return int
@@ -199,6 +254,18 @@ class HeadHunter
     public function getPerPage(): int
     {
         return $this->perPage;
+    }
+
+    /**
+     * Sets number of vacancies to fetch for a single page
+     *
+     * @param int $perPage Number of vacancies to fetch for a single page
+     *
+     * @return void
+     */
+    public function setPerPage(int $perPage): void
+    {
+        $this->perPage = $perPage;
     }
 
     /**

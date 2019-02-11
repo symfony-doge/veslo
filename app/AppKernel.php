@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle(),
             new Veslo\AppBundle\VesloAppBundle(),
             new Veslo\AnthillBundle\VesloAnthillBundle(),
             new Veslo\SanityBundle\VesloSanityBundle(),

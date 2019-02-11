@@ -1,0 +1,10 @@
+Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters\HeadHunter:
+    php:
+        configurationKey: 'php'
+        text: 'php'
+        area: 0
+        dateFrom: <(new DateTime('today'))>
+        dateTo: <(new DateTime('tomorrow'))>
+        orderBy: 'publication_time'
+        perPage: 1
+        received: 0

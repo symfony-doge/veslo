@@ -1,0 +1,9 @@
+services:
+    veslo.anthill.fixture.vacancy.roadmap.configuration.head_hunter_parameters_fixture:
+        class: Veslo\AnthillBundle\Fixture\Vacancy\Roadmap\Configuration\HeadHunterParametersFixture
+        arguments:
+            - '@file_locator'
+            - '@nelmio_alice.file_loader.simple'
+            - '@@VesloAnthillBundle/Resources/fixtures/roadmap/head_hunter_parameters.yml'
+        tags:
+            - !php/const Doctrine\Bundle\FixturesBundle\DependencyInjection\CompilerPass\FixturesCompilerPass::FIXTURE_TAG
