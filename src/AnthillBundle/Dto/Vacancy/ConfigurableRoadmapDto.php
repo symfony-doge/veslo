@@ -32,6 +32,16 @@ class ConfigurableRoadmapDto
     private $roadmap;
 
     /**
+     * ConfigurableRoadmapDto constructor.
+     *
+     * @param RoadmapDto|null $roadmap Base roadmap data
+     */
+    public function __construct(?RoadmapDto $roadmap = null)
+    {
+        $this->roadmap = $roadmap;
+    }
+
+    /**
      * Sets context of searching algorithm
      *
      * @param StrategyDto $strategy

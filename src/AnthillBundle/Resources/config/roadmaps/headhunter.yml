@@ -15,7 +15,7 @@ services:
 
     # TODO: Parsers
 #    veslo.anthill.vacancy.roadmap.parser.head_hunter.api.version20190204:
-#        strategyName="api.version20190204"
+#        strategyName="Strategy\HeadHunter\Api\Version20190204"
 
     # Configurations
     veslo.anthill.vacancy.roadmap.configuration.head_hunter:

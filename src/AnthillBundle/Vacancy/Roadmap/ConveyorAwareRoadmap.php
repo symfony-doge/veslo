@@ -2,8 +2,12 @@
 
 namespace Veslo\AnthillBundle\Vacancy\Roadmap;
 
+use Veslo\AnthillBundle\Dto\Vacancy\ConfigurableRoadmapDto;
+use Veslo\AnthillBundle\Dto\Vacancy\Roadmap\ConfigurationDto;
 use Veslo\AnthillBundle\Dto\Vacancy\Roadmap\LocationDto;
+use Veslo\AnthillBundle\Dto\Vacancy\Roadmap\StrategyDto;
 use Veslo\AnthillBundle\Dto\Vacancy\RoadmapDto;
+use Veslo\AnthillBundle\Vacancy\ConfigurableRoadmapInterface;
 use Veslo\AnthillBundle\Vacancy\RoadmapInterface;
 
 /**
@@ -67,10 +71,43 @@ class ConveyorAwareRoadmap
         $roadmapDto = new RoadmapDto();
         $roadmapDto->setName($this->name);
 
+        if ($this->roadmap instanceof ConfigurableRoadmapInterface) {
+            $roadmapDto = $this->upgradeToConfigurableRoadmapDto($roadmapDto);
+        }
+
         $locationDto = new LocationDto();
         $locationDto->setRoadmap($roadmapDto);
         $locationDto->setVacancyUrl($vacancyUrl);
 
         return $locationDto;
+    }
+
+    /**
+     * Builds and returns configurable roadmap dto by specified base roadmap dto
+     *
+     * @param RoadmapDto $roadmapDto Base roadmap dto
+     *
+     * @return ConfigurableRoadmapDto
+     */
+    private function upgradeToConfigurableRoadmapDto(RoadmapDto $roadmapDto): ConfigurableRoadmapDto
+    {
+        $configurableRoadmapDto = new ConfigurableRoadmapDto($roadmapDto);
+
+        $strategy     = $this->roadmap->getStrategy();
+        $strategyName = substr(get_class($strategy), stripos(get_class($strategy), 'Strategy\\'));
+
+        $strategyDto = new StrategyDto();
+        $strategyDto->setName($strategyName);
+        $configurableRoadmapDto->setStrategy($strategyDto);
+
+        $configuration    = $this->roadmap->getConfiguration();
+        $parameters       = $configuration->getParameters();
+        $configurationKey = $parameters['configurationKey'];    // TODO: ParametersInterface::getConfigurationKey
+
+        $configurationDto = new ConfigurationDto();
+        $configurationDto->setKey($configurationKey);
+        $configurableRoadmapDto->setConfiguration($configurationDto);
+
+        return $configurableRoadmapDto;
     }
 }
