@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Veslo\AnthillBundle\Command\Roadmap;
 
 use Symfony\Component\Console\Command\Command;

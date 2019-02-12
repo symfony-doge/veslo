@@ -1,6 +1,7 @@
 Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters\HeadHunter:
     php:
         configurationKey: 'php'
+        url: 'https://api.hh.ru/vacancies'
         text: 'php'
         area: 0
         dateFrom: <(new DateTime('today'))>

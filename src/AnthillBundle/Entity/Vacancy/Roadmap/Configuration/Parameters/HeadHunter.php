@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Veslo\AnthillBundle\Vacancy\Roadmap\Configuration\ParametersInterface;
 
 /**
  * Parameters for vacancy searching on HeadHunter website
@@ -12,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Veslo\AnthillBundle\Entity\Repository\Vacancy\Roadmap\Configuration\Parameters\HeadHunterRepository")
  * @ORM\Cache(usage="READ_WRITE", region="roadmap_parameters_head_hunter")
  */
-class HeadHunter
+class HeadHunter implements ParametersInterface
 {
     /**
      * DateTime format
@@ -42,6 +45,15 @@ class HeadHunter
     private $configurationKey;
 
     /**
+     * Vacancy website URL
+     *
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=255)
+     */
+    private $url;
+
+    /**
      * Search query text
      *
      * @var string
@@ -53,7 +65,7 @@ class HeadHunter
     /**
      * Vacancy area
      *
-     * @var string
+     * @var int
      *
      * @ORM\Column(name="area", type="integer")
      */
@@ -115,9 +127,7 @@ class HeadHunter
     }
 
     /**
-     * Returns roadmap configuration key to which parameters belongs to
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getConfigurationKey(): string
     {
@@ -134,6 +144,28 @@ class HeadHunter
     public function setConfigurationKey(string $configurationKey): void
     {
         $this->configurationKey = $configurationKey;
+    }
+
+    /**
+     * Returns vacancy website URL
+     *
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    /**
+     * Sets vacancy website URL
+     *
+     * @param string $url Website URL
+     *
+     * @return void
+     */
+    public function setUrl(string $url): void
+    {
+        $this->url = $url;
     }
 
     /**
@@ -161,9 +193,9 @@ class HeadHunter
     /**
      * Returns vacancy area
      *
-     * @return string
+     * @return int
      */
-    public function getArea(): string
+    public function getArea(): int
     {
         return $this->area;
     }
@@ -171,11 +203,11 @@ class HeadHunter
     /**
      * Sets vacancy area
      *
-     * @param string $area Vacancy area
+     * @param int $area Vacancy area
      *
      * @return void
      */
-    public function setArea(string $area): void
+    public function setArea(int $area): void
     {
         $this->area = $area;
     }
@@ -188,6 +220,20 @@ class HeadHunter
     public function getDateFrom(): DateTimeInterface
     {
         return $this->dateFrom;
+    }
+
+    /**
+     * Returns publication date "from" formatted for query argument
+     *
+     * @return string
+     */
+    public function getDateFromFormatted(): string
+    {
+        if (!$this->dateFrom instanceof DateTimeInterface) {
+            return '';
+        }
+
+        return $this->dateFrom->format(self::DATETIME_FORMAT);
     }
 
     /**
@@ -210,6 +256,20 @@ class HeadHunter
     public function getDateTo(): DateTimeInterface
     {
         return $this->dateTo;
+    }
+
+    /**
+     * Returns publication date "to" formatted for query argument
+     *
+     * @return string
+     */
+    public function getDateToFormatted(): string
+    {
+        if (!$this->dateTo instanceof DateTimeInterface) {
+            return '';
+        }
+
+        return $this->dateTo->format(self::DATETIME_FORMAT);
     }
 
     /**

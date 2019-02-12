@@ -1,8 +1,8 @@
 <?php
 
-namespace Veslo\AnthillBundle\Dto\Vacancy\Roadmap;
+declare(strict_types=1);
 
-use Veslo\AnthillBundle\Dto\Vacancy\RoadmapDto;
+namespace Veslo\AnthillBundle\Dto\Vacancy\Roadmap;
 
 /**
  * Context of vacancy location from internet
@@ -20,14 +20,14 @@ class LocationDto
     /**
      * Context of roadmap by which the vacancy was found
      *
-     * @var RoadmapDto
+     * @var object
      */
     private $roadmap;
 
     /**
      * Sets vacancy URL
      *
-     * @param string $vacancyUrl
+     * @param string $vacancyUrl Vacancy URL for parsing
      *
      * @return void
      */
@@ -49,11 +49,11 @@ class LocationDto
     /**
      * Sets context of roadmap by which the vacancy was found
      *
-     * @param RoadmapDto $roadmap
+     * @param object $roadmap Context of roadmap by which the vacancy was found
      *
      * @return void
      */
-    public function setRoadmap(RoadmapDto $roadmap): void
+    public function setRoadmap(object $roadmap): void
     {
         $this->roadmap = $roadmap;
     }
@@ -61,9 +61,9 @@ class LocationDto
     /**
      * Returns context of roadmap by which the vacancy was found
      *
-     * @return RoadmapDto|null
+     * @return object|null
      */
-    public function getRoadmap(): ?RoadmapDto
+    public function getRoadmap(): ?object
     {
         return $this->roadmap;
     }

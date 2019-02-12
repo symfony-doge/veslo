@@ -1,15 +1,18 @@
 <?php
 
-namespace Veslo\AnthillBundle\Exception;
+declare(strict_types=1);
+
+namespace Veslo\AnthillBundle\Exception\Roadmap;
 
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
+use Veslo\AnthillBundle\Exception\AnthillBundleExceptionInterface;
 
 /**
  * Will be thrown if configuration for roadmap is not found
  */
-class RoadmapConfigurationNotFoundException extends RuntimeException implements AnthillBundleExceptionInterface
+class ConfigurationNotFoundException extends RuntimeException implements AnthillBundleExceptionInterface
 {
     /**
      * Default error message

@@ -1,9 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Veslo\AnthillBundle\Vacancy\Roadmap;
+
+use Veslo\AnthillBundle\Exception\Roadmap\StrategyException;
 
 /**
  * Represents vacancy searching algorithm for specific website-provider
+ *
+ * Note: each strategy is an immutable algorithm version, you should not change it after deployment
+ * due to conveyor processing; create a new strategy class if you need to implement modifications
  */
 interface StrategyInterface
 {
@@ -12,7 +19,9 @@ interface StrategyInterface
      *
      * @param ConfigurationInterface $configuration Roadmap configuration with parameters for searching algorithm
      *
-     * @return string
+     * @return string|null
+     *
+     * @throws StrategyException
      */
     public function lookup(ConfigurationInterface $configuration): ?string;
 

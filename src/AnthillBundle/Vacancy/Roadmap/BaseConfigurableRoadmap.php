@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Veslo\AnthillBundle\Vacancy\Roadmap;
 
 use Veslo\AnthillBundle\Vacancy\ConfigurableRoadmapInterface;

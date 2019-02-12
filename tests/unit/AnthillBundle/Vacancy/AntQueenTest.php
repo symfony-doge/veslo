@@ -5,7 +5,7 @@ namespace Veslo;
 use Codeception\AssertThrows;
 use Codeception\Specify;
 use Codeception\Test\Unit;
-use Veslo\AnthillBundle\Exception\RoadmapConfigurationNotSupportedException;
+use Veslo\AnthillBundle\Exception\Roadmap\ConfigurationNotSupportedException;
 use Veslo\AnthillBundle\Exception\RoadmapNotFoundException;
 use Veslo\AnthillBundle\Vacancy\AntQueen;
 use Veslo\AnthillBundle\Vacancy\ConfigurableRoadmapInterface;
@@ -113,7 +113,7 @@ class AntQueenTest extends Unit
                 $simpleRoadmap = $this->makeEmpty(RoadmapInterface::class);
                 $this->antQueen->addRoadmap('simpleRoadmap', $simpleRoadmap);
 
-                $this->assertThrows(RoadmapConfigurationNotSupportedException::class, function() {
+                $this->assertThrows(ConfigurationNotSupportedException::class, function() {
                     try {
                         $this->antQueen->buildRoadmap('simpleRoadmap', 'notExpectedKeyForConfiguration');
                     } catch (RoadmapNotFoundException $e) {

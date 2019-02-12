@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Veslo\AnthillBundle\Fixture\Vacancy\Roadmap\Configuration;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -39,7 +41,7 @@ class HeadHunterParametersFixture extends Fixture implements FixtureGroupInterfa
     /**
      * HeadHunterParametersFixture constructor.
      *
-     * @param FileLocatorInterface $fileLocator
+     * @param FileLocatorInterface $fileLocator   Locates file by physical or logic '@' path
      * @param FileLoaderInterface  $fixtureLoader Loads a fixture files
      * @param string               $fixturePath   Fixture path to load
      */

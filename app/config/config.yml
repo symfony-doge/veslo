@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: doctrine.yml }
     - { resource: services.yml }
+    - { resource: bundles/veslo_app.yml }
     - { resource: bundles/veslo_anthill.yml }
     - { resource: bundles/veslo_sanity.yml }
 

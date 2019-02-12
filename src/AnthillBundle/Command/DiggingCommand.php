@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Veslo\AnthillBundle\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -84,9 +86,9 @@ class DiggingCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $roadmapName      = $input->getArgument('roadmap');
-        $configurationKey = $input->getArgument('configuration');
-        $iterations       = $input->getOption('iterations');
+        $roadmapName      = (string) $input->getArgument('roadmap');
+        $configurationKey = (string) $input->getArgument('configuration');
+        $iterations       = (int) $input->getOption('iterations');
 
         $roadmap = $this->antQueen->buildRoadmap($roadmapName, $configurationKey);
 

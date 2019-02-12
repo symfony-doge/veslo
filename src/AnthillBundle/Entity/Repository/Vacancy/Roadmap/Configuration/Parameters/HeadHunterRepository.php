@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Veslo\AnthillBundle\Entity\Repository\Vacancy\Roadmap\Configuration\Parameters;
 
+use Doctrine\ORM\Cache;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters\HeadHunter as HeadHunterParameters;
@@ -29,8 +32,8 @@ class HeadHunterRepository extends BaseRepository
         $queryBuilder
             ->andWhere($queryBuilder->expr()->eq('p.configurationKey', ':configurationKey'))
             ->setParameter('configurationKey', $configurationKey)
-            //->setCacheMode(Cache::MODE_NORMAL)
-            //->setCacheable(true)
+            ->setCacheMode(Cache::MODE_NORMAL)
+            ->setCacheable(true)
         ;
 
         return $queryBuilder->getQuery()->getSingleResult();

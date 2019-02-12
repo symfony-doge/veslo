@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Veslo\AnthillBundle\Vacancy\Roadmap\Configuration;
 
 use Veslo\AnthillBundle\Entity\Repository\Vacancy\Roadmap\Configuration\Parameters\HeadHunterRepository as HeadHunterParametersRepository;
 use Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters\HeadHunter as HeadHunterParameters;
-use Veslo\AnthillBundle\Exception\RoadmapConfigurationNotFoundException;
+use Veslo\AnthillBundle\Exception\Roadmap\ConfigurationNotFoundException;
 use Veslo\AnthillBundle\Vacancy\Roadmap\ConfigurationInterface;
 
 /**
@@ -48,7 +50,7 @@ class HeadHunter implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getParameters()
+    public function getParameters(): ParametersInterface
     {
         $this->ensureParameters();
 
@@ -58,7 +60,7 @@ class HeadHunter implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function setParameters($parameters): void
+    public function setParameters(ParametersInterface $parameters): void
     {
         $this->_parameters = $parameters;
 
@@ -83,7 +85,7 @@ class HeadHunter implements ConfigurationInterface
     private function ensureParameters(): void
     {
         if (!$this->_parameters instanceof HeadHunterParameters) {
-            throw new RoadmapConfigurationNotFoundException();
+            throw new ConfigurationNotFoundException();
         }
     }
 }

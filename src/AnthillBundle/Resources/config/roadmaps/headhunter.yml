@@ -12,6 +12,10 @@ services:
     # Search strategies
     veslo.anthill.vacancy.roadmap.strategy.head_hunter.api.version20190204:
         class: Veslo\AnthillBundle\Vacancy\Roadmap\Strategy\HeadHunter\Api\Version20190204
+        arguments:
+            - '@logger'
+            - '@veslo.app.http_client'
+            - '@serializer.encoder.json'
 
     # TODO: Parsers
 #    veslo.anthill.vacancy.roadmap.parser.head_hunter.api.version20190204:

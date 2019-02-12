@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Veslo\AnthillBundle\Vacancy;
 
-use Veslo\AnthillBundle\Exception\RoadmapConfigurationNotSupportedException;
+use Veslo\AnthillBundle\Exception\Roadmap\ConfigurationNotSupportedException;
 use Veslo\AnthillBundle\Exception\RoadmapNotFoundException;
 use Veslo\AnthillBundle\Vacancy\Roadmap\ConveyorAwareRoadmap;
 
@@ -92,7 +94,7 @@ class AntQueen
      *
      * @return ConveyorAwareRoadmap
      *
-     * @throws RoadmapConfigurationNotSupportedException
+     * @throws ConfigurationNotSupportedException
      */
     public function buildRoadmap(string $roadmapName, ?string $configurationKey = null): ConveyorAwareRoadmap
     {
@@ -100,7 +102,7 @@ class AntQueen
 
         if (!empty($configurationKey)) {
             if (!$roadmap instanceof ConfigurableRoadmapInterface) {
-                throw RoadmapConfigurationNotSupportedException::withName($roadmapName);
+                throw ConfigurationNotSupportedException::withName($roadmapName);
             }
 
             $configuration = $roadmap->getConfiguration();

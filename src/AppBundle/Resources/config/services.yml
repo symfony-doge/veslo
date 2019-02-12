@@ -1,1 +1,6 @@
 services:
+    veslo.app.http_client:
+        class: GuzzleHttp\Client
+        arguments:
+            - headers:
+                  User-Agent: '%veslo.app.http_client.headers.user_agent%'

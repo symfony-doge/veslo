@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Veslo\AnthillBundle\Vacancy\Roadmap;
+
+use Veslo\AnthillBundle\Vacancy\Roadmap\Configuration\ParametersInterface;
 
 /**
  * Encapsulates HOW roadmap parameters are stored
@@ -25,16 +29,16 @@ interface ConfigurationInterface
      *
      * @return mixed
      */
-    public function getParameters();
+    public function getParameters(): ParametersInterface;
 
     /**
      * Sets parameters with format, specific for strategy that using it
      *
-     * @param mixed $parameters Set of parameters with format, specific for strategy that using it
+     * @param ParametersInterface $parameters Set of parameters with format, specific for strategy that using it
      *
      * @return void
      */
-    public function setParameters($parameters): void;
+    public function setParameters(ParametersInterface $parameters): void;
 
     /**
      * Saves configuration for last applied key

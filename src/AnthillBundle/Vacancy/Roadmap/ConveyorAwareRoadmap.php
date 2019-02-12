@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Veslo\AnthillBundle\Vacancy\Roadmap;
 
 use Veslo\AnthillBundle\Dto\Vacancy\ConfigurableRoadmapDto;
@@ -100,9 +102,11 @@ class ConveyorAwareRoadmap
         $strategyDto->setName($strategyName);
         $configurableRoadmapDto->setStrategy($strategyDto);
 
-        $configuration    = $this->roadmap->getConfiguration();
+        /** @var ConfigurationInterface $configuration */
+        $configuration = $this->roadmap->getConfiguration();
+
         $parameters       = $configuration->getParameters();
-        $configurationKey = $parameters['configurationKey'];    // TODO: ParametersInterface::getConfigurationKey
+        $configurationKey = $parameters->getConfigurationKey();
 
         $configurationDto = new ConfigurationDto();
         $configurationDto->setKey($configurationKey);

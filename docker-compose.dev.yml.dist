@@ -135,6 +135,7 @@ networks:
                 - subnet: 172.100.0.0/16
                   gateway: 172.100.0.1
     # Entrypoints: app, supervisor (background tasks)
+    # docker-compose run --no-deps app php -dxdebug.remote_autostart=1 -dxdebug.remote_host=172.101.0.1 bin/console
     backend:
         driver: bridge
         ipam:

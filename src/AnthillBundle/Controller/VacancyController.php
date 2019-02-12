@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Veslo\AnthillBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;

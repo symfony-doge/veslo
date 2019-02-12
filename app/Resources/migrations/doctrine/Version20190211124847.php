@@ -25,6 +25,7 @@ final class Version20190211124847 extends AbstractMigration
             'CREATE TABLE anthill_vacancy_roadmap_headhunter (
                 id INT NOT NULL, 
                 configuration_key VARCHAR(255) NOT NULL, 
+                url VARCHAR(255) NOT NULL, 
                 text VARCHAR(255) NOT NULL, 
                 area INT NOT NULL, 
                 date_from TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, 

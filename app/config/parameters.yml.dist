@@ -19,3 +19,5 @@ parameters:
     # Cache
     app.redis.host: '%env(string:REDIS_HOST)%'
     app.redis.port: '%env(int:REDIS_PORT)%'
+
+    app.http_client.headers.user_agent: 'Veslo/dev-master (https://github.com/symfony-doge/veslo)'

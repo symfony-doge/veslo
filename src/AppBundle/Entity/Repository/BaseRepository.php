@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Veslo\AppBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Doctrine\ORM\ORMInvalidArgumentException;
 use Veslo\AppBundle\Exception\EntityNotFoundException;
 
 /**

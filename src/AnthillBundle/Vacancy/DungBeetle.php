@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Veslo\AnthillBundle\Vacancy;
 
 use Exception;
@@ -85,11 +87,8 @@ class DungBeetle
      */
     private function digIteration(ConveyorAwareRoadmap $roadmap): void
     {
-        // TODO: digging hard...
-        sleep(1);
-
         if (!$roadmap->hasNext()) {
-            $this->logger->log('info', 'No more vacancies to parse.', ['roadmap' => $roadmap]);
+            $this->logger->log('info', 'No more vacancies in roadmap.');
 
             return;
         }

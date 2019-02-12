@@ -1,1 +1,4 @@
 veslo_app:
+    http_client:
+        headers:
+            user_agent: '%app.http_client.headers.user_agent%'
