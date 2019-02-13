@@ -152,6 +152,7 @@ class Version20190213 implements StrategyInterface
         $parameters->setDateFrom($today);
         $tomorrow = new DateTime('tomorrow');
         $parameters->setDateTo($tomorrow);
+        $parameters->setReceived(0);
 
         $configuration->save();
     }
@@ -306,9 +307,9 @@ class Version20190213 implements StrategyInterface
      * Encapsulates ascending order managing logic
      *
      * @param ConfigurationInterface $configuration Roadmap configuration with parameters for searching algorithm
-     * @param int                    $found         Freshly vacancies total count for specified search criteria
+     * @param int                    $found         Freshly total count of vacancies for specified search criteria
      *
-     * @return int|null Page number in 0..N range
+     * @return int|null Page number in 0..N range or null if no new vacancies
      */
     private function determinePage(ConfigurationInterface $configuration, int $found): ?int
     {
