@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Vacancy\Roadmap\Strategy\HeadHunter\Api;
 
+use DateTime;
+use Exception;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
@@ -16,8 +18,12 @@ use Veslo\AnthillBundle\Vacancy\Roadmap\StrategyInterface;
 /**
  * Represents vacancy searching algorithm for HeadHunter site based on public API
  * https://github.com/hhru/api/blob/master/docs/general.md
+ *
+ * The problem is that we can't sort vacancies by publication_date in ascending order. Only in descending.
+ * This algorithm performs vacancy fetching in ascending order by managing additional parameter - received count.
+ * So it provides vacancy fetching in real time by their actual publication order.
  */
-class Version20190204 implements StrategyInterface
+class Version20190213 implements StrategyInterface
 {
     /**
      * Logger
@@ -48,21 +54,21 @@ class Version20190204 implements StrategyInterface
     private $_last_response;
 
     /**
-     * Last resolved vacancy URL indexed by;
+     * Last resolved vacancy URL indexed by configuration key using in search
      *
      * @var array
      */
     private $_last_resolved_url;
 
     /**
-     * Maximum depth for internal solutions based on recursion.
+     * Maximum depth for internal solutions based on recursion
      *
      * @var int
      */
     private $_recursion_calls_available = 3;
 
     /**
-     * Version20190204 constructor.
+     * Version20190213 constructor.
      *
      * @param LoggerInterface  $logger     Logger
      * @param ClientInterface  $httpClient Sends http requests
@@ -91,7 +97,7 @@ class Version20190204 implements StrategyInterface
             return $this->_last_resolved_url[$configurationKey];
         }
 
-        // TODO: adjust dates (and received) for current day if needed.
+        $this->adjustDatesToCurrentDay($configuration);
 
         $found = $this->howMany($parameters);
         $page  = $this->determinePage($configuration, $found);
@@ -122,6 +128,32 @@ class Version20190204 implements StrategyInterface
 
         $configurationKey = $parameters->getConfigurationKey();
         $this->_last_resolved_url[$configurationKey] = null;
+    }
+
+    /**
+     * Sets searching publication date range to current day if it is not valid
+     *
+     * @param ConfigurationInterface $configuration Roadmap configuration with parameters for searching algorithm
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
+    private function adjustDatesToCurrentDay(ConfigurationInterface $configuration): void
+    {
+        /** @var HeadHunterParameters $parameters */
+        $parameters = $configuration->getParameters();
+        $today      = new DateTime('today');
+
+        if ($parameters->getDateFrom() == $today) {
+            return;
+        }
+
+        $parameters->setDateFrom($today);
+        $tomorrow = new DateTime('tomorrow');
+        $parameters->setDateTo($tomorrow);
+
+        $configuration->save();
     }
 
     /**
@@ -269,10 +301,18 @@ class Version20190204 implements StrategyInterface
         throw StrategyException::unexpectedResponse('items.0.url');
     }
 
-    // TODO: descr
+    /**
+     * Returns page for next lookup
+     * Encapsulates ascending order managing logic
+     *
+     * @param ConfigurationInterface $configuration Roadmap configuration with parameters for searching algorithm
+     * @param int                    $found         Freshly vacancies total count for specified search criteria
+     *
+     * @return int|null Page number in 0..N range
+     */
     private function determinePage(ConfigurationInterface $configuration, int $found): ?int
     {
-        // HeadHunter can potentially remove or hide some vacancies.
+        // Provider can potentially remove or hide some vacancies.
         $received = $this->normalizeReceived($configuration, $found);
 
         // No new vacancies.
@@ -283,8 +323,16 @@ class Version20190204 implements StrategyInterface
         return $found - $received - 1;
     }
 
-    // TODO: descr
-    private function normalizeReceived(ConfigurationInterface $configuration, int $found)
+    /**
+     * Returns received vacancies count synchronized with actual total count on website by search criteria
+     * Also guarantees that page number cannot fall to less than 0 during page determination
+     *
+     * @param ConfigurationInterface $configuration Roadmap configuration with parameters for searching algorithm
+     * @param int                    $found         Vacancies total count for specified search criteria
+     *
+     * @return int
+     */
+    private function normalizeReceived(ConfigurationInterface $configuration, int $found): int
     {
         /** @var HeadHunterParameters $parameters */
         $parameters = $configuration->getParameters();

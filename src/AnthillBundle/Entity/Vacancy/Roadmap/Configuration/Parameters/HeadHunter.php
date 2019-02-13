@@ -7,6 +7,7 @@ namespace Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Veslo\AnthillBundle\Vacancy\Roadmap\Configuration\ParametersInterface;
+use Veslo\AnthillBundle\Vacancy\Roadmap\Strategy\HeadHunter\Api\Version20190213 as HeadHunterApiStrategy;
 
 /**
  * Parameters for vacancy searching on HeadHunter website
@@ -109,10 +110,13 @@ class HeadHunter implements ParametersInterface
 
     /**
      * Vacancies received during specified publication date range
+     * This value cannot be used in any real statistics because it can be changed in algorithms
      *
      * @var int
      *
      * @ORM\Column(name="received", type="integer")
+     *
+     * @see HeadHunterApiStrategy::determinePage()
      */
     private $received;
 

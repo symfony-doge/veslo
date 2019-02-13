@@ -18,7 +18,7 @@ use Veslo\AppBundle\Enum\Fixture\Group as ApplicationGroup;
 class HeadHunterParametersFixture extends Fixture implements FixtureGroupInterface
 {
     /**
-     * Locates file by physical or logic '@' path
+     * Locates file by physical or logical '@' path
      *
      * @var FileLocatorInterface
      */
