@@ -34,7 +34,7 @@ class StrategyException extends RuntimeException implements AnthillBundleExcepti
      *
      * @const string
      */
-    public const MESSAGE_PROVIDER_IS_BUSY = 'Vacancy provider is too busy. We should try again later.';
+    public const MESSAGE_PROVIDER_IS_UNSTABLE = "Vacancy provider '{providerUri}' is unstable. Lets try again later.";
 
     /**
      * {@inheritdoc}
@@ -76,10 +76,14 @@ class StrategyException extends RuntimeException implements AnthillBundleExcepti
     /**
      * Returns exception in context of unstable response from vacancy provider
      *
+     * @param string $providerUri Vacancy provider's URI
+     *
      * @return StrategyException
      */
-    public static function providerIsBusy(): StrategyException
+    public static function providerIsUnstable(string $providerUri): StrategyException
     {
-        return new static(self::MESSAGE_PROVIDER_IS_BUSY);
+        $message = str_replace('{providerUri}', $providerUri, self::MESSAGE_PROVIDER_IS_UNSTABLE);
+
+        return new static($message);
     }
 }

@@ -10,6 +10,6 @@ services:
         class: Veslo\AnthillBundle\Command\DiggingCommand
         arguments:
             - '@veslo.anthill.vacancy.ant_queen'
-            - '@veslo.anthill.vacancy.dung_beetle'
+            - '@veslo.anthill.vacancy.digger.cranky_dung_beetle'
         tags:
             - { name: 'console.command', command: 'veslo:anthill:digging' }

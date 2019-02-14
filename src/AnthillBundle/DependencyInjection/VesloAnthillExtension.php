@@ -31,5 +31,15 @@ class VesloAnthillExtension extends Extension
 
         $configuration = new Configuration();
         $config        = $this->processConfiguration($configuration, $configs);
+
+        // Digging parameters.
+        $container->setParameter(
+            'veslo.anthill.vacancy.digging.roadmap.attempts_until_pause',
+            $config['vacancy']['digging']['roadmap']['attempts_until_pause']
+        );
+        $container->setParameter(
+            'veslo.anthill.vacancy.digging.roadmap.pause_duration',
+            $config['vacancy']['digging']['roadmap']['pause_duration']
+        );
     }
 }

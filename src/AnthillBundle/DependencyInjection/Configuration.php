@@ -22,6 +22,26 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->arrayNode('vacancy')
+                    ->children()
+                        ->arrayNode('digging')
+                            ->children()
+                                ->arrayNode('roadmap')
+                                    ->children()
+                                        ->scalarNode('attempts_until_pause')
+                                            ->isRequired()
+                                            ->cannotBeEmpty()
+                                        ->end()
+                                        ->scalarNode('pause_duration')
+                                            ->isRequired()
+                                            ->cannotBeEmpty()
+                                        ->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

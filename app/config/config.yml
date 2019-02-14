@@ -54,6 +54,9 @@ swiftmailer:
     password: '%app.mailer_password%'
     spool: { type: memory }
 
+monolog:
+    channels: ['anthill.digging']
+
 nelmio_alice:
     # Default locale for the Faker Generator
     locale: 'en_US'

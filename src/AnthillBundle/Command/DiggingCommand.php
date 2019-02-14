@@ -10,8 +10,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Veslo\AnthillBundle\Command\Roadmap\ListCommand;
-use Veslo\AnthillBundle\Vacancy\DungBeetle;
 use Veslo\AnthillBundle\Vacancy\AntQueen;
+use Veslo\AnthillBundle\Vacancy\DiggerInterface;
 
 /**
  * Represents dung (vacancies) digging process.
@@ -35,21 +35,21 @@ class DiggingCommand extends Command
     /**
      * Digs some dung (vacancies) from internet and sends to queue for processing
      *
-     * @var DungBeetle
+     * @var DiggerInterface
      */
-    private $dungBeetle;
+    private $digger;
 
     /**
      * DiggingCommand constructor.
      *
-     * @param AntQueen    $antQueen   Aggregates all available roadmap services for vacancy parsing
-     * @param DungBeetle  $dungBeetle Digs some dung (vacancies) from internet and sends to queue for processing
-     * @param string|null $name       The name of the command; passing null means it must be set in configure()
+     * @param AntQueen        $antQueen Aggregates all available roadmap services for vacancy parsing
+     * @param DiggerInterface $digger   Digs some dung (vacancies) from internet and sends to queue for processing
+     * @param string|null     $name     The name of the command; passing null means it must be set in configure()
      */
-    public function __construct(AntQueen $antQueen, DungBeetle $dungBeetle, ?string $name = null)
+    public function __construct(AntQueen $antQueen, DiggerInterface $digger, ?string $name = null)
     {
-        $this->antQueen   = $antQueen;
-        $this->dungBeetle = $dungBeetle;
+        $this->antQueen = $antQueen;
+        $this->digger   = $digger;
 
         parent::__construct($name);
     }
@@ -92,12 +92,12 @@ class DiggingCommand extends Command
 
         $roadmap = $this->antQueen->buildRoadmap($roadmapName, $configurationKey);
 
-        $this->dungBeetle->dig($roadmap, $iterations);
+        $successfulIterations = $this->digger->dig($roadmap, $iterations);
 
         $messageComplete = str_replace(
-            ['{roadmapName}', '{iterations}'],
-            [$roadmapName, $iterations],
-            'Digging complete for roadmap: {roadmapName} ({iterations} iterations).'
+            ['{roadmapName}', '{iterations}', '{successful}'],
+            [$roadmap->getName(), $iterations, $successfulIterations],
+            'Digging complete for roadmap: {roadmapName} ({iterations} iterations, {successful} successful).'
         );
         $output->writeln($messageComplete);
     }

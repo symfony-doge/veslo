@@ -44,6 +44,26 @@ class ConveyorAwareRoadmap
     }
 
     /**
+     * Returns name of wrapped roadmap
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        $name = $this->name;
+
+        if (!$this->roadmap instanceof ConfigurableRoadmapInterface) {
+            return $name;
+        }
+
+        $configuration    = $this->roadmap->getConfiguration();
+        $parameters       = $configuration->getParameters();
+        $configurationKey = $parameters->getConfigurationKey();
+
+        return "$name.$configurationKey";
+    }
+
+    /**
      * Returns positive whenever roadmap has available vacancy for parsing
      *
      * @return bool

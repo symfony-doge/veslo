@@ -26,6 +26,13 @@ use Veslo\AnthillBundle\Vacancy\Roadmap\StrategyInterface;
 class Version20190213 implements StrategyInterface
 {
     /**
+     * Maximum depth for internal solutions based on recursion
+     *
+     * @const int
+     */
+    private const MAX_RECURSION_CALLS = 3;
+
+    /**
      * Logger
      *
      * @var LoggerInterface
@@ -51,21 +58,21 @@ class Version20190213 implements StrategyInterface
      *
      * @var array
      */
-    private $_last_response;
+    private $_lastResponse;
 
     /**
      * Last resolved vacancy URL indexed by configuration key using in search
      *
      * @var array
      */
-    private $_last_resolved_url;
+    private $_lastResolvedUrl;
 
     /**
-     * Maximum depth for internal solutions based on recursion
+     * Available recursion calls for internal solutions
      *
      * @var int
      */
-    private $_recursion_calls_available = 3;
+    private $_recursionCallsAvailable;
 
     /**
      * Version20190213 constructor.
@@ -80,8 +87,9 @@ class Version20190213 implements StrategyInterface
         $this->httpClient = $httpClient;
         $this->decoder    = $decoder;
 
-        $this->_last_response     = [];
-        $this->_last_resolved_url = [];
+        $this->_lastResponse            = [];
+        $this->_lastResolvedUrl         = [];
+        $this->_recursionCallsAvailable = self::MAX_RECURSION_CALLS;
     }
 
     /**
@@ -93,8 +101,8 @@ class Version20190213 implements StrategyInterface
         $parameters       = $configuration->getParameters();
         $configurationKey = $parameters->getConfigurationKey();
 
-        if (!empty($this->_last_resolved_url[$configurationKey])) {
-            return $this->_last_resolved_url[$configurationKey];
+        if (!empty($this->_lastResolvedUrl[$configurationKey])) {
+            return $this->_lastResolvedUrl[$configurationKey];
         }
 
         $this->adjustDatesToCurrentDay($configuration);
@@ -108,7 +116,7 @@ class Version20190213 implements StrategyInterface
 
         // We already have a cached response for first page after howMany check.
         if (1 === $page) {
-            return $this->resolveUrl($this->_last_response, $configurationKey);
+            return $this->resolveUrl($this->_lastResponse, $configurationKey);
         }
 
         return $this->copyOnWriteLookup($configuration, $page, $found);
@@ -127,7 +135,9 @@ class Version20190213 implements StrategyInterface
         $configuration->save();
 
         $configurationKey = $parameters->getConfigurationKey();
-        $this->_last_resolved_url[$configurationKey] = null;
+
+        $this->_lastResolvedUrl[$configurationKey] = null;
+        $this->_recursionCallsAvailable            = self::MAX_RECURSION_CALLS;
     }
 
     /**
@@ -186,12 +196,14 @@ class Version20190213 implements StrategyInterface
      */
     private function copyOnWriteLookup(ConfigurationInterface $configuration, int $page, int $found): ?string
     {
-        if (0 > $this->_recursion_calls_available) {
-            throw StrategyException::providerIsBusy();
-        }
-
         /** @var HeadHunterParameters $parameters */
         $parameters = $configuration->getParameters();
+
+        if (0 > $this->_recursionCallsAvailable) {
+            $providerUri = $parameters->getProviderUri();
+
+            throw StrategyException::providerIsUnstable($providerUri);
+        }
 
         $response = $this->iAmCurious($parameters, $page);
         $newFound = $this->resolveFound($response);
@@ -211,7 +223,7 @@ class Version20190213 implements StrategyInterface
             return null;
         }
 
-        --$this->_recursion_calls_available;
+        --$this->_recursionCallsAvailable;
 
         return $this->copyOnWriteLookup($configuration, $newPage, $newFound);
     }
@@ -254,7 +266,7 @@ class Version20190213 implements StrategyInterface
         $json  = $response->getBody()->getContents();
         $array = $this->decoder->decode($json, 'json');
 
-        return $this->_last_response = $array;
+        return $this->_lastResponse = $array;
     }
 
     /**
@@ -291,7 +303,7 @@ class Version20190213 implements StrategyInterface
 
                 if (array_key_exists('url', $item)) {
                     if (!empty($cacheKey)) {
-                        $this->_last_resolved_url[$cacheKey] = $item['url'];
+                        $this->_lastResolvedUrl[$cacheKey] = $item['url'];
                     }
 
                     return $item['url'];

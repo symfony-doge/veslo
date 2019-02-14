@@ -15,4 +15,11 @@ interface ParametersInterface
      * @return string
      */
     public function getConfigurationKey(): string;
+
+    /**
+     * Returns vacancy provider's URI
+     *
+     * @return string
+     */
+    public function getProviderUri(): string;
 }

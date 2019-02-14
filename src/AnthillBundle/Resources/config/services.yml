@@ -2,10 +2,19 @@ services:
     veslo.anthill.vacancy.ant_queen:
         class: Veslo\AnthillBundle\Vacancy\AntQueen
 
-    veslo.anthill.vacancy.dung_beetle:
-        class: Veslo\AnthillBundle\Vacancy\DungBeetle
+    veslo.anthill.vacancy.digger.cranky_dung_beetle:
+        class: Veslo\AnthillBundle\Vacancy\Digger\CrankyDungBeetle
         arguments:
-            - '@logger'
+            - '@veslo.anthill.vacancy.digger.dung_beetle'
+            - '@cache.app'
+            - '%veslo.anthill.vacancy.digging.roadmap.attempts_until_pause%'
+            - '%veslo.anthill.vacancy.digging.roadmap.pause_duration%'
+
+    veslo.anthill.vacancy.digger.dung_beetle:
+        class: Veslo\AnthillBundle\Vacancy\Digger\DungBeetle
+        arguments:
+            - '@monolog.logger.anthill.digging'
+            - '@serializer'
 
     veslo.anthill.vacancy.ant_worker:
         class: Veslo\AnthillBundle\Vacancy\AntWorker

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Vacancy\Roadmap;
 
+use Veslo\AnthillBundle\Exception\Roadmap\ConfigurationNotFoundException;
 use Veslo\AnthillBundle\Vacancy\Roadmap\Configuration\ParametersInterface;
 
 /**
@@ -27,7 +28,9 @@ interface ConfigurationInterface
     /**
      * Returns set of parameters with format, specific for strategy that using it
      *
-     * @return mixed
+     * @return ParametersInterface
+     *
+     * @throws ConfigurationNotFoundException If configuration hasn't been properly applied
      */
     public function getParameters(): ParametersInterface;
 
@@ -37,6 +40,8 @@ interface ConfigurationInterface
      * @param ParametersInterface $parameters Set of parameters with format, specific for strategy that using it
      *
      * @return void
+     *
+     * @throws ConfigurationNotFoundException If configuration hasn't been properly applied
      */
     public function setParameters(ParametersInterface $parameters): void;
 
@@ -44,6 +49,8 @@ interface ConfigurationInterface
      * Saves configuration for last applied key
      *
      * @return void
+     *
+     * @throws ConfigurationNotFoundException If configuration hasn't been properly applied
      */
     public function save(): void;
 }

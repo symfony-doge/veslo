@@ -151,6 +151,14 @@ class HeadHunter implements ParametersInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getProviderUri(): string
+    {
+        return $this->getUrl();
+    }
+
+    /**
      * Returns vacancy website URL
      *
      * @return string
