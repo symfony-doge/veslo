@@ -86,6 +86,9 @@ services:
             context: ./docker/${APP_ENV}/nginx
             args:
                 HOST_UID: ${HOST_UID}
+                TIMEZONE: ${TIMEZONE}
+                NGINX_VERSION: ${NGINX_VERSION}
+                NGINX_PORT_EXPOSE: ${NGINX_PORT_EXPOSE}
         networks:
             frontend:
                 ipv4_address: 172.100.1.1
@@ -96,7 +99,7 @@ services:
         depends_on:
             - php-fpm
         ports:
-            - "8080:80"
+            - "${NGINX_PORT_EXPOSE}:80"
         volumes_from:
             - app
         volumes:
@@ -122,6 +125,7 @@ services:
                 HOST_UID: ${HOST_UID}
                 TIMEZONE: ${TIMEZONE}
                 PHP_VERSION: ${PHP_VERSION}
+                SUPERVISOR_VERSION: ${SUPERVISOR_VERSION}
         networks:
             backend:
                 ipv4_address: 172.101.2.1

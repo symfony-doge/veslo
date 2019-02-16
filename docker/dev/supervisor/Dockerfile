@@ -4,6 +4,7 @@ FROM php:${PHP_VERSION}-cli
 
 ARG HOST_UID
 ARG TIMEZONE
+ARG SUPERVISOR_VERSION
 
 USER root
 
@@ -11,7 +12,7 @@ USER root
 RUN apt-get update && apt-get install --no-install-recommends -qy \
         openssl \
         libpq-dev \
-        supervisor
+        supervisor=${SUPERVISOR_VERSION}
 
 # php
 #RUN docker-php-ext-install \

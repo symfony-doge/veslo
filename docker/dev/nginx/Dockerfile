@@ -1,22 +1,27 @@
-FROM debian:stretch
+ARG NGINX_VERSION
+
+FROM nginx:${NGINX_VERSION}
 
 ARG HOST_UID
+ARG TIMEZONE
+ARG NGINX_PORT_EXPOSE
 
 WORKDIR /etc/nginx
 
 USER root
 
-RUN apt-get update && apt-get install --no-install-recommends -qy \
-        nginx
+# timezone
+RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} > /etc/timezone && \
+    date
 
 COPY nginx.conf /etc/nginx/
 COPY veslo.it.conf /etc/nginx/sites-available/
 
-RUN ln -s /etc/nginx/sites-available/veslo.it.conf /etc/nginx/sites-enabled/veslo.it
-RUN rm /etc/nginx/sites-enabled/default
+RUN ln -s /etc/nginx/sites-available/veslo.it.conf /etc/nginx/conf.d/veslo.it.conf && \
+    rm /etc/nginx/conf.d/default.conf
 
 RUN usermod -u ${HOST_UID} www-data
 
-CMD ["nginx"]
+EXPOSE ${NGINX_PORT_EXPOSE}
 
-EXPOSE 8080
+CMD ["nginx-debug"]
