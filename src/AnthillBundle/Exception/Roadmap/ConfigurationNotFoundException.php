@@ -22,6 +22,13 @@ class ConfigurationNotFoundException extends RuntimeException implements Anthill
     public const MESSAGE = 'Roadmap configuration is not found.';
 
     /**
+     * Error message with key of missed configuration
+     *
+     * @const string
+     */
+    public const MESSAGE_WITH_KEY = "Configuration '{configurationKey}' for roadmap is not found.";
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(
@@ -30,5 +37,19 @@ class ConfigurationNotFoundException extends RuntimeException implements Anthill
         Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);
+    }
+
+    /**
+     * Returns exception in context of specified configuration key
+     *
+     * @param string $configurationKey Configuration key
+     *
+     * @return ConfigurationNotFoundException
+     */
+    public static function withKey(string $configurationKey): ConfigurationNotFoundException
+    {
+        $message = str_replace('{configurationKey}', $configurationKey, self::MESSAGE_WITH_KEY);
+
+        return new static($message);
     }
 }

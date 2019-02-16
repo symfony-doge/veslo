@@ -21,7 +21,7 @@ interface StrategyInterface
      *
      * @return string|null
      *
-     * @throws StrategyException
+     * @throws StrategyException If an error occurred during vacancy lookup
      */
     public function lookup(ConfigurationInterface $configuration): ?string;
 

@@ -8,6 +8,7 @@ use Doctrine\ORM\Cache;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters\HeadHunter as HeadHunterParameters;
+use Veslo\AnthillBundle\Exception\Roadmap\ConfigurationNotFoundException;
 use Veslo\AppBundle\Entity\Repository\BaseRepository;
 
 /**
@@ -22,8 +23,8 @@ class HeadHunterRepository extends BaseRepository
      *
      * @return HeadHunterParameters
      *
-     * @throws NoResultException
      * @throws NonUniqueResultException
+     * @throws ConfigurationNotFoundException
      */
     public function requireByConfigurationKey(string $configurationKey): HeadHunterParameters
     {
@@ -36,6 +37,10 @@ class HeadHunterRepository extends BaseRepository
             ->setCacheable(true)
         ;
 
-        return $queryBuilder->getQuery()->getSingleResult();
+        try {
+            return $queryBuilder->getQuery()->getSingleResult();
+        } catch (NoResultException $e) {
+            throw ConfigurationNotFoundException::withKey($configurationKey);
+        }
     }
 }

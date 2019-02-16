@@ -7,6 +7,8 @@ services:
             args:
                 HOST_UID: ${HOST_UID}
                 TIMEZONE: ${TIMEZONE}
+                PHP_VERSION: ${PHP_VERSION}
+                DEPLOYMENT_PATH: ${DEPLOYMENT_PATH}
         networks:
             backend:
                 ipv4_address: 172.101.1.1
@@ -14,7 +16,7 @@ services:
             - db
             - redis
         volumes:
-            - ${SYMFONY_APP_PATH}:/var/www/veslo.it
+            - ${SYMFONY_APP_PATH}:${DEPLOYMENT_PATH}
             - ${SYMFONY_APP_PATH}/var/.composer:/var/www/.composer
             - ${SYMFONY_APP_PATH}/var/.yarn:/var/www/.yarn
             - ${SYMFONY_APP_PATH}/var/.yarn/cache:/var/www/.cache/yarn
@@ -31,19 +33,53 @@ services:
             POSTGRES_DB: ${POSTGRES_DB}
             POSTGRES_USER: ${POSTGRES_USER}
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-            PGDATA: /var/lib/postgresql/data
+            PGDATA: ${POSTGRES_DATA_DIR}
         volumes:
-            - db_data:/var/lib/postgresql/data
+            - db_data:${POSTGRES_DATA_DIR}
 
     redis:
-        build: ./docker/${APP_ENV}/redis
+        build:
+            context: ./docker/${APP_ENV}/redis
+            args:
+                HOST_UID: ${HOST_UID}
+                TIMEZONE: ${TIMEZONE}
+                REDIS_VERSION: ${REDIS_VERSION}
+                REDIS_DATA_DIR: ${REDIS_DATA_DIR}
         networks:
             frontend:
                 ipv4_address: 172.100.4.1
             backend:
                 ipv4_address: 172.101.4.1
         volumes:
-            - redis_data:/data
+            - redis_data:${REDIS_DATA_DIR}
+
+    mq:
+        build:
+            context: ./docker/${APP_ENV}/mq
+            args:
+                HOST_UID: ${HOST_UID}
+                TIMEZONE: ${TIMEZONE}
+                RABBITMQ_VERSION: ${RABBITMQ_VERSION}
+                RABBITMQ_DATA_DIR: ${RABBITMQ_DATA_DIR}
+                RABBITMQ_CONFIG_FILE: ${RABBITMQ_CONFIG_FILE}
+        networks:
+            backend:
+                ipv4_address: 172.101.7.1
+        hostname: ${RABBITMQ_NODENAME}
+        ports:
+            - "6060:15672"
+        environment:
+            RABBITMQ_NODENAME: ${RABBITMQ_NODENAME}
+            RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE}
+            RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+            RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+            RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_DEFAULT_VHOST}
+            RABBITMQ_CONFIG_FILE: ${RABBITMQ_CONFIG_FILE}
+            RABBITMQ_DATA_DIR: ${RABBITMQ_DATA_DIR}
+            RABBITMQ_LOG_BASE: ${RABBITMQ_LOG_BASE}
+        volumes:
+            - mq_data:${RABBITMQ_DATA_DIR}
+            - ${SYMFONY_APP_PATH}/var/logs/rabbitmq:${RABBITMQ_LOG_BASE}
 
     nginx:
         build:
@@ -54,7 +90,7 @@ services:
             frontend:
                 ipv4_address: 172.100.1.1
             backend:
-                ipv4_address: 172.101.7.1
+                ipv4_address: 172.101.8.1
                 aliases:
                     - veslo.test
         depends_on:
@@ -72,6 +108,7 @@ services:
             args:
                 HOST_UID: ${HOST_UID}
                 TIMEZONE: ${TIMEZONE}
+                PHP_VERSION: ${PHP_VERSION}
         networks:
             frontend:
                 ipv4_address: 172.100.2.1
@@ -84,12 +121,14 @@ services:
             args:
                 HOST_UID: ${HOST_UID}
                 TIMEZONE: ${TIMEZONE}
+                PHP_VERSION: ${PHP_VERSION}
         networks:
             backend:
                 ipv4_address: 172.101.2.1
         depends_on:
             - db
             - redis
+            - mq
         volumes_from:
             - app
         volumes:
@@ -100,10 +139,6 @@ services:
         networks:
             backend:
                 ipv4_address: 172.101.5.1
-#                aliases:
-#                    - hub
-#        ports:
-#            - "4444:4444"
         environment:
             GRID_MAX_SESSION: 200
             GRID_NEW_SESSION_WAIT_TIMEOUT: -1
@@ -156,4 +191,10 @@ volumes:
         driver_opts:
             type: none
             device: ${PWD}/var/redis/data
+            o: bind
+    mq_data:
+        driver: local
+        driver_opts:
+            type: none
+            device: ${PWD}/var/rabbitmq
             o: bind

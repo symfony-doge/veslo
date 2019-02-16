@@ -25,6 +25,10 @@
 /var/redis/*
 !var/redis/.gitkeep
 
+!/var/rabbitmq
+/var/rabbitmq/*
+!var/rabbitmq/.gitkeep
+
 !/var/cache
 /var/cache/*
 !var/cache/.gitkeep
@@ -32,6 +36,9 @@
 !/var/logs
 /var/logs/*
 !var/logs/.gitkeep
+!var/logs/rabbitmq
+/var/logs/rabbitmq/*
+!var/logs/rabbitmq/.gitkeep
 !var/logs/nginx
 /var/logs/nginx/*
 !var/logs/nginx/.gitkeep

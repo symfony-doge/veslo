@@ -2,19 +2,22 @@
 
 echo 'Stopping docker-compose services...'
 docker-compose down
-cp .env.dev.dist .env
-cp docker-compose.dev.yml.dist docker-compose.yml
 
+echo 'Clearing docker volumes...'
+docker volume rm veslo_db_data veslo_redis_data veslo_mq_data
 mkdir -p ./var/postgresql/data
 mkdir -p ./var/redis/data
+
 [ ! -d web/tests ] && mkdir -p web/tests && ln -s ../../tests/_output web/tests/_output
 
-echo 'Fixing permissions...'
-source .env
-sudo chown `id -nu $HOST_UID`:www-data -R . && sudo chmod g+w -R .
-
-echo 'Copying latest configs and parameters...'
+echo 'Applying environment variables and configs...'
+cp .env.dev.dist .env
+cp docker-compose.dev.yml.dist docker-compose.yml
 cp ./app/config/parameters.dev.yml.dist ./app/config/parameters.yml
+source .env
+
+echo 'Fixing permissions...'
+sudo chown `id -nu $HOST_UID`:www-data -R . && sudo chmod g+w -R .
 
 echo 'Building docker-compose services...'
 docker-compose build --force-rm
