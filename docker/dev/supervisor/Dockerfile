@@ -30,7 +30,7 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
 
 # db
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
-    docker-php-ext-install pdo pdo_pgsql pgsql
+    docker-php-ext-install pdo_pgsql pgsql
 
 WORKDIR /etc/supervisor/conf.d
 

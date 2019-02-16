@@ -5,6 +5,7 @@ docker-compose down
 
 echo 'Clearing docker volumes...'
 docker volume rm veslo_db_data veslo_redis_data veslo_mq_data
+docker volume prune --force
 mkdir -p ./var/postgresql/data
 mkdir -p ./var/redis/data
 
@@ -13,7 +14,7 @@ mkdir -p ./var/redis/data
 echo 'Applying environment variables and configs...'
 cp .env.dev.dist .env
 cp docker-compose.dev.yml.dist docker-compose.yml
-cp ./app/config/parameters.dev.yml.dist ./app/config/parameters.yml
+cp app/config/parameters.yml.dist app/config/parameters.yml
 source .env
 
 echo 'Fixing permissions...'
