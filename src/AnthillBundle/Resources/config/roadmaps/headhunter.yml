@@ -13,6 +13,8 @@ services:
     veslo.anthill.vacancy.roadmap.configuration.head_hunter:
         class: Veslo\AnthillBundle\Vacancy\Roadmap\Configuration\HeadHunter
         arguments:
+            - '@serializer'
+            - '@monolog.logger.anthill.digging'
             - '@veslo.anthill.vacancy.roadmap.configuration.parameters.head_hunter_repository'
 
     # Search strategies

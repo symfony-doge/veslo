@@ -118,14 +118,20 @@ class Conveyor
                 $this->publish($payload, $channel, $queueName);
             } catch (Exception $e) {
                 $channel->txRollback();
-                $this->amqpClient->disconnect();
+
+                $channel->close()->then(function () {
+                    $this->amqpClient->disconnect();
+                });
 
                 throw $e;
             }
         }
 
         $channel->txCommit();
-        $this->amqpClient->disconnect();
+
+        $channel->close()->then(function () {
+            $this->amqpClient->disconnect();
+        });
     }
 
     /**

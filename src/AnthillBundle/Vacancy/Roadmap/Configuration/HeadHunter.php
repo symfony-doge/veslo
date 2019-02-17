@@ -4,16 +4,32 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Vacancy\Roadmap\Configuration;
 
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Veslo\AnthillBundle\Entity\Repository\Vacancy\Roadmap\Configuration\Parameters\HeadHunterRepository as HeadHunterParametersRepository;
 use Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters\HeadHunter as HeadHunterParameters;
 use Veslo\AnthillBundle\Exception\Roadmap\ConfigurationNotFoundException;
 use Veslo\AnthillBundle\Vacancy\Roadmap\ConfigurationInterface;
 
 /**
- * Represents configuraton of vacancy searching algorithms for HeadHunter
+ * Represents configuration of vacancy searching algorithms for HeadHunter
  */
 class HeadHunter implements ConfigurationInterface
 {
+    /**
+     * Converts an object into a set of arrays/scalars
+     *
+     * @var NormalizerInterface
+     */
+    private $normalizer;
+
+    /**
+     * Logger as it is
+     *
+     * @var LoggerInterface
+     */
+    private $logger;
+
     /**
      * Repository for HeadHunter searching parameters
      *
@@ -31,10 +47,17 @@ class HeadHunter implements ConfigurationInterface
     /**
      * HeadHunter constructor.
      *
+     * @param NormalizerInterface            $normalizer           Converts an object into a set of arrays/scalars
+     * @param LoggerInterface                $logger               Logger as it is
      * @param HeadHunterParametersRepository $parametersRepository Repository for HeadHunter searching parameters
      */
-    public function __construct(HeadHunterParametersRepository $parametersRepository)
-    {
+    public function __construct(
+        NormalizerInterface $normalizer,
+        LoggerInterface $logger,
+        HeadHunterParametersRepository $parametersRepository
+    ) {
+        $this->normalizer           = $normalizer;
+        $this->logger               = $logger;
         $this->parametersRepository = $parametersRepository;
         $this->_parameters          = null;
     }
@@ -75,6 +98,9 @@ class HeadHunter implements ConfigurationInterface
         $this->ensureParameters();
 
         $this->parametersRepository->save($this->_parameters);
+
+        $normalizedParameters = $this->normalizer->normalize($this->_parameters);
+        $this->logger->info('Roadmap configuration changed.', ['parameters' => $normalizedParameters]);
     }
 
     /**
