@@ -279,7 +279,7 @@ class Version20190213 implements StrategyInterface
      */
     private function resolveFound(array $response): int
     {
-        if (!empty($response['found']) && is_numeric($response['found'])) {
+        if (array_key_exists('found', $response) && is_numeric($response['found'])) {
             return (int) $response['found'];
         }
 

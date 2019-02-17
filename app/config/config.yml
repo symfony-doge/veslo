@@ -85,7 +85,9 @@ swiftmailer:
     spool: { type: memory }
 
 monolog:
-    channels: ['anthill.digging']
+    channels:
+        - 'app.workflow'
+        - 'anthill.digging'
 
 nelmio_alice:
     # Default locale for the Faker Generator

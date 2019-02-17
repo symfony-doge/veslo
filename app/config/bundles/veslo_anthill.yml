@@ -5,4 +5,4 @@ veslo_anthill:
                 # How much vacancy search attempts cranky dung beetle should perform via roadmap before give up
                 attempts_until_pause: 3
                 # Give up time in seconds for cranky dung beetle after too much unsuccessful vacancy search attempts
-                pause_duration: 60
+                pause_duration: 120

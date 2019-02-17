@@ -7,8 +7,10 @@ namespace Veslo\AppBundle\Workflow\Vacancy\Research;
 use Bunny\Channel;
 use Bunny\Client;
 use Exception;
-use Symfony\Component\Serializer\SerializerInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Workflow\Workflow;
+use Veslo\AppBundle\Exception\Workflow\Conveyor\DistributeException;
 use Veslo\AppBundle\Workflow\Vacancy\Research\Conveyor\Payload;
 
 /**
@@ -19,6 +21,13 @@ use Veslo\AppBundle\Workflow\Vacancy\Research\Conveyor\Payload;
 class Conveyor
 {
     /**
+     * Logger as it is
+     *
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * State machine, represent business process
      *
      * @var Workflow
@@ -26,9 +35,9 @@ class Conveyor
     private $workflow;
 
     /**
-     * Serializes data in the appropriate format
+     * Converts data in the appropriate format
      *
-     * @var SerializerInterface
+     * @var Serializer
      */
     private $serializer;
 
@@ -49,17 +58,20 @@ class Conveyor
     /**
      * Conveyor constructor.
      *
-     * @param Workflow            $workflow    State machine, represent business process
-     * @param SerializerInterface $serializer  Serializes data in the appropriate format
-     * @param Client              $amqpClient  Communicates with message broker
-     * @param string              $queuePrefix Prefix for workflow-related queues
+     * @param LoggerInterface $logger      Logger as it is
+     * @param Workflow        $workflow    State machine, represent business process
+     * @param Serializer      $serializer  Converts data in the appropriate format
+     * @param Client          $amqpClient  Communicates with message broker
+     * @param string          $queuePrefix Prefix for workflow-related queues
      */
     public function __construct(
+        LoggerInterface $logger,
         Workflow $workflow,
-        SerializerInterface $serializer,
+        Serializer $serializer,
         Client $amqpClient,
         string $queuePrefix
     ) {
+        $this->logger      = $logger;
         $this->workflow    = $workflow;
         $this->serializer  = $serializer;
         $this->amqpClient  = $amqpClient;
@@ -123,15 +135,24 @@ class Conveyor
                     $this->amqpClient->disconnect();
                 });
 
-                throw $e;
+                $this->logger->critical(
+                    'Payload distribution failed.',
+                    [
+                        'message'   => $e->getMessage(),
+                        'payload'   => $this->serializer->normalize($payload),
+                        'channel'   => $this->serializer->normalize($channel),
+                        'queueName' => $queueName,
+                    ]
+                );
+
+                throw DistributeException::withQueueName($queueName);
             }
         }
 
         $channel->txCommit();
 
-        $channel->close()->then(function () {
-            $this->amqpClient->disconnect();
-        });
+        $normalizedPayload = $this->serializer->normalize($payload);
+        $this->logger->info('Payload distributed.', ['queueNames' => $queueNames, 'payload' => $normalizedPayload]);
     }
 
     /**
@@ -148,6 +169,8 @@ class Conveyor
         $data    = $payload->getData();
         $message = $this->serializer->serialize($data, 'json');
 
-        $channel->publish($message, [], '', $queueName);
+        $channel->publish($message, ['content_type' => 'application/json'], '', $queueName);
+
+        $this->logger->info('Payload publishing...', ['queueName' => $queueName, 'message' => $message]);
     }
 }

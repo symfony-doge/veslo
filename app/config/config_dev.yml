@@ -24,7 +24,7 @@ monolog:
             path: '%kernel.logs_dir%/%kernel.environment%.anthill.digging.log'
             max_files: 1
             level: debug
-            channels: ['anthill.digging', 'doctrine']
+            channels: ['app.workflow', 'anthill.digging', 'doctrine']
         console:
             type: console
             process_psr_3_messages: false
