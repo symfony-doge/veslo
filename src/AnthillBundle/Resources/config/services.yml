@@ -14,7 +14,7 @@ services:
         class: Veslo\AnthillBundle\Vacancy\Digger\DungBeetle
         arguments:
             - '@monolog.logger.anthill.digging'
-            - '@serializer'
+            - '@veslo.app.workflow.vacancy.research.conveyor'
 
     veslo.anthill.vacancy.ant_worker:
         class: Veslo\AnthillBundle\Vacancy\AntWorker

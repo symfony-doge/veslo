@@ -6,7 +6,7 @@ namespace Veslo\AnthillBundle\Dto\Vacancy\Parser;
 
 use Veslo\AnthillBundle\Dto\Vacancy\ParserDto;
 use Veslo\AnthillBundle\Dto\Vacancy\RawDto;
-use Veslo\AnthillBundle\Dto\Vacancy\Roadmap\LocationDto;
+use Veslo\AnthillBundle\Dto\Vacancy\LocationDto;
 
 /**
  * Context of parsed vacancy data for analysis

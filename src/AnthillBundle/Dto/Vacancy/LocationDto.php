@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Veslo\AnthillBundle\Dto\Vacancy\Roadmap;
+namespace Veslo\AnthillBundle\Dto\Vacancy;
 
 /**
  * Context of vacancy location from internet

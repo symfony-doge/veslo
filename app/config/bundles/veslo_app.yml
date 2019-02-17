@@ -2,3 +2,12 @@ veslo_app:
     http_client:
         headers:
             user_agent: '%app.http_client.headers.user_agent%'
+    amqp_client:
+        host: '%app.amqp_client.host%'
+        vhost: '%app.amqp_client.vhost%'
+        user: '%app.amqp_client.user%'
+        password: '%app.amqp_client.password%'
+    workflow:
+        vacancy_research:
+            transitions:
+                queue_prefix: 'veslo.app.workflow.vacancy_research.'

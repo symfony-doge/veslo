@@ -27,9 +27,24 @@ class VesloAppExtension extends Extension
         $configuration = new Configuration();
         $config        = $this->processConfiguration($configuration, $configs);
 
+        $httpClientConfig = [
+            'headers' => [
+                'user_agent' => $config['http_client']['headers']['user_agent'],
+            ],
+        ];
+        $container->setParameter('veslo.app.http_client.config', $httpClientConfig);
+
+        $amqpClientOptions = [
+            'host'     => $config['amqp_client']['host'],
+            'vhost'    => $config['amqp_client']['vhost'],
+            'user'     => $config['amqp_client']['user'],
+            'password' => $config['amqp_client']['password'],
+        ];
+        $container->setParameter('veslo.app.amqp_client.options', $amqpClientOptions);
+
         $container->setParameter(
-            'veslo.app.http_client.headers.user_agent',
-            $config['http_client']['headers']['user_agent']
+            'veslo.app.workflow.vacancy_research.transitions.queue_prefix',
+            $config['workflow']['vacancy_research']['transitions']['queue_prefix']
         );
     }
 }

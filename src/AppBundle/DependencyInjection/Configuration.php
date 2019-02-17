@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Veslo\AppBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -22,13 +23,19 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->arrayNode('http_client')
+                ->append($this->getHttpClientNode())
+                ->append($this->getAmqpClientNode())
+                ->arrayNode('workflow')
                     ->children()
-                        ->arrayNode('headers')
+                        ->arrayNode('vacancy_research')
                             ->children()
-                                ->scalarNode('user_agent')
-                                    ->isRequired()
-                                    ->cannotBeEmpty()
+                                ->arrayNode('transitions')
+                                    ->children()
+                                        ->scalarNode('queue_prefix')
+                                            ->isRequired()
+                                            ->cannotBeEmpty()
+                                        ->end()
+                                    ->end()
                                 ->end()
                             ->end()
                         ->end()
@@ -38,5 +45,65 @@ class Configuration implements ConfigurationInterface
         ;
 
         return $treeBuilder;
+    }
+
+    /**
+     * Returns a global http client node
+     *
+     * @return ArrayNodeDefinition
+     */
+    private function getHttpClientNode(): ArrayNodeDefinition
+    {
+        $treeBuilder = new TreeBuilder();
+        $node        = $treeBuilder->root('http_client');
+
+        $node
+            ->children()
+                ->arrayNode('headers')
+                    ->children()
+                        ->scalarNode('user_agent')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    /**
+     * Returns a global amqp client node
+     *
+     * @return ArrayNodeDefinition
+     */
+    private function getAmqpClientNode(): ArrayNodeDefinition
+    {
+        $treeBuilder = new TreeBuilder();
+        $node        = $treeBuilder->root('amqp_client');
+
+        $node
+            ->children()
+                ->scalarNode('host')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('vhost')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('user')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('password')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
     }
 }

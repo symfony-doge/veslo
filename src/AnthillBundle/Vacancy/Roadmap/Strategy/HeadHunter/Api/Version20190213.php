@@ -17,11 +17,12 @@ use Veslo\AnthillBundle\Vacancy\Roadmap\StrategyInterface;
 
 /**
  * Represents vacancy searching algorithm for HeadHunter site based on public API
- * https://github.com/hhru/api/blob/master/docs/general.md
  *
  * The problem is that we can't sort vacancies by publication_date in ascending order. Only in descending.
  * This algorithm performs vacancy fetching in ascending order by managing additional parameter - received count.
  * So it provides vacancy fetching in real time by their actual publication order.
+ *
+ * @see https://github.com/hhru/api/blob/master/docs/general.md
  */
 class Version20190213 implements StrategyInterface
 {
@@ -278,11 +279,11 @@ class Version20190213 implements StrategyInterface
      */
     private function resolveFound(array $response): int
     {
-        if (!array_key_exists('found', $response) || !is_numeric($response['found'])) {
-            throw StrategyException::unexpectedResponse('found');
+        if (!empty($response['found']) && is_numeric($response['found'])) {
+            return (int) $response['found'];
         }
 
-        return (int) $response['found'];
+        throw StrategyException::unexpectedResponse('found');
     }
 
     /**
@@ -295,19 +296,15 @@ class Version20190213 implements StrategyInterface
      */
     private function resolveUrl(array $response, ?string $cacheKey = null): string
     {
-        if (array_key_exists('items', $response)) {
-            $items = $response['items'];
+        if (!empty($response['items'])) {
+            $item = array_shift($response['items']);
 
-            if (!empty($items)) {
-                $item = array_shift($items);
-
-                if (array_key_exists('url', $item)) {
-                    if (!empty($cacheKey)) {
-                        $this->_lastResolvedUrl[$cacheKey] = $item['url'];
-                    }
-
-                    return $item['url'];
+            if (!empty($item['url'])) {
+                if (!empty($cacheKey)) {
+                    $this->_lastResolvedUrl[$cacheKey] = $item['url'];
                 }
+
+                return $item['url'];
             }
         }
 

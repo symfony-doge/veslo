@@ -67,7 +67,7 @@ services:
                 ipv4_address: 172.101.7.1
         hostname: ${RABBITMQ_NODENAME}
         ports:
-            - "6060:15672"
+            - "${RABBITMQ_MANAGEMENT_PORT_EXPOSE}:15672"
         environment:
             RABBITMQ_NODENAME: ${RABBITMQ_NODENAME}
             RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE}

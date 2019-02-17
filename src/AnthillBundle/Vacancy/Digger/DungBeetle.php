@@ -6,9 +6,10 @@ namespace Veslo\AnthillBundle\Vacancy\Digger;
 
 use Exception;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Veslo\AnthillBundle\Vacancy\DiggerInterface;
 use Veslo\AnthillBundle\Vacancy\Roadmap\ConveyorAwareRoadmap;
+use Veslo\AppBundle\Workflow\Vacancy\Research\Conveyor;
+use Veslo\AppBundle\Workflow\Vacancy\Research\Conveyor\Payload;
 
 /**
  * Digs some dung (vacancies) from internet and sends to conveyor for processing
@@ -47,22 +48,22 @@ class DungBeetle implements DiggerInterface
     private $logger;
 
     /**
-     * Normalizes an object into a set of arrays/scalars
+     * Manages data exchange between workers
      *
-     * @var NormalizerInterface
+     * @var Conveyor
      */
-    private $normalizer;
+    private $conveyor;
 
     /**
      * DungBeetle constructor.
      *
-     * @param LoggerInterface     $logger     Logger as it is
-     * @param NormalizerInterface $normalizer Normalizes an object into a set of arrays/scalars
+     * @param LoggerInterface $logger   Logger as it is
+     * @param Conveyor        $conveyor Manages data exchange between workers
      */
-    public function __construct(LoggerInterface $logger, NormalizerInterface $normalizer)
+    public function __construct(LoggerInterface $logger, Conveyor $conveyor)
     {
-        $this->logger     = $logger;
-        $this->normalizer = $normalizer;
+        $this->logger   = $logger;
+        $this->conveyor = $conveyor;
     }
 
     /**
@@ -129,6 +130,7 @@ class DungBeetle implements DiggerInterface
 
     /**
      * Returns positive if vacancy is successfully found by specified roadmap
+     * Builds and sends a payload to conveyor for further processing according configured workflow
      *
      * @param ConveyorAwareRoadmap $roadmap Provides URL of vacancies
      *
@@ -146,16 +148,10 @@ class DungBeetle implements DiggerInterface
 
         $locationDto = $roadmap->next();
 
-        // TODO: pass $locationDto to conveyor, it should encapsulate all date [de]normalization & queue logic
-        $locationData = $this->normalizer->normalize($locationDto);
+        $vacancyUrl = $locationDto->getVacancyUrl();
+        $this->logger->info('Vacancy found.', ['roadmap' => $roadmapName, 'vacancyUrl' => $vacancyUrl]);
 
-        try {
-            // $this->conveyor->send(?) ($locationDto, queue(?))         // + rabbitmq, wrapper(?)
-        } catch (Exception $e) {
-            // TODO
-        }
-
-        $this->logger->info('Vacancy found.', ['roadmap' => $roadmapName, 'location' => $locationData]);
+        $this->conveyor->send(new Payload($locationDto));
 
         return true;
     }

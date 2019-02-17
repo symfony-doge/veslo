@@ -6,7 +6,7 @@ namespace Veslo\AnthillBundle\Vacancy\Roadmap;
 
 use Veslo\AnthillBundle\Dto\Vacancy\ConfigurableRoadmapDto;
 use Veslo\AnthillBundle\Dto\Vacancy\Roadmap\ConfigurationDto;
-use Veslo\AnthillBundle\Dto\Vacancy\Roadmap\LocationDto;
+use Veslo\AnthillBundle\Dto\Vacancy\LocationDto;
 use Veslo\AnthillBundle\Dto\Vacancy\Roadmap\StrategyDto;
 use Veslo\AnthillBundle\Dto\Vacancy\RoadmapDto;
 use Veslo\AnthillBundle\Vacancy\ConfigurableRoadmapInterface;

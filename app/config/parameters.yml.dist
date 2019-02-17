@@ -20,4 +20,11 @@ parameters:
     app.redis.host: '%env(string:REDIS_HOST)%'
     app.redis.port: '%env(int:REDIS_PORT)%'
 
+    # Http client
     app.http_client.headers.user_agent: 'Veslo/dev-master (https://github.com/symfony-doge/veslo)'
+
+    # Amqp client
+    app.amqp_client.host: '%env(string:RABBITMQ_HOST)%'
+    app.amqp_client.vhost: '%env(string:RABBITMQ_DEFAULT_VHOST)%'
+    app.amqp_client.user: '%env(string:RABBITMQ_DEFAULT_USER)%'
+    app.amqp_client.password: '%env(string:RABBITMQ_DEFAULT_PASS)%'

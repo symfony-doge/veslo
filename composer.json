@@ -21,6 +21,7 @@
     },
     "require": {
         "php": ">=7.2",
+        "bunny/bunny": "^0.4.1",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-fixtures-bundle": "^3.1",
         "doctrine/doctrine-migrations-bundle": "^1.0",
