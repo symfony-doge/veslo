@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Vacancy\Roadmap;
 
-use Veslo\AnthillBundle\Exception\Roadmap\StrategyException;
+use Veslo\AnthillBundle\Exception\Vacancy\Roadmap\StrategyException;
 
 /**
  * Represents vacancy searching algorithm for specific website-provider

@@ -20,7 +20,7 @@ class LocationDto
     /**
      * Context of roadmap by which the vacancy was found
      *
-     * @var object
+     * @var ConfigurableRoadmapDto|RoadmapDto
      */
     private $roadmap;
 
@@ -49,11 +49,11 @@ class LocationDto
     /**
      * Sets context of roadmap by which the vacancy was found
      *
-     * @param object $roadmap Context of roadmap by which the vacancy was found
+     * @param RoadmapDto $roadmap Context of roadmap by which the vacancy was found
      *
      * @return void
      */
-    public function setRoadmap(object $roadmap): void
+    public function setRoadmap(RoadmapDto $roadmap): void
     {
         $this->roadmap = $roadmap;
     }
@@ -61,9 +61,9 @@ class LocationDto
     /**
      * Returns context of roadmap by which the vacancy was found
      *
-     * @return object|null
+     * @return RoadmapDto|null
      */
-    public function getRoadmap(): ?object
+    public function getRoadmap(): ?RoadmapDto
     {
         return $this->roadmap;
     }

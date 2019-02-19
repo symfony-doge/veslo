@@ -7,6 +7,7 @@ namespace Veslo\AnthillBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Veslo\AnthillBundle\DependencyInjection\Compiler\VacancyRoadmapPass;
+use Veslo\AnthillBundle\DependencyInjection\Compiler\VacancyScannerPass;
 
 /**
  * Anthill bundle.
@@ -21,5 +22,6 @@ class VesloAnthillBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new VacancyRoadmapPass());
+        $container->addCompilerPass(new VacancyScannerPass());
     }
 }

@@ -8,7 +8,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Veslo\AnthillBundle\Entity\Repository\Vacancy\Roadmap\Configuration\Parameters\HeadHunterRepository as HeadHunterParametersRepository;
 use Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters\HeadHunter as HeadHunterParameters;
-use Veslo\AnthillBundle\Exception\Roadmap\ConfigurationNotFoundException;
+use Veslo\AnthillBundle\Exception\Vacancy\Roadmap\ConfigurationNotFoundException;
 use Veslo\AnthillBundle\Vacancy\Roadmap\ConfigurationInterface;
 
 /**

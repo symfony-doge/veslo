@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Vacancy;
 
-use Veslo\AnthillBundle\Exception\Roadmap\ConfigurationNotSupportedException;
-use Veslo\AnthillBundle\Exception\RoadmapNotFoundException;
+use Veslo\AnthillBundle\Exception\Vacancy\Roadmap\ConfigurationNotSupportedException;
+use Veslo\AnthillBundle\Exception\Vacancy\RoadmapNotFoundException;
 use Veslo\AnthillBundle\Vacancy\Roadmap\ConveyorAwareRoadmap;
 
 /**
- * Aggregates and builds roadmaps for vacancy parsing
+ * Aggregates and builds roadmaps for vacancy search
  * It means that each beetle should ask her what to do and how to do, yup
  *
  *              *

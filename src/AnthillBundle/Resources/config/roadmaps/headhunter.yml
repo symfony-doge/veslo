@@ -1,5 +1,13 @@
 services:
-    # HeadHunter
+    # Configurations
+    veslo.anthill.vacancy.roadmap.configuration.head_hunter:
+        class: Veslo\AnthillBundle\Vacancy\Roadmap\Configuration\HeadHunter
+        arguments:
+            - '@serializer'
+            - '@monolog.logger.anthill.digging'
+            - '@veslo.anthill.vacancy.roadmap.configuration.parameters.head_hunter_repository'
+
+    # Roadmap
     veslo.anthill.vacancy.roadmap.head_hunter:
         class: Veslo\AnthillBundle\Vacancy\Roadmap\BaseConfigurableRoadmap
         arguments:
@@ -9,14 +17,6 @@ services:
             -   name: !php/const Veslo\AnthillBundle\Vacancy\RoadmapInterface::TAG
                 roadmapName: !php/const Veslo\AnthillBundle\Enum\Vacancy\Roadmap::HEAD_HUNTER
 
-    # Configurations
-    veslo.anthill.vacancy.roadmap.configuration.head_hunter:
-        class: Veslo\AnthillBundle\Vacancy\Roadmap\Configuration\HeadHunter
-        arguments:
-            - '@serializer'
-            - '@monolog.logger.anthill.digging'
-            - '@veslo.anthill.vacancy.roadmap.configuration.parameters.head_hunter_repository'
-
     # Search strategies
     veslo.anthill.vacancy.roadmap.strategy.head_hunter.api.version20190213:
         class: Veslo\AnthillBundle\Vacancy\Roadmap\Strategy\HeadHunter\Api\Version20190213
@@ -25,6 +25,21 @@ services:
             - '@veslo.app.http_client'
             - '@serializer.encoder.json'
 
-    # TODO: Parsers
-#    veslo.anthill.vacancy.roadmap.parser.head_hunter.api.version20190213:
-#        strategyName="Strategy\HeadHunter\Api\Version20190213"
+    # Scanner
+    veslo.anthill.vacancy.scanner.head_hunter:
+        class: Veslo\AnthillBundle\Vacancy\Scanner\MultistrategicScanner
+        arguments:
+            - '@veslo.anthill.vacancy.scanner.strategy_pool.head_hunter'
+        tags:
+            -   name: !php/const Veslo\AnthillBundle\Vacancy\ScannerInterface::TAG
+                roadmapName: !php/const Veslo\AnthillBundle\Enum\Vacancy\Roadmap::HEAD_HUNTER
+
+    # Scanner strategy pool
+    veslo.anthill.vacancy.scanner.strategy_pool.head_hunter:
+        class: Veslo\AnthillBundle\Vacancy\Scanner\StrategyPool\OneToOneStrategyPool
+        arguments:
+            -   Strategy\HeadHunter\Api\Version20190213: '@veslo.anthill.vacancy.scanner.strategy.head_hunter.api.version20190213'
+
+    # Parse strategies
+    veslo.anthill.vacancy.scanner.strategy.head_hunter.api.version20190213:
+        class: Veslo\AnthillBundle\Vacancy\Scanner\Strategy\HeadHunter\Api\Version20190213

@@ -44,7 +44,7 @@ class ConveyorAwareRoadmap
     }
 
     /**
-     * Returns name of wrapped roadmap
+     * Returns name of wrapped roadmap for conveyor workflow
      *
      * @return string
      */
@@ -76,7 +76,7 @@ class ConveyorAwareRoadmap
     }
 
     /**
-     * Returns URL that contains vacancy for parsing with meta information about roadmap
+     * Returns URL that contains vacancy for parsing with meta information about roadmap for conveyor workflow
      *
      * @return LocationDto|null
      *
@@ -113,7 +113,8 @@ class ConveyorAwareRoadmap
      */
     private function upgradeToConfigurableRoadmapDto(RoadmapDto $roadmapDto): ConfigurableRoadmapDto
     {
-        $configurableRoadmapDto = new ConfigurableRoadmapDto($roadmapDto);
+        $configurableRoadmapDto = new ConfigurableRoadmapDto();
+        $configurableRoadmapDto->setName($roadmapDto->getName());
 
         $strategy     = $this->roadmap->getStrategy();
         $strategyName = substr(get_class($strategy), stripos(get_class($strategy), 'Strategy\\'));

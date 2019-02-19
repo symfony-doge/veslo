@@ -12,7 +12,7 @@ use Veslo\AppBundle\Exception\AppBundleExceptionInterface;
 /**
  * Will be thrown if conveyor failed payload distribution among the queues
  */
-class DistributeException extends RuntimeException implements AppBundleExceptionInterface
+class DistributionFailedException extends RuntimeException implements AppBundleExceptionInterface
 {
     /**
      * Default error message
@@ -44,9 +44,9 @@ class DistributeException extends RuntimeException implements AppBundleException
      *
      * @param string $queueName Queue name in message broker
      *
-     * @return DistributeException
+     * @return DistributionFailedException
      */
-    public static function withQueueName(string $queueName): DistributeException
+    public static function withQueueName(string $queueName): DistributionFailedException
     {
         $message = str_replace(['{queueName}'], $queueName, self::MESSAGE_WITH_QUEUE);
 

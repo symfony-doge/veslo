@@ -83,8 +83,6 @@ class CrankyDungBeetle implements DiggerInterface
      * Temporarily stops digging if too much unsuccessful attempts occurred
      *
      * {@inheritdoc}
-     *
-     * @throws InvalidArgumentException
      */
     public function dig(ConveyorAwareRoadmap $roadmap, int $iterations = 1): int
     {

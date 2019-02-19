@@ -19,7 +19,7 @@ class ConfigurationDto
     /**
      * Sets configuration key
      *
-     * @param string $key
+     * @param string $key Configuration key
      *
      * @return void
      */

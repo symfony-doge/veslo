@@ -8,7 +8,7 @@ use Doctrine\ORM\Cache;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters\HeadHunter as HeadHunterParameters;
-use Veslo\AnthillBundle\Exception\Roadmap\ConfigurationNotFoundException;
+use Veslo\AnthillBundle\Exception\Vacancy\Roadmap\ConfigurationNotFoundException;
 use Veslo\AppBundle\Entity\Repository\BaseRepository;
 
 /**

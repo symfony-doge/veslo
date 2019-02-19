@@ -10,7 +10,8 @@ use Veslo\AnthillBundle\Dto\Vacancy\Roadmap\StrategyDto;
 /**
  * Context of configurable roadmap by which the vacancy was found
  */
-class ConfigurableRoadmapDto
+// inheritance used only for symfony serializer compatibility and cleaner communication with external services.
+class ConfigurableRoadmapDto extends RoadmapDto
 {
     /**
      * Context of searching algorithm
@@ -25,23 +26,6 @@ class ConfigurableRoadmapDto
      * @var ConfigurationDto
      */
     private $configuration;
-
-    /**
-     * Base roadmap data
-     *
-     * @var RoadmapDto
-     */
-    private $roadmap;
-
-    /**
-     * ConfigurableRoadmapDto constructor.
-     *
-     * @param RoadmapDto|null $roadmap Base roadmap data
-     */
-    public function __construct(?RoadmapDto $roadmap = null)
-    {
-        $this->roadmap = $roadmap;
-    }
 
     /**
      * Sets context of searching algorithm
@@ -85,27 +69,5 @@ class ConfigurableRoadmapDto
     public function getConfiguration(): ?ConfigurationDto
     {
         return $this->configuration;
-    }
-
-    /**
-     * Sets base roadmap data
-     *
-     * @param RoadmapDto $roadmap
-     *
-     * @return void
-     */
-    public function setRoadmap(RoadmapDto $roadmap): void
-    {
-        $this->roadmap = $roadmap;
-    }
-
-    /**
-     * Returns base roadmap data
-     *
-     * @return RoadmapDto|null
-     */
-    public function getRoadmap(): ?RoadmapDto
-    {
-        return $this->roadmap;
     }
 }

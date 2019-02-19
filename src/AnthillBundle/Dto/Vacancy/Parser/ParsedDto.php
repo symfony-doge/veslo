@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Dto\Vacancy\Parser;
 
-use Veslo\AnthillBundle\Dto\Vacancy\ParserDto;
-use Veslo\AnthillBundle\Dto\Vacancy\RawDto;
 use Veslo\AnthillBundle\Dto\Vacancy\LocationDto;
+use Veslo\AnthillBundle\Dto\Vacancy\MultistrategicScannerDto;
+use Veslo\AnthillBundle\Dto\Vacancy\RawDto;
+use Veslo\AnthillBundle\Dto\Vacancy\ScannerDto;
 
 /**
  * Context of parsed vacancy data for analysis
@@ -24,11 +25,11 @@ class ParsedDto
     private $vacancy;
 
     /**
-     * Context of executed parser
+     * Context of executed scanner
      *
-     * @var ParserDto
+     * @var MultistrategicScannerDto|ScannerDto
      */
-    private $parser;
+    private $scanner;
 
     /**
      * Context of vacancy location from internet
@@ -60,25 +61,25 @@ class ParsedDto
     }
 
     /**
-     * Sets context of executed parser
+     * Sets context of executed scanner
      *
-     * @param ParserDto $parser Context of executed parser
+     * @param ScannerDto $scanner Context of executed scanner
      *
      * @return void
      */
-    public function setParser(ParserDto $parser): void
+    public function setScanner(ScannerDto $scanner): void
     {
-        $this->parser = $parser;
+        $this->scanner = $scanner;
     }
 
     /**
-     * Returns context of executed parser
+     * Returns context of executed scanner
      *
-     * @return ParserDto|null
+     * @return ScannerDto|null
      */
-    public function getParser(): ?ParserDto
+    public function getScanner(): ?ScannerDto
     {
-        return $this->parser;
+        return $this->scanner;
     }
 
     /**

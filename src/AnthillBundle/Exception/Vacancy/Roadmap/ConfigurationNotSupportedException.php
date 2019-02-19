@@ -2,30 +2,34 @@
 
 declare(strict_types=1);
 
-namespace Veslo\AnthillBundle\Exception;
+namespace Veslo\AnthillBundle\Exception\Vacancy\Roadmap;
 
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
+use Veslo\AnthillBundle\Exception\AnthillBundleExceptionInterface;
+use Veslo\AnthillBundle\Vacancy\ConfigurableRoadmapInterface;
 
 /**
- * Will be thrown if roadmap is not found
+ * Will be thrown if roadmap doesn't support configuration
+ *
+ * @see ConfigurableRoadmapInterface
  */
-class RoadmapNotFoundException extends RuntimeException implements AnthillBundleExceptionInterface
+class ConfigurationNotSupportedException extends RuntimeException implements AnthillBundleExceptionInterface
 {
     /**
      * Default error message
      *
      * @const string
      */
-    public const MESSAGE = 'Roadmap is not found.';
+    public const MESSAGE = 'Configuration of roadmap is not supported.';
 
     /**
-     * Error message with name of missed roadmap
+     * Error message with name of roadmap that doesn't support configuration
      *
      * @const string
      */
-    public const MESSAGE_WITH_NAME = "Roadmap '{roadmapName}' is not found. Declare it in roadmaps.yml";
+    public const MESSAGE_WITH_NAME = "Configuration of roadmap '{roadmapName}' is not supported.";
 
     /**
      * {@inheritdoc}
@@ -43,9 +47,9 @@ class RoadmapNotFoundException extends RuntimeException implements AnthillBundle
      *
      * @param string $roadmapName Roadmap name
      *
-     * @return RoadmapNotFoundException
+     * @return ConfigurationNotSupportedException
      */
-    public static function withName(string $roadmapName): RoadmapNotFoundException
+    public static function withName(string $roadmapName): ConfigurationNotSupportedException
     {
         $message = str_replace('{roadmapName}', $roadmapName, self::MESSAGE_WITH_NAME);
 

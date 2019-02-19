@@ -8,8 +8,7 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use Veslo\AnthillBundle\Vacancy\DiggerInterface;
 use Veslo\AnthillBundle\Vacancy\Roadmap\ConveyorAwareRoadmap;
-use Veslo\AppBundle\Workflow\Vacancy\Research\Conveyor;
-use Veslo\AppBundle\Workflow\Vacancy\Research\Conveyor\Payload;
+use Veslo\AppBundle\Workflow\Vacancy\PitInterface;
 
 /**
  * Digs some dung (vacancies) from internet and sends to conveyor for processing
@@ -48,22 +47,22 @@ class DungBeetle implements DiggerInterface
     private $logger;
 
     /**
-     * Manages data exchange between workers
+     * Storage for fresh dung (vacancies)
      *
-     * @var Conveyor
+     * @var PitInterface
      */
-    private $conveyor;
+    private $dungPit;
 
     /**
      * DungBeetle constructor.
      *
-     * @param LoggerInterface $logger   Logger as it is
-     * @param Conveyor        $conveyor Manages data exchange between workers
+     * @param LoggerInterface $logger  Logger as it is
+     * @param PitInterface    $dungPit Storage for digged dung (vacancies)
      */
-    public function __construct(LoggerInterface $logger, Conveyor $conveyor)
+    public function __construct(LoggerInterface $logger, PitInterface $dungPit)
     {
-        $this->logger   = $logger;
-        $this->conveyor = $conveyor;
+        $this->logger  = $logger;
+        $this->dungPit = $dungPit;
     }
 
     /**
@@ -73,11 +72,11 @@ class DungBeetle implements DiggerInterface
     {
         $roadmapName = $roadmap->getName();
 
-        $this->logger->info('Digging started.', ['roadmap' => $roadmapName, 'iterations' => $iterations]);
+        $this->logger->debug('Digging started.', ['roadmap' => $roadmapName, 'iterations' => $iterations]);
 
         $successfulIterations = $this->digInternal($roadmap, $iterations);
 
-        $this->logger->info(
+        $this->logger->debug(
             'Digging completed.',
             [
                 'roadmap'    => $roadmapName,
@@ -134,14 +133,14 @@ class DungBeetle implements DiggerInterface
      *
      * @param ConveyorAwareRoadmap $roadmap Provides URL of vacancies
      *
-     * @return bool
+     * @return bool Positive, if new vacancy has been successfully found, negative otherwise
      */
     private function digIteration(ConveyorAwareRoadmap $roadmap): bool
     {
         $roadmapName = $roadmap->getName();
 
         if (!$roadmap->hasNext()) {
-            $this->logger->info('No more vacancies.', ['roadmap' => $roadmapName]);
+            $this->logger->debug('No more vacancies.', ['roadmap' => $roadmapName]);
 
             return false;
         }
@@ -151,7 +150,7 @@ class DungBeetle implements DiggerInterface
         $vacancyUrl = $locationDto->getVacancyUrl();
         $this->logger->info('Vacancy found.', ['roadmap' => $roadmapName, 'vacancyUrl' => $vacancyUrl]);
 
-        $this->conveyor->send(new Payload($locationDto));
+        $this->dungPit->offer($locationDto);
 
         return true;
     }

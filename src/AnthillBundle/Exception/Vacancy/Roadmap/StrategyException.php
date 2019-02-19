@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Veslo\AnthillBundle\Exception\Roadmap;
+namespace Veslo\AnthillBundle\Exception\Vacancy\Roadmap;
 
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;

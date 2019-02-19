@@ -6,11 +6,13 @@ namespace Veslo\AppBundle\Workflow\Vacancy\Research;
 
 use Bunny\Channel;
 use Bunny\Client;
+use Bunny\Message;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Workflow\Workflow;
-use Veslo\AppBundle\Exception\Workflow\Conveyor\DistributeException;
+use Veslo\AppBundle\Exception\Workflow\Conveyor\ConnectionFailedException;
+use Veslo\AppBundle\Exception\Workflow\Conveyor\DistributionFailedException;
 use Veslo\AppBundle\Workflow\Vacancy\Research\Conveyor\Payload;
 
 /**
@@ -81,14 +83,13 @@ class Conveyor
     /**
      * Sends payload data to queues for processing according to configured workflow transitions
      *
-     * @param Payload $payload Data to be passed through workflow
+     * @param object $dto Data to be passed through workflow
      *
      * @return void
-     *
-     * @throws Exception
      */
-    public function send(Payload $payload): void
+    public function send(object $dto): void
     {
+        $payload     = new Payload($dto);
         $transitions = $this->workflow->getEnabledTransitions($payload);
 
         if (empty($transitions)) {
@@ -106,6 +107,30 @@ class Conveyor
     }
 
     /**
+     * Returns data transfer object filled up with data from queues according to configured workflow transitions
+     *
+     * @param string $dtoClass Class of data transfer object
+     *
+     * @return object|null
+     */
+    public function receive(string $dtoClass): ?object
+    {
+        // TODO: if (!in_array($dtoName, $this->dtoNames))
+
+        $dto = new $dtoClass;
+
+        $transitions = $this->workflow->getEnabledTransitions(new Payload($dto));
+
+        // Space for multiple queue logic here.
+        $transition = array_shift($transitions);
+
+        $transitionName = $transition->getName();
+        $queueName      = $this->queuePrefix . $transitionName;
+
+        return $this->get($dtoClass, $queueName);
+    }
+
+    /**
      * Distributes payload data among the queues for conveyor processing via workflow
      *
      * @param Payload $payload    Data to be passed through workflow
@@ -113,13 +138,11 @@ class Conveyor
      *
      * @return void
      *
-     * @throws Exception
+     * @throws DistributionFailedException
      */
     private function distribute(Payload $payload, array $queueNames): void
     {
-        if (!$this->amqpClient->isConnected()) {
-            $this->amqpClient->connect();
-        }
+        $this->ensureConnection();
 
         $channel = $this->amqpClient->channel();
         $channel->txSelect();
@@ -136,16 +159,15 @@ class Conveyor
                 });
 
                 $this->logger->critical(
-                    'Payload distribution failed.',
+                    'Payload publish failed.',
                     [
                         'message'   => $e->getMessage(),
                         'payload'   => $this->serializer->normalize($payload),
-                        'channel'   => $this->serializer->normalize($channel),
                         'queueName' => $queueName,
                     ]
                 );
 
-                throw DistributeException::withQueueName($queueName);
+                throw DistributionFailedException::withQueueName($queueName);
             }
         }
 
@@ -170,7 +192,42 @@ class Conveyor
         $message = $this->serializer->serialize($data, 'json');
 
         $channel->publish($message, ['content_type' => 'application/json'], '', $queueName);
+    }
 
-        $this->logger->info('Payload publishing...', ['queueName' => $queueName, 'message' => $message]);
+    // TODO: extract into gateway +descr
+    private function get(string $dtoClass, string $queueName): ?object
+    {
+        $this->ensureConnection();
+
+        $channel = $this->amqpClient->channel();
+        $channel->queueDeclare($queueName);
+
+        $message = $channel->get($queueName, true);
+
+        if (!$message instanceof Message) {
+            return null;
+        }
+
+        return $this->serializer->deserialize($message->content, $dtoClass,'json');
+    }
+
+    /**
+     * Ensures connection with message broker is established
+     *
+     * @return void
+     *
+     * @throws ConnectionFailedException
+     */
+    private function ensureConnection(): void
+    {
+        if ($this->amqpClient->isConnected()) {
+            return;
+        }
+
+        try {
+            $this->amqpClient->connect();
+        } catch (Exception $e) {
+            throw ConnectionFailedException::withPrevious($e);
+        }
     }
 }

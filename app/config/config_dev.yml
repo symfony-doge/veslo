@@ -18,13 +18,19 @@ monolog:
             path: '%kernel.logs_dir%/%kernel.environment%.log'
             max_files: 1
             level: debug
-            channels: ['!event']
+            channels: ['!event', '!anthill.digging', '!anthill.parsing']
         anthill.digging:
             type: rotating_file
             path: '%kernel.logs_dir%/%kernel.environment%.anthill.digging.log'
             max_files: 1
             level: debug
-            channels: ['app.workflow', 'anthill.digging', 'doctrine']
+            channels: ['anthill.digging', 'doctrine']
+        anthill.parsing:
+            type: rotating_file
+            path: '%kernel.logs_dir%/%kernel.environment%.anthill.parsing.log'
+            max_files: 1
+            level: debug
+            channels: ['anthill.parsing']
         console:
             type: console
             process_psr_3_messages: false

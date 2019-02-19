@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Veslo\AnthillBundle\Dto\Vacancy\Roadmap;
+namespace Veslo\AnthillBundle\Dto\Vacancy;
 
 /**
- * Context of searching algorithm used by roadmap
+ * Context of scanner for vacancy URL
  */
-class StrategyDto
+class ScannerDto
 {
     /**
-     * Searching algorithm name
+     * Scanner name
      *
      * @var string
      */
     private $name;
 
     /**
-     * Sets name for searching algorithm used by roadmap
+     * Sets scanner name
      *
-     * @param string $name Searching algorithm name
+     * @param string $name Scanner name
      *
      * @return void
      */
@@ -29,7 +29,7 @@ class StrategyDto
     }
 
     /**
-     * Returns name of searching algorithm used by roadmap
+     * Returns scanner name
      *
      * @return string|null
      */

@@ -13,3 +13,11 @@ services:
             - '@veslo.anthill.vacancy.digger.cranky_dung_beetle'
         tags:
             - { name: 'console.command', command: 'veslo:anthill:digging' }
+
+    veslo.anthill.command.parsing:
+        class: Veslo\AnthillBundle\Command\ParsingCommand
+        arguments:
+            - '@veslo.anthill.vacancy.parser.earwig'
+            - '@veslo.anthill.vacancy.dung_pit'
+        tags:
+            - { name: 'console.command', command: 'veslo:anthill:parsing' }

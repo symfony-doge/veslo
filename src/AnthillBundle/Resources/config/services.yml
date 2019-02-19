@@ -14,9 +14,42 @@ services:
         class: Veslo\AnthillBundle\Vacancy\Digger\DungBeetle
         arguments:
             - '@monolog.logger.anthill.digging'
-            - '@veslo.app.workflow.vacancy.research.conveyor'
+            - '@veslo.anthill.vacancy.dung_pit'
+
+    veslo.anthill.vacancy.parser.earwig:
+        class: Veslo\AnthillBundle\Vacancy\Parser\Earwig
+        arguments:
+            - '@monolog.logger.anthill.parsing'
+            - '@veslo.anthill.vacancy.raw_data_preview_normalizer'
+            - '@veslo.anthill.vacancy.scanner_pool.conveyor_aware_scanner_pool'
+            - '@veslo.anthill.vacancy.chewed_dung_pit'
 
     veslo.anthill.vacancy.ant_worker:
         class: Veslo\AnthillBundle\Vacancy\AntWorker
         arguments:
             - '@logger'
+
+    veslo.anthill.vacancy.dung_pit:
+        class: Veslo\AnthillBundle\Vacancy\Pit\DungPit
+        arguments:
+            - '@veslo.app.workflow.vacancy.research.conveyor'
+            - 'Veslo\AnthillBundle\Dto\Vacancy\LocationDto'
+
+    veslo.anthill.vacancy.chewed_dung_pit:
+        class: Veslo\AnthillBundle\Vacancy\Pit\DungPit
+        arguments:
+            - '@veslo.app.workflow.vacancy.research.conveyor'
+            - 'Veslo\AnthillBundle\Dto\Vacancy\ParsedDto'
+
+    veslo.anthill.vacancy.scanner_pool.conveyor_aware_scanner_pool:
+        class: Veslo\AnthillBundle\Vacancy\ScannerPool\ConveyorAwareScannerPool
+        arguments:
+            - '@veslo.anthill.vacancy.scanner_pool.unique_scanner_pool'
+
+    veslo.anthill.vacancy.scanner_pool.unique_scanner_pool:
+        class: Veslo\AnthillBundle\Vacancy\ScannerPool\UniqueScannerPool
+
+    veslo.anthill.vacancy.raw_data_preview_normalizer:
+        class: Veslo\AnthillBundle\Vacancy\RawDataPreviewNormalizer
+        arguments:
+            - '@serializer'

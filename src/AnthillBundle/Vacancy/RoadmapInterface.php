@@ -7,14 +7,14 @@ namespace Veslo\AnthillBundle\Vacancy;
 use Veslo\AnthillBundle\Enum\Vacancy\Roadmap;
 
 /**
- * Should be implemented by service that holds context and parsing plan for specific site
+ * Should be implemented by service that holds context and vacancy searching plan for specific website
  *
  * @see Roadmap
  */
 interface RoadmapInterface
 {
     /**
-     * Roadmap service tag for aggregation in storage
+     * Service tag for aggregation in storage
      *
      * @const string
      */

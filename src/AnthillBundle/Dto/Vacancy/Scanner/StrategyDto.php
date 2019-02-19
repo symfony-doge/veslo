@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Veslo\AnthillBundle\Dto\Vacancy;
+namespace Veslo\AnthillBundle\Dto\Vacancy\Scanner;
 
 /**
- * Context of parser for vacancy URL
+ * Context of parsing algorithm used by scanner
  */
-class ParserDto
+class StrategyDto
 {
     /**
-     * Parser name
+     * Parsing algorithm name
      *
      * @var string
      */
     private $name;
 
     /**
-     * Sets parser name
+     * Sets name for parsing algorithm used by scanner
      *
-     * @param string $name Parser name
+     * @param string $name Parsing algorithm name
      *
      * @return void
      */
@@ -29,7 +29,7 @@ class ParserDto
     }
 
     /**
-     * Returns parser name
+     * Returns name of parsing algorithm used by scanner
      *
      * @return string|null
      */

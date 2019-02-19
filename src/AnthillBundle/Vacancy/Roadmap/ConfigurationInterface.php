@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Vacancy\Roadmap;
 
-use Veslo\AnthillBundle\Exception\Roadmap\ConfigurationNotFoundException;
+use Veslo\AnthillBundle\Exception\Vacancy\Roadmap\ConfigurationNotFoundException;
 use Veslo\AnthillBundle\Vacancy\Roadmap\Configuration\ParametersInterface;
 
 /**
