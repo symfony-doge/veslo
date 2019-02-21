@@ -77,9 +77,10 @@ class ParsingCommand extends Command
         $successfulIterations = $this->earwig->parse($this->dungPit, $iterations);
 
         $messageComplete = str_replace(
-            ['{iterations}', '{successful}'],
-            [$iterations, $successfulIterations],
+            ['{iterations}', '{successful}', '{memory}', '{memoryPeak}'],
+            [$iterations, $successfulIterations, memory_get_usage(), memory_get_peak_usage()],
             'Parsing complete ({iterations} iterations, {successful} successful).'
+            . ' Memory usage: {memory}/{memoryPeak}'
         );
         $output->writeln($messageComplete);
     }

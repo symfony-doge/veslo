@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Veslo\AnthillBundle\Vacancy\Scanner;
 
 use Veslo\AnthillBundle\Dto\Vacancy\RawDto;
+use Veslo\AnthillBundle\Exception\Vacancy\Scanner\InputDataEmptyException;
+use Veslo\AnthillBundle\Exception\Vacancy\Scanner\StrategyNotChosenException;
 use Veslo\AnthillBundle\Vacancy\Scanner\StrategyPool\OneToOneStrategyPool;
 use Veslo\AnthillBundle\Vacancy\ScannerInterface;
 
@@ -52,14 +54,24 @@ class MultistrategicScanner implements ScannerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws StrategyNotChosenException
+     * @throws InputDataEmptyException
      */
     public function scan(string $vacancyUrl): RawDto
     {
-        // TODO: Implement scan() method.
-        // if (!$this->_strategy instanceof StrategyInterface
+        if (!$this->_strategy instanceof StrategyInterface) {
+            throw StrategyNotChosenException::withVacancyUrl($vacancyUrl);
+        }
 
-        $data = new RawDto();
+        $data = $this->_strategy->fetch($vacancyUrl);
 
-        return $data;
+        if (empty($data)) {
+            throw InputDataEmptyException::withVacancyUrl($vacancyUrl);
+        }
+
+        $vacancyData = $this->_strategy->tokenize($data);
+
+        return $vacancyData;
     }
 }

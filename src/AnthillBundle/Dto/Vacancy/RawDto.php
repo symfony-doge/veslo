@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Veslo\AnthillBundle\Dto\Vacancy;
 
 use DateTime;
+use DateTimeInterface;
+use Exception;
+use InvalidArgumentException;
 
 /**
  * Context of raw vacancy data from website for analysis
@@ -22,6 +25,13 @@ class RawDto
     private $url;
 
     /**
+     * Unique vacancy identifier on provider's website
+     *
+     * @var string
+     */
+    private $externalIdentifier;
+
+    /**
      * Vacancy region name
      *
      * @var string
@@ -36,18 +46,18 @@ class RawDto
     private $companyName;
 
     /**
-     * Vacancy company logo url
-     *
-     * @var string
-     */
-    private $companyLogoUrl;
-
-    /**
      * Vacancy company website url
      *
-     * @var string
+     * @var string|null
      */
     private $companyUrl;
+
+    /**
+     * Vacancy company logo url
+     *
+     * @var string|null
+     */
+    private $companyLogoUrl;
 
     /**
      * Vacancy title
@@ -59,7 +69,7 @@ class RawDto
     /**
      * Vacancy preview text
      *
-     * @var string
+     * @var string|null
      */
     private $snippet;
 
@@ -73,23 +83,40 @@ class RawDto
     /**
      * Vacancy salary amount from
      *
-     * @var int
+     * @var int|null
      */
     private $salaryFrom;
 
     /**
      * Vacancy salary amount to
      *
-     * @var int
+     * @var int|null
      */
     private $salaryTo;
 
     /**
+     * Vacancy salary currency
+     *
+     * @var string|null
+     */
+    private $salaryCurrency;
+
+    /**
      * Vacancy publication date
      *
-     * @var DateTime
+     * @var DateTimeInterface
      */
     private $publicationDate;
+
+    /**
+     * Returns vacancy URL
+     *
+     * @return string|null
+     */
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
 
     /**
      * Sets vacancy URL
@@ -104,13 +131,35 @@ class RawDto
     }
 
     /**
-     * Returns vacancy URL
+     * Returns unique vacancy identifier on provider's website
+     *
+     * @return string
+     */
+    public function getExternalIdentifier(): string
+    {
+        return $this->externalIdentifier;
+    }
+
+    /**
+     * Sets unique vacancy identifier on provider's website
+     *
+     * @param string $externalIdentifier Unique vacancy identifier on provider's website
+     *
+     * @return void
+     */
+    public function setExternalIdentifier(string $externalIdentifier): void
+    {
+        $this->externalIdentifier = $externalIdentifier;
+    }
+
+    /**
+     * Returns vacancy region name
      *
      * @return string|null
      */
-    public function getUrl(): ?string
+    public function getRegionName(): ?string
     {
-        return $this->url;
+        return $this->regionName;
     }
 
     /**
@@ -126,13 +175,13 @@ class RawDto
     }
 
     /**
-     * Returns vacancy region name
+     * Returns vacancy company name
      *
      * @return string|null
      */
-    public function getRegionName(): ?string
+    public function getCompanyName(): ?string
     {
-        return $this->regionName;
+        return $this->companyName;
     }
 
     /**
@@ -148,13 +197,13 @@ class RawDto
     }
 
     /**
-     * Returns vacancy company name
+     * Returns vacancy company logo URL
      *
      * @return string|null
      */
-    public function getCompanyName(): ?string
+    public function getCompanyLogoUrl(): ?string
     {
-        return $this->companyName;
+        return $this->companyLogoUrl;
     }
 
     /**
@@ -170,13 +219,13 @@ class RawDto
     }
 
     /**
-     * Returns vacancy company logo URL
+     * Returns vacancy company URL
      *
      * @return string|null
      */
-    public function getCompanyLogoUrl(): ?string
+    public function getCompanyUrl(): ?string
     {
-        return $this->companyLogoUrl;
+        return $this->companyUrl;
     }
 
     /**
@@ -192,13 +241,13 @@ class RawDto
     }
 
     /**
-     * Returns vacancy company URL
+     * Returns vacancy title
      *
      * @return string|null
      */
-    public function getCompanyUrl(): ?string
+    public function getTitle(): ?string
     {
-        return $this->companyUrl;
+        return $this->title;
     }
 
     /**
@@ -214,13 +263,13 @@ class RawDto
     }
 
     /**
-     * Returns vacancy title
+     * Returns vacancy preview text
      *
      * @return string|null
      */
-    public function getTitle(): ?string
+    public function getSnippet(): ?string
     {
-        return $this->title;
+        return $this->snippet;
     }
 
     /**
@@ -236,13 +285,13 @@ class RawDto
     }
 
     /**
-     * Returns vacancy preview text
+     * Returns vacancy text
      *
      * @return string|null
      */
-    public function getSnippet(): ?string
+    public function getText(): ?string
     {
-        return $this->snippet;
+        return $this->text;
     }
 
     /**
@@ -258,13 +307,13 @@ class RawDto
     }
 
     /**
-     * Returns vacancy text
+     * Returns vacancy salary amount from
      *
-     * @return string|null
+     * @return int|null
      */
-    public function getText(): ?string
+    public function getSalaryFrom(): ?int
     {
-        return $this->text;
+        return $this->salaryFrom;
     }
 
     /**
@@ -280,13 +329,13 @@ class RawDto
     }
 
     /**
-     * Returns vacancy salary amount from
+     * Returns vacancy salary amount to
      *
      * @return int|null
      */
-    public function getSalaryFrom(): ?int
+    public function getSalaryTo(): ?int
     {
-        return $this->salaryFrom;
+        return $this->salaryTo;
     }
 
     /**
@@ -302,34 +351,56 @@ class RawDto
     }
 
     /**
-     * Returns vacancy salary amount to
+     * Returns vacancy salary currency
      *
-     * @return int|null
+     * @return string|null
      */
-    public function getSalaryTo(): ?int
+    public function getSalaryCurrency(): ?string
     {
-        return $this->salaryTo;
+        return $this->salaryCurrency;
     }
 
     /**
-     * Sets vacancy publication date
+     * Sets vacancy salary currency
      *
-     * @param DateTime $publicationDate Vacancy publication date
+     * @param string $salaryCurrency Vacancy salary currency
      *
      * @return void
      */
-    public function setPublicationDate(DateTime $publicationDate): void
+    public function setSalaryCurrency(string $salaryCurrency): void
     {
-        $this->publicationDate = $publicationDate;
+        $this->salaryCurrency = $salaryCurrency;
     }
 
     /**
      * Returns vacancy publication date
      *
-     * @return DateTime|null
+     * @return DateTimeInterface|null
      */
-    public function getPublicationDate(): ?DateTime
+    public function getPublicationDate(): ?DateTimeInterface
     {
         return $this->publicationDate;
+    }
+
+    /**
+     * Sets vacancy publication date
+     *
+     * @param DateTimeInterface|string $publicationDate Vacancy publication date
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
+    public function setPublicationDate($publicationDate): void
+    {
+        if ($publicationDate instanceof DateTimeInterface) {
+            $this->publicationDate = $publicationDate;
+        } elseif (is_string($publicationDate)) {
+            $this->publicationDate = new DateTime($publicationDate);
+        } else {
+            throw new InvalidArgumentException(
+                'Publication date should be either instanceof DateTimeInterface or string'
+            );
+        }
     }
 }

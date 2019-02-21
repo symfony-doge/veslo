@@ -100,7 +100,7 @@ class HeadHunter implements ConfigurationInterface
         $this->parametersRepository->save($this->_parameters);
 
         $normalizedParameters = $this->normalizer->normalize($this->_parameters);
-        $this->logger->info('Roadmap configuration changed.', ['parameters' => $normalizedParameters]);
+        $this->logger->debug('Roadmap configuration changed.', ['parameters' => $normalizedParameters]);
     }
 
     /**

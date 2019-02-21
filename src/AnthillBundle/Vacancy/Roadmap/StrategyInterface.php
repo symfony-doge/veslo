@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Vacancy\Roadmap;
 
-use Veslo\AnthillBundle\Exception\Vacancy\Roadmap\StrategyException;
+use Veslo\AnthillBundle\Exception\Vacancy\Roadmap\Strategy\LookupFailedException;
 
 /**
  * Represents vacancy searching algorithm for specific website-provider
@@ -21,7 +21,7 @@ interface StrategyInterface
      *
      * @return string|null
      *
-     * @throws StrategyException If an error occurred during vacancy lookup
+     * @throws LookupFailedException If an error occurred during vacancy lookup on website
      */
     public function lookup(ConfigurationInterface $configuration): ?string;
 

@@ -43,3 +43,8 @@ services:
     # Parse strategies
     veslo.anthill.vacancy.scanner.strategy.head_hunter.api.version20190213:
         class: Veslo\AnthillBundle\Vacancy\Scanner\Strategy\HeadHunter\Api\Version20190213
+        arguments:
+            - '@monolog.logger.anthill.parsing'
+            - '@veslo.app.http_client'
+            - '@serializer.encoder.json'
+            - '@property_accessor'

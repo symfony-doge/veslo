@@ -35,7 +35,8 @@ class RawDataPreviewNormalizer implements NormalizerInterface
     {
         $normalizedData = $this->normalizer->normalize($object, $format, $context);
 
-        $normalizedData['vacancy']['text'] = '...';
+        $normalizedData['vacancy']['snippet'] = '...';
+        $normalizedData['vacancy']['text']    = '...';
 
         return $normalizedData;
     }

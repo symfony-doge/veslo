@@ -35,10 +35,11 @@ class VesloAppExtension extends Extension
         $container->setParameter('veslo.app.http_client.config', $httpClientConfig);
 
         $amqpClientOptions = [
-            'host'     => $config['amqp_client']['host'],
-            'vhost'    => $config['amqp_client']['vhost'],
-            'user'     => $config['amqp_client']['user'],
-            'password' => $config['amqp_client']['password'],
+            'host'      => $config['amqp_client']['host'],
+            'vhost'     => $config['amqp_client']['vhost'],
+            'user'      => $config['amqp_client']['user'],
+            'password'  => $config['amqp_client']['password'],
+            'heartbeat' => $config['amqp_client']['heartbeat'],
         ];
         $container->setParameter('veslo.app.amqp_client.options', $amqpClientOptions);
 

@@ -28,3 +28,4 @@ parameters:
     app.amqp_client.vhost: '%env(string:RABBITMQ_DEFAULT_VHOST)%'
     app.amqp_client.user: '%env(string:RABBITMQ_DEFAULT_USER)%'
     app.amqp_client.password: '%env(string:RABBITMQ_DEFAULT_PASS)%'
+    app.amqp_client.heartbeat: '%env(string:RABBITMQ_HEARTBEAT)%'

@@ -6,6 +6,8 @@ ARG HOST_UID
 ARG TIMEZONE
 ARG SUPERVISOR_VERSION
 
+WORKDIR /etc/supervisor/conf.d
+
 USER root
 
 # system
@@ -31,8 +33,6 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
 # db
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
     docker-php-ext-install pdo_pgsql pgsql
-
-WORKDIR /etc/supervisor/conf.d
 
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 COPY anthill /etc/supervisor/conf.d/anthill

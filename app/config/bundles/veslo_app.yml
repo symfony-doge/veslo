@@ -7,6 +7,7 @@ veslo_app:
         vhost: '%app.amqp_client.vhost%'
         user: '%app.amqp_client.user%'
         password: '%app.amqp_client.password%'
+        heartbeat: '%app.amqp_client.heartbeat%'
     workflow:
         vacancy_research:
             transitions:

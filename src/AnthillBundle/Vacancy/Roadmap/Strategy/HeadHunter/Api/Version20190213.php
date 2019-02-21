@@ -11,7 +11,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters\HeadHunter as HeadHunterParameters;
-use Veslo\AnthillBundle\Exception\Vacancy\Roadmap\StrategyException;
+use Veslo\AnthillBundle\Exception\Vacancy\Roadmap\Strategy\LookupFailedException;
 use Veslo\AnthillBundle\Vacancy\Roadmap\ConfigurationInterface;
 use Veslo\AnthillBundle\Vacancy\Roadmap\StrategyInterface;
 
@@ -203,7 +203,7 @@ class Version20190213 implements StrategyInterface
         if (0 > $this->_recursionCallsAvailable) {
             $providerUri = $parameters->getProviderUri();
 
-            throw StrategyException::providerIsUnstable($providerUri);
+            throw LookupFailedException::providerIsUnstable($providerUri);
         }
 
         $response = $this->iAmCurious($parameters, $page);
@@ -259,9 +259,16 @@ class Version20190213 implements StrategyInterface
         try {
             $response = $this->httpClient->request('GET', $uri, ['query' => $query]);
         } catch (GuzzleException $e) {
-            $this->logger->error('Request to website failed.', ['uri' => $uri, 'query' => $query]);
+            $this->logger->error(
+                'Request to website failed.',
+                [
+                    'message' => $e->getMessage(),
+                    'uri'     => $uri,
+                    'query'   => $query,
+                ]
+            );
 
-            throw StrategyException::withPrevious($e);
+            throw LookupFailedException::withPrevious($e);
         }
 
         $json  = $response->getBody()->getContents();
@@ -283,7 +290,7 @@ class Version20190213 implements StrategyInterface
             return (int) $response['found'];
         }
 
-        throw StrategyException::unexpectedResponse('found');
+        throw LookupFailedException::unexpectedResponse('found');
     }
 
     /**
@@ -296,6 +303,8 @@ class Version20190213 implements StrategyInterface
      */
     private function resolveUrl(array $response, ?string $cacheKey = null): string
     {
+        // Symfony PropertyAccessor is not used due to unnecessary dependency overload.
+        // This strategy requires only two fields to analyse: found count and url.
         if (!empty($response['items'])) {
             $item = array_shift($response['items']);
 
@@ -308,7 +317,7 @@ class Version20190213 implements StrategyInterface
             }
         }
 
-        throw StrategyException::unexpectedResponse('items.0.url');
+        throw LookupFailedException::unexpectedResponse('items.0.url');
     }
 
     /**

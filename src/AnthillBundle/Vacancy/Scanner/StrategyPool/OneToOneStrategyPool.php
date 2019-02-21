@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Vacancy\Scanner\StrategyPool;
 
+use Veslo\AnthillBundle\Exception\Vacancy\Scanner\StrategyNotFoundException;
 use Veslo\AnthillBundle\Vacancy\Scanner\StrategyInterface;
 
 /**
@@ -31,19 +32,18 @@ class OneToOneStrategyPool
     /**
      * Returns parse strategy that supports specified search strategy
      *
-     * @param string $roadmapStrategyName Name of vacancy searching algorithm for specific website-provider
+     * @param string $searchStrategyName Name of vacancy search algorithm for specific website-provider
      *
      * @return StrategyInterface Parsing strategy
      *
      * @throws StrategyNotFoundException
      */
-    public function choose(string $roadmapStrategyName): StrategyInterface
+    public function choose(string $searchStrategyName): StrategyInterface
     {
-        // TODO
-        if (!array_key_exists($roadmapStrategyName, $this->strategyMap)) {
-            throw StrategyNotFoundException::withName($roadmapStrategyName);
+        if (!array_key_exists($searchStrategyName, $this->strategyMap)) {
+            throw StrategyNotFoundException::withSearchStrategyName($searchStrategyName);
         }
 
-        return $this->strategyMap[$roadmapStrategyName];
+        return $this->strategyMap[$searchStrategyName];
     }
 }

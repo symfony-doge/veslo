@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Veslo\AnthillBundle\Exception\Vacancy\Roadmap;
+namespace Veslo\AnthillBundle\Exception\Vacancy\Roadmap\Strategy;
 
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,9 +10,9 @@ use Throwable;
 use Veslo\AnthillBundle\Exception\AnthillBundleExceptionInterface;
 
 /**
- * Will be thrown if configuration for roadmap is not found
+ * Will be thrown if vacancy lookup algorithm on website has failed
  */
-class StrategyException extends RuntimeException implements AnthillBundleExceptionInterface
+class LookupFailedException extends RuntimeException implements AnthillBundleExceptionInterface
 {
     /**
      * Default error message
@@ -52,9 +52,9 @@ class StrategyException extends RuntimeException implements AnthillBundleExcepti
      *
      * @param Throwable $previous Previous exception
      *
-     * @return StrategyException
+     * @return LookupFailedException
      */
-    public static function withPrevious(Throwable $previous): StrategyException
+    public static function withPrevious(Throwable $previous): LookupFailedException
     {
         return new static(self::MESSAGE, Response::HTTP_INTERNAL_SERVER_ERROR, $previous);
     }
@@ -64,9 +64,9 @@ class StrategyException extends RuntimeException implements AnthillBundleExcepti
      *
      * @param string $needle Key or path that is missed in response data structure
      *
-     * @return StrategyException
+     * @return LookupFailedException
      */
-    public static function unexpectedResponse(string $needle): StrategyException
+    public static function unexpectedResponse(string $needle): LookupFailedException
     {
         $message = str_replace('{needle}', $needle, self::MESSAGE_UNEXPECTED_RESPONSE);
 
@@ -78,9 +78,9 @@ class StrategyException extends RuntimeException implements AnthillBundleExcepti
      *
      * @param string $providerUri Vacancy provider's URI
      *
-     * @return StrategyException
+     * @return LookupFailedException
      */
-    public static function providerIsUnstable(string $providerUri): StrategyException
+    public static function providerIsUnstable(string $providerUri): LookupFailedException
     {
         $message = str_replace('{providerUri}', $providerUri, self::MESSAGE_PROVIDER_IS_UNSTABLE);
 
