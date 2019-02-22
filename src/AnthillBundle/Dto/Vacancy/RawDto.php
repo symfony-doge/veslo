@@ -111,9 +111,9 @@ class RawDto
     /**
      * Returns vacancy URL
      *
-     * @return string|null
+     * @return string
      */
-    public function getUrl(): ?string
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -155,9 +155,9 @@ class RawDto
     /**
      * Returns vacancy region name
      *
-     * @return string|null
+     * @return string
      */
-    public function getRegionName(): ?string
+    public function getRegionName(): string
     {
         return $this->regionName;
     }
@@ -177,9 +177,9 @@ class RawDto
     /**
      * Returns vacancy company name
      *
-     * @return string|null
+     * @return string
      */
-    public function getCompanyName(): ?string
+    public function getCompanyName(): string
     {
         return $this->companyName;
     }
@@ -209,11 +209,11 @@ class RawDto
     /**
      * Sets vacancy company logo URL
      *
-     * @param string $companyLogoUrl Vacancy company logo URL
+     * @param string|null $companyLogoUrl Vacancy company logo URL
      *
      * @return void
      */
-    public function setCompanyLogoUrl(string $companyLogoUrl): void
+    public function setCompanyLogoUrl(?string $companyLogoUrl): void
     {
         $this->companyLogoUrl = $companyLogoUrl;
     }
@@ -231,11 +231,11 @@ class RawDto
     /**
      * Sets vacancy company URL
      *
-     * @param string $companyUrl Vacancy company URL
+     * @param string|null $companyUrl Vacancy company URL
      *
      * @return void
      */
-    public function setCompanyUrl(string $companyUrl): void
+    public function setCompanyUrl(?string $companyUrl): void
     {
         $this->companyUrl = $companyUrl;
     }
@@ -243,9 +243,9 @@ class RawDto
     /**
      * Returns vacancy title
      *
-     * @return string|null
+     * @return string
      */
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -275,11 +275,11 @@ class RawDto
     /**
      * Sets vacancy preview text
      *
-     * @param string $snippet Vacancy preview text
+     * @param string|null $snippet Vacancy preview text
      *
      * @return void
      */
-    public function setSnippet(string $snippet): void
+    public function setSnippet(?string $snippet): void
     {
         $this->snippet = $snippet;
     }
@@ -287,9 +287,9 @@ class RawDto
     /**
      * Returns vacancy text
      *
-     * @return string|null
+     * @return string
      */
-    public function getText(): ?string
+    public function getText(): string
     {
         return $this->text;
     }
@@ -319,11 +319,11 @@ class RawDto
     /**
      * Sets vacancy salary amount from
      *
-     * @param int $salaryFrom Vacancy salary amount from
+     * @param int|null $salaryFrom Vacancy salary amount from
      *
      * @return void
      */
-    public function setSalaryFrom(int $salaryFrom): void
+    public function setSalaryFrom(?int $salaryFrom): void
     {
         $this->salaryFrom = $salaryFrom;
     }
@@ -341,11 +341,11 @@ class RawDto
     /**
      * Sets vacancy salary amount to
      *
-     * @param int $salaryTo Vacancy salary amount to
+     * @param int|null $salaryTo Vacancy salary amount to
      *
      * @return void
      */
-    public function setSalaryTo(int $salaryTo): void
+    public function setSalaryTo(?int $salaryTo): void
     {
         $this->salaryTo = $salaryTo;
     }
@@ -363,11 +363,11 @@ class RawDto
     /**
      * Sets vacancy salary currency
      *
-     * @param string $salaryCurrency Vacancy salary currency
+     * @param string|null $salaryCurrency Vacancy salary currency
      *
      * @return void
      */
-    public function setSalaryCurrency(string $salaryCurrency): void
+    public function setSalaryCurrency(?string $salaryCurrency): void
     {
         $this->salaryCurrency = $salaryCurrency;
     }
@@ -375,9 +375,9 @@ class RawDto
     /**
      * Returns vacancy publication date
      *
-     * @return DateTimeInterface|null
+     * @return DateTimeInterface
      */
-    public function getPublicationDate(): ?DateTimeInterface
+    public function getPublicationDate(): DateTimeInterface
     {
         return $this->publicationDate;
     }

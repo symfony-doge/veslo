@@ -1,7 +1,17 @@
 {
     "name": "symfony-doge/veslo",
-    "license": "GPL-3.0-or-later",
     "type": "project",
+    "description": "Vacancy aggregator & analyser",
+    "homepage": "https://veslo.it",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Pavel Petrov",
+            "email": "itnelo@gmail.com",
+            "homepage": "https://ppetrov.it",
+            "role": "Developer"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Veslo\\": ["src/"]

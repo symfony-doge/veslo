@@ -39,7 +39,7 @@ class Company
      *
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true, options={"comment": "Company website URL"})
+     * @ORM\Column(name="url", type="string", length=255, nullable=true, options={"comment": "Company website URL"})
      */
     private $url;
 
@@ -48,7 +48,7 @@ class Company
      *
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true, options={"comment": "Company logo URL"})
+     * @ORM\Column(name="logo_url", type="string", length=255, nullable=true, options={"comment": "Company logo URL"})
      */
     private $logoUrl;
 
@@ -106,7 +106,7 @@ class Company
     /**
      * Sets company website URL
      *
-     * @param string $url Company website URL
+     * @param string|null $url Company website URL
      *
      * @return void
      */
@@ -128,7 +128,7 @@ class Company
     /**
      * Sets company logo URL
      *
-     * @param string $logoUrl Company logo URL
+     * @param string|null $logoUrl Company logo URL
      *
      * @return void
      */
