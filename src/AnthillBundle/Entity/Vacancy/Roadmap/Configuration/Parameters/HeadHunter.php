@@ -30,7 +30,7 @@ class HeadHunter implements ParametersInterface
      *
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer", options={"comment": "Parameters record identifier"})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -41,7 +41,13 @@ class HeadHunter implements ParametersInterface
      *
      * @var string
      *
-     * @ORM\Column(name="configuration_key", type="string", length=255, unique=true)
+     * @ORM\Column(
+     *     name="configuration_key",
+     *     type="string",
+     *     length=255,
+     *     unique=true,
+     *     options={"comment": "Roadmap configuration key to which parameters belongs to"}
+     * )
      */
     private $configurationKey;
 
@@ -50,7 +56,7 @@ class HeadHunter implements ParametersInterface
      *
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=255)
+     * @ORM\Column(name="url", type="string", length=255, options={"comment": "Vacancy website URL"})
      */
     private $url;
 
@@ -59,7 +65,7 @@ class HeadHunter implements ParametersInterface
      *
      * @var string
      *
-     * @ORM\Column(name="text", type="string", length=255)
+     * @ORM\Column(name="text", type="string", length=255, options={"comment": "Search query text"})
      */
     private $text;
 
@@ -68,7 +74,7 @@ class HeadHunter implements ParametersInterface
      *
      * @var int
      *
-     * @ORM\Column(name="area", type="integer")
+     * @ORM\Column(name="area", type="integer", options={"unsigned": true, "comment": "Vacancy area"})
      */
     private $area;
 
@@ -77,7 +83,7 @@ class HeadHunter implements ParametersInterface
      *
      * @var DateTimeInterface
      *
-     * @ORM\Column(name="date_from", type="datetime")
+     * @ORM\Column(name="date_from", type="datetime", options={"comment": "Publication date from"})
      */
     private $dateFrom;
 
@@ -86,7 +92,7 @@ class HeadHunter implements ParametersInterface
      *
      * @var DateTimeInterface
      *
-     * @ORM\Column(name="date_to", type="datetime")
+     * @ORM\Column(name="date_to", type="datetime", options={"comment": "Publication date to"})
      */
     private $dateTo;
 
@@ -95,7 +101,7 @@ class HeadHunter implements ParametersInterface
      *
      * @var string
      *
-     * @ORM\Column(name="order_by", type="string", length=255)
+     * @ORM\Column(name="order_by", type="string", length=255, options={"comment": "Order by criteria"})
      */
     private $orderBy;
 
@@ -104,24 +110,32 @@ class HeadHunter implements ParametersInterface
      *
      * @var int
      *
-     * @ORM\Column(name="per_page", type="integer")
+     * @ORM\Column(
+     *     name="per_page",
+     *     type="integer",
+     *     options={"unsigned": true, "comment": "Number of vacancies to fetch for a single page"}
+     * )
      */
     private $perPage;
 
     /**
      * Vacancies received during specified publication date range
-     * This value cannot be used in any real statistics because it can be changed in algorithms
+     * This value cannot be used in any real statistics because it can be changed by algorithms
      *
      * @var int
      *
-     * @ORM\Column(name="received", type="integer")
+     * @ORM\Column(
+     *     name="received",
+     *     type="integer",
+     *     options={"unsigned": true, "comment": "Vacancies received during specified publication date range"}
+     * )
      *
      * @see HeadHunterApiStrategy::determinePage()
      */
     private $received;
 
     /**
-     * Returns configuration parameters identifier
+     * Returns parameters record identifier
      *
      * @return int
      */
