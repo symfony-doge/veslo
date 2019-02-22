@@ -80,6 +80,16 @@ class Vacancy
     private $categories;
 
     /**
+     * Company that posted the vacancy
+     *
+     * @var Company
+     *
+     * @ORM\ManyToOne(targetEntity="Veslo\AnthillBundle\Entity\Company", inversedBy="vacancies")
+     * @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     */
+    private $company;
+
+    /**
      * Vacancy constructor.
      */
     public function __construct()
@@ -183,5 +193,29 @@ class Vacancy
 
         $this->categories->removeElement($category);
         $category->removeVacancy($this);
+    }
+
+    /**
+     * Returns company that posted the vacancy
+     *
+     * @return Company
+     */
+    public function getCompany(): Company
+    {
+        return $this->company;
+    }
+
+    /**
+     * Sets company that posted the vacancy
+     *
+     * @param Company $company Company entity instance
+     *
+     * @return void
+     */
+    public function setCompany(Company $company): void
+    {
+        $this->company = $company;
+
+        $company->addVacancy($this);
     }
 }
