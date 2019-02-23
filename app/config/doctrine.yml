@@ -34,6 +34,13 @@ doctrine:
                                 host: '%app.redis.host%'
                                 port: '%app.redis.port%'
                                 database: 3
+                        history:
+                            type: default
+                            cache_driver:
+                                type: predis
+                                host: '%app.redis.host%'
+                                port: '%app.redis.port%'
+                                database: 4
                 mappings:
                     # is_bundle is considered a legacy option, so we use "Outside of a Bundle" style
                     # all bundles can potentially be moved to project dependencies category
@@ -43,6 +50,10 @@ doctrine:
                         dir: '%kernel.project_dir%/src/AnthillBundle/Entity'
                         prefix: Veslo\AnthillBundle\Entity
                         alias: VesloAnthill
+                filters:
+                    softdeleteable:
+                        class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+                        enabled: true
     dbal:
         default_connection: anthill
         connections:
@@ -62,3 +73,12 @@ doctrine_migrations:
     name: Application Migrations
     organize_migrations: false # Version >= 1.2, possible values are: "BY_YEAR", "BY_YEAR_AND_MONTH", false
     custom_template: ~ # Version >= 1.2, path to your custom migrations template
+
+stof_doctrine_extensions:
+    default_locale: en_US
+    orm:
+        anthill:
+            sluggable: true
+            timestampable: true
+            loggable: true
+            softdeleteable: true

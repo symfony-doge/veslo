@@ -19,7 +19,7 @@ class VacancyScannerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $antQueenDefinition = $container->getDefinition('veslo.anthill.vacancy.scanner_pool.unique_scanner_pool');
+        $scannerPoolDefinition = $container->getDefinition('veslo.anthill.vacancy.scanner_pool.unique_scanner_pool');
 
         $roadmapIds = $container->findTaggedServiceIds(ScannerInterface::TAG);
 
@@ -28,7 +28,7 @@ class VacancyScannerPass implements CompilerPassInterface
                 $roadmapName = $attributes['roadmapName'];
                 $reference   = new Reference($id);
 
-                $antQueenDefinition->addMethodCall('addScanner', [$roadmapName, $reference]);
+                $scannerPoolDefinition->addMethodCall('addScanner', [$roadmapName, $reference]);
             }
         }
     }

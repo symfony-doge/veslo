@@ -21,8 +21,8 @@ final class Version20190211124847 extends AbstractMigration
         );
 
         $this->addSql('CREATE SEQUENCE anthill_vacancy_roadmap_headhunter_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql(
-            'CREATE TABLE anthill_vacancy_roadmap_headhunter (
+        $this->addSql('
+            CREATE TABLE anthill_vacancy_roadmap_headhunter (
                 id INT NOT NULL, 
                 configuration_key VARCHAR(255) NOT NULL, 
                 url VARCHAR(255) NOT NULL, 
@@ -34,11 +34,21 @@ final class Version20190211124847 extends AbstractMigration
                 per_page INT NOT NULL, 
                 received INT NOT NULL, 
                 PRIMARY KEY(id)
-            )'
-        );
+            )
+        ');
         $this->addSql(
             'CREATE UNIQUE INDEX UNIQ_5F46689693F6AF1 ON anthill_vacancy_roadmap_headhunter (configuration_key)'
         );
+        $this->addSql('COMMENT ON COLUMN anthill_vacancy_roadmap_headhunter.id IS \'Parameters record identifier\'');
+        $this->addSql('COMMENT ON COLUMN anthill_vacancy_roadmap_headhunter.configuration_key IS \'Roadmap configuration key to which parameters belongs to\'');
+        $this->addSql('COMMENT ON COLUMN anthill_vacancy_roadmap_headhunter.url IS \'Vacancy website URL\'');
+        $this->addSql('COMMENT ON COLUMN anthill_vacancy_roadmap_headhunter.text IS \'Search query text\'');
+        $this->addSql('COMMENT ON COLUMN anthill_vacancy_roadmap_headhunter.area IS \'Vacancy area\'');
+        $this->addSql('COMMENT ON COLUMN anthill_vacancy_roadmap_headhunter.date_from IS \'Publication date from\'');
+        $this->addSql('COMMENT ON COLUMN anthill_vacancy_roadmap_headhunter.date_to IS \'Publication date to\'');
+        $this->addSql('COMMENT ON COLUMN anthill_vacancy_roadmap_headhunter.order_by IS \'Order by criteria\'');
+        $this->addSql('COMMENT ON COLUMN anthill_vacancy_roadmap_headhunter.per_page IS \'Number of vacancies to fetch for a single page\'');
+        $this->addSql('COMMENT ON COLUMN anthill_vacancy_roadmap_headhunter.received IS \'Vacancies received during specified publication date range\'');
     }
 
     public function down(Schema $schema): void

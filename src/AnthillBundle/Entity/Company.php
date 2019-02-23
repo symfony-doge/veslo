@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Veslo\AnthillBundle\Entity;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Company
@@ -11,6 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="anthill_company")
  * @ORM\Entity
  * @ORM\Cache(usage="NONSTRICT_READ_WRITE", region="vacancies")
+ * @Gedmo\Loggable(logEntryClass="Veslo\AnthillBundle\Entity\Company\History\Entry")
+ * @Gedmo\SoftDeleteable(fieldName="deletionDate", timeAware=true, hardDelete=false)
  */
 class Company
 {
@@ -31,6 +37,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, options={"comment": "Company name"})
+     * @Gedmo\Versioned
      */
     private $name;
 
@@ -40,6 +47,7 @@ class Company
      * @var string|null
      *
      * @ORM\Column(name="url", type="string", length=255, nullable=true, options={"comment": "Company website URL"})
+     * @Gedmo\Versioned
      */
     private $url;
 
@@ -49,6 +57,7 @@ class Company
      * @var string|null
      *
      * @ORM\Column(name="logo_url", type="string", length=255, nullable=true, options={"comment": "Company logo URL"})
+     * @Gedmo\Versioned
      */
     private $logoUrl;
 
@@ -60,6 +69,33 @@ class Company
      * @ORM\OneToMany(targetEntity="Veslo\AnthillBundle\Entity\Vacancy", mappedBy="company")
      */
     private $vacancies;
+
+    /**
+     * Last time when company data has been fetched from external job website
+     *
+     * @var DateTimeInterface
+     *
+     * @ORM\Column(
+     *     name="synchronization_date",
+     *     type="datetime",
+     *     options={"comment": "Last time when company data has been fetched from external job website"}
+     * )
+     */
+    private $synchronizationDate;
+
+    /**
+     * Date when company has been deleted
+     *
+     * @var DateTimeInterface
+     *
+     * @ORM\Column(
+     *     name="deletion_date",
+     *     type="datetime",
+     *     nullable=true,
+     *     options={"comment": "Date when company has been deleted"}
+     * )
+     */
+    private $deletionDate;
 
     /**
      * Returns company identifier
@@ -162,5 +198,37 @@ class Company
 
         $this->vacancies->add($vacancy);
         $vacancy->setCompany($this);
+    }
+
+    /**
+     * Returns last time when company data has been changed
+     *
+     * @return DateTimeInterface
+     */
+    public function getSynchronizationDate(): DateTimeInterface
+    {
+        return $this->synchronizationDate;
+    }
+
+    /**
+     * Sets last time when company data has been fetched from external job website
+     *
+     * @param DateTimeInterface $synchronizationDate Last time when company data has been changed
+     *
+     * @return void
+     */
+    public function setSynchronizationDate(DateTimeInterface $synchronizationDate): void
+    {
+        $this->synchronizationDate = $synchronizationDate;
+    }
+
+    /**
+     * Returns date when company has been deleted
+     *
+     * @return DateTimeInterface
+     */
+    public function getDeletionDate(): DateTimeInterface
+    {
+        return $this->deletionDate;
     }
 }
