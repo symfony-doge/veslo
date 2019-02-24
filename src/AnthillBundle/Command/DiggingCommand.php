@@ -15,6 +15,7 @@ use Veslo\AnthillBundle\Vacancy\DiggerInterface;
 
 /**
  * Represents dung (vacancies) digging process.
+ * This is an initial stage of vacancy research workflow, where objects will be 'found' first time
  *
  * Usage example:
  * ```

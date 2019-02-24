@@ -8,11 +8,13 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Veslo\AnthillBundle\Dto\Vacancy\LocationDto;
 use Veslo\AnthillBundle\Vacancy\Parser\Earwig;
 use Veslo\AppBundle\Workflow\Vacancy\PitInterface;
 
 /**
- * Represents vacancy parsing process
+ * Represents dung (vacancies) parsing process
+ * This is 'to_parse' transition of vacancy research workflow, moves an object place from 'found' to 'parsed'
  *
  * Usage example:
  * ```
@@ -22,6 +24,16 @@ use Veslo\AppBundle\Workflow\Vacancy\PitInterface;
 class ParsingCommand extends Command
 {
     /**
+     * Vacancy URL storage
+     * Should return instances of vacancy LocationDto or null, if storage is empty
+     *
+     * @var PitInterface
+     *
+     * @see LocationDto
+     */
+    private $source;
+
+    /**
      * Parses vacancy URL from queue and sends data further to conveyor according to workflow
      *
      * @var Earwig
@@ -29,23 +41,16 @@ class ParsingCommand extends Command
     private $earwig;
 
     /**
-     * Vacancy URL storage
-     *
-     * @var PitInterface
-     */
-    private $dungPit;
-
-    /**
      * ParsingCommand constructor.
      *
-     * @param Earwig       $earwig  Parses vacancy URL from queue and sends data further according to workflow
-     * @param PitInterface $dungPit Vacancy URL storage
-     * @param string|null  $name    The name of the command; passing null means it must be set in configure()
+     * @param PitInterface $source Vacancy URL storage
+     * @param Earwig       $earwig Parses vacancy URL from queue and sends data further according to workflow
+     * @param string|null  $name   The name of the command; passing null means it must be set in configure()
      */
-    public function __construct(Earwig $earwig, PitInterface $dungPit, ?string $name = null)
+    public function __construct(PitInterface $source, Earwig $earwig, ?string $name = null)
     {
-        $this->earwig  = $earwig;
-        $this->dungPit = $dungPit;
+        $this->source = $source;
+        $this->earwig = $earwig;
 
         parent::__construct($name);
     }
@@ -74,7 +79,7 @@ class ParsingCommand extends Command
     {
         $iterations = (int) $input->getOption('iterations');
 
-        $successfulIterations = $this->earwig->parse($this->dungPit, $iterations);
+        $successfulIterations = $this->earwig->parse($this->source, $iterations);
 
         $messageComplete = str_replace(
             ['{iterations}', '{successful}', '{memory}', '{memoryPeak}'],

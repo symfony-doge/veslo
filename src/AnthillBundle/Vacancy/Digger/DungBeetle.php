@@ -51,18 +51,18 @@ class DungBeetle implements DiggerInterface
      *
      * @var PitInterface
      */
-    private $dungPit;
+    private $destination;
 
     /**
      * DungBeetle constructor.
      *
-     * @param LoggerInterface $logger  Logger as it is
-     * @param PitInterface    $dungPit Storage for digged dung (vacancies)
+     * @param LoggerInterface $logger      Logger as it is
+     * @param PitInterface    $destination Storage for digged dung (vacancies)
      */
-    public function __construct(LoggerInterface $logger, PitInterface $dungPit)
+    public function __construct(LoggerInterface $logger, PitInterface $destination)
     {
-        $this->logger  = $logger;
-        $this->dungPit = $dungPit;
+        $this->logger      = $logger;
+        $this->destination = $destination;
     }
 
     /**
@@ -102,7 +102,7 @@ class DungBeetle implements DiggerInterface
      * Performs actual dung (vacancies) digging loop
      *
      * @param ConveyorAwareRoadmap $roadmap    Provides URL of vacancies
-     * @param int                  $iterations Digging iterations count, at least one
+     * @param int                  $iterations Digging iterations count
      *
      * @return int Successful dig attempts count
      */
@@ -150,7 +150,7 @@ class DungBeetle implements DiggerInterface
         $vacancyUrl = $locationDto->getVacancyUrl();
         $this->logger->info('Vacancy found.', ['roadmap' => $roadmapName, 'vacancyUrl' => $vacancyUrl]);
 
-        $this->dungPit->offer($locationDto);
+        $this->destination->offer($locationDto);
 
         return true;
     }

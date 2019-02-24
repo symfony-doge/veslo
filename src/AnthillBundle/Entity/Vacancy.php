@@ -9,9 +9,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Timestampable\Timestampable;
 use Veslo\AnthillBundle\Entity\Vacancy\Category;
-use Veslo\AnthillBundle\Entity\Vacancy\SynchronizableDataFields;
+use Veslo\AnthillBundle\Entity\Vacancy\MappedSuperclass\SynchronizableDataFields;
 
 /**
  * Vacancy entity, contains metadata; all fields which represent a real vacancy data from job websites
@@ -26,12 +25,12 @@ use Veslo\AnthillBundle\Entity\Vacancy\SynchronizableDataFields;
  *         )
  *     }
  * )
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Veslo\AnthillBundle\Entity\Repository\VacancyRepository")
  * @ORM\Cache(usage="NONSTRICT_READ_WRITE", region="vacancies")
  * @Gedmo\Loggable(logEntryClass="Veslo\AnthillBundle\Entity\Vacancy\History\Entry")
  * @Gedmo\SoftDeleteable(fieldName="deletionDate", timeAware=true, hardDelete=false)
  */
-class Vacancy extends SynchronizableDataFields implements Timestampable
+class Vacancy extends SynchronizableDataFields
 {
     // Note: traits are not used for better contextual readability, all fields should be explicit in one scope.
 

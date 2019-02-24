@@ -20,26 +20,35 @@ services:
         class: Veslo\AnthillBundle\Vacancy\Parser\Earwig
         arguments:
             - '@monolog.logger.anthill.parsing'
-            - '@veslo.anthill.vacancy.raw_data_preview_normalizer'
+            - '@veslo.anthill.vacancy.scan_result_normalizer'
             - '@veslo.anthill.vacancy.scanner_pool.conveyor_aware_scanner_pool'
             - '@veslo.anthill.vacancy.chewed_dung_pit'
 
-    veslo.anthill.vacancy.ant_worker:
-        class: Veslo\AnthillBundle\Vacancy\AntWorker
+    veslo.anthill.vacancy.collector.ant_worker:
+        class: Veslo\AnthillBundle\Vacancy\Collector\AntWorker
         arguments:
-            - '@logger'
+            - '@monolog.logger.anthill.collecting'
+            - '@veslo.anthill.vacancy.acceptance_normalizer'
+            - '@veslo.anthill.vacancy.decision.is_collectable'
+            - '@veslo.anthill.vacancy.dung_pit'
 
     veslo.anthill.vacancy.dung_pit:
-        class: Veslo\AnthillBundle\Vacancy\Pit\DungPit
+        class: Veslo\AnthillBundle\Vacancy\DungPit
         arguments:
             - '@veslo.app.workflow.vacancy.research.conveyor'
             - 'Veslo\AnthillBundle\Dto\Vacancy\LocationDto'
 
     veslo.anthill.vacancy.chewed_dung_pit:
-        class: Veslo\AnthillBundle\Vacancy\Pit\DungPit
+        class: Veslo\AnthillBundle\Vacancy\DungPit
         arguments:
             - '@veslo.app.workflow.vacancy.research.conveyor'
-            - 'Veslo\AnthillBundle\Dto\Vacancy\ParsedDto'
+            - 'Veslo\AnthillBundle\Dto\Vacancy\Parser\ParsedDto'
+
+    veslo.anthill.vacancy.sinful_dung_pit:
+        class: Veslo\AnthillBundle\Vacancy\DungPit
+        arguments:
+            - '@veslo.app.workflow.vacancy.research.conveyor'
+            - 'Veslo\AnthillBundle\Dto\Vacancy\Collector\AcceptanceDto'
 
     veslo.anthill.vacancy.scanner_pool.conveyor_aware_scanner_pool:
         class: Veslo\AnthillBundle\Vacancy\ScannerPool\ConveyorAwareScannerPool
@@ -49,7 +58,23 @@ services:
     veslo.anthill.vacancy.scanner_pool.unique_scanner_pool:
         class: Veslo\AnthillBundle\Vacancy\ScannerPool\UniqueScannerPool
 
-    veslo.anthill.vacancy.raw_data_preview_normalizer:
-        class: Veslo\AnthillBundle\Vacancy\RawDataPreviewNormalizer
+    veslo.anthill.vacancy.decision.is_collectable:
+        class: Veslo\AnthillBundle\Vacancy\Decision\ChainDecision
+        arguments:
+            - ['@veslo.anthill.vacancy.decision.not_duplicate']
+
+    veslo.anthill.vacancy.decision.not_duplicate:
+        class: Veslo\AnthillBundle\Vacancy\Decision\NotADuplicate
+        arguments:
+            - '@logger'
+            - '@veslo.anthill.vacancy_repository'
+
+    veslo.anthill.vacancy.acceptance_normalizer:
+        class: Veslo\AnthillBundle\Vacancy\Normalizer\AcceptanceNormalizer
+        arguments:
+            - '@veslo.anthill.vacancy.scan_result_normalizer'
+
+    veslo.anthill.vacancy.scan_result_normalizer:
+        class: Veslo\AnthillBundle\Vacancy\Normalizer\ScanResultNormalizer
         arguments:
             - '@serializer'

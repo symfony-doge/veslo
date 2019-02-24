@@ -43,26 +43,26 @@ class Earwig
      *
      * @var PitInterface
      */
-    private $chewedDungPit;
+    private $destination;
 
     /**
      * Earwig constructor.
      *
-     * @param LoggerInterface          $logger        Logger as it is
-     * @param NormalizerInterface      $normalizer    Converts an object into a set of arrays/scalars
-     * @param ConveyorAwareScannerPool $scannerPool   Aggregates scanners for vacancy parsing in conveyor context
-     * @param PitInterface             $chewedDungPit Storage for parsed vacancy from website-provider
+     * @param LoggerInterface          $logger      Logger as it is
+     * @param NormalizerInterface      $normalizer  Converts an object into a set of arrays/scalars
+     * @param ConveyorAwareScannerPool $scannerPool Aggregates scanners for vacancy parsing in conveyor context
+     * @param PitInterface             $destination Storage for parsed vacancy from website-provider
      */
     public function __construct(
         LoggerInterface $logger,
         NormalizerInterface $normalizer,
         ConveyorAwareScannerPool $scannerPool,
-        PitInterface $chewedDungPit
+        PitInterface $destination
     ) {
-        $this->logger        = $logger;
-        $this->normalizer    = $normalizer;
-        $this->scannerPool   = $scannerPool;
-        $this->chewedDungPit = $chewedDungPit;
+        $this->logger      = $logger;
+        $this->normalizer  = $normalizer;
+        $this->scannerPool = $scannerPool;
+        $this->destination = $destination;
     }
 
     /**
@@ -97,11 +97,11 @@ class Earwig
      * Performs dung (vacancies) parsing loop
      *
      * @param PitInterface $pit        Vacancy URL storage
-     * @param int          $iterations Parsing iterations count, at least one expected
+     * @param int          $iterations Parsing iterations count
      *
      * @return int Successful parse attempts count
      */
-    private function parseInternal(PitInterface $pit, int $iterations = 1): int
+    private function parseInternal(PitInterface $pit, int $iterations): int
     {
         $iterationRemains = max(1, $iterations);
         $iterationSuccess = 0;
@@ -156,7 +156,7 @@ class Earwig
         $scanResultNormalized = $this->normalizer->normalize($scanResult);
         $this->logger->info('Vacancy parsed.', ['source' => $sourceName, 'data' => $scanResultNormalized]);
 
-        $this->chewedDungPit->offer($scanResult);
+        $this->destination->offer($scanResult);
 
         return true;
     }

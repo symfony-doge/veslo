@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Veslo\AnthillBundle\Vacancy\Pit;
+namespace Veslo\AnthillBundle\Vacancy;
 
 use Veslo\AppBundle\Workflow\Vacancy\PitInterface;
 use Veslo\AppBundle\Workflow\Vacancy\Research\Conveyor;

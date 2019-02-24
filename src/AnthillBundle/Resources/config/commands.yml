@@ -17,7 +17,15 @@ services:
     veslo.anthill.command.parsing:
         class: Veslo\AnthillBundle\Command\ParsingCommand
         arguments:
-            - '@veslo.anthill.vacancy.parser.earwig'
             - '@veslo.anthill.vacancy.dung_pit'
+            - '@veslo.anthill.vacancy.parser.earwig'
         tags:
             - { name: 'console.command', command: 'veslo:anthill:parsing' }
+
+    veslo.anthill.command.collecting:
+        class: Veslo\AnthillBundle\Command\CollectingCommand
+        arguments:
+            - '@veslo.anthill.vacancy.chewed_dung_pit'
+            - '@veslo.anthill.vacancy.collector.ant_worker'
+        tags:
+            - { name: 'console.command', command: 'veslo:anthill:collecting' }

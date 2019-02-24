@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Veslo\AnthillBundle\Entity\Vacancy;
+namespace Veslo\AnthillBundle\Entity\Vacancy\MappedSuperclass;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;

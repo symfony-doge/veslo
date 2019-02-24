@@ -31,6 +31,12 @@ monolog:
             max_files: 1
             level: debug
             channels: ['anthill.parsing']
+        anthill.collecting:
+            type: rotating_file
+            path: '%kernel.logs_dir%/%kernel.environment%.anthill.collecting.log'
+            max_files: 1
+            level: debug
+            channels: ['anthill.collecting']
         console:
             type: console
             process_psr_3_messages: false

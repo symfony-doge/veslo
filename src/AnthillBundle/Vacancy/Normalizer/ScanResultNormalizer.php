@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Veslo\AnthillBundle\Vacancy;
+namespace Veslo\AnthillBundle\Vacancy\Normalizer;
 
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
- * Converts an vacancy raw data object into a set of arrays/scalars with long text truncation
+ * Converts an vacancy scan result object into a set of arrays/scalars with long text truncation
  */
-class RawDataPreviewNormalizer implements NormalizerInterface
+class ScanResultNormalizer implements NormalizerInterface
 {
     /**
      * Converts an object into a set of arrays/scalars
