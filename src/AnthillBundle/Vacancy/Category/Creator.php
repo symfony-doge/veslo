@@ -49,7 +49,7 @@ class Creator
         $categoryName = $configuration->getKey();
         $category->setName($categoryName);
 
-        $this->categoryRepository->save($category, false, !$isCascadeChild);
+        $this->categoryRepository->save($category, !$isCascadeChild);
 
         return $category;
     }

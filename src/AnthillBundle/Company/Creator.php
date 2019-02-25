@@ -49,7 +49,7 @@ class Creator
         $company->setLogoUrl($vacancy->getCompanyLogoUrl());
         $company->setSynchronizationDate(new DateTime());
 
-        $this->companyRepository->save($company, false, !$isCascadeChild);
+        $this->companyRepository->save($company, !$isCascadeChild);
 
         return $company;
     }
