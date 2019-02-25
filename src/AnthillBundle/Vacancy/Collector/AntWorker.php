@@ -8,8 +8,8 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Veslo\AnthillBundle\Dto\Vacancy\Collector\AcceptanceDto;
-use Veslo\AnthillBundle\Dto\Vacancy\Collector\AcceptedDto;
 use Veslo\AnthillBundle\Dto\Vacancy\Parser\ParsedDto;
+use Veslo\AnthillBundle\Vacancy\Creator;
 use Veslo\AnthillBundle\Vacancy\DecisionInterface;
 use Veslo\AppBundle\Workflow\Vacancy\PitInterface;
 
@@ -53,6 +53,13 @@ class AntWorker
     private $decision;
 
     /**
+     * Creates and persists a new vacancy instance in local storage
+     *
+     * @var Creator
+     */
+    private $vacancyCreator;
+
+    /**
      * Storage for collected vacancy from website-provider
      * Destination place in which result of worker action will be persisted
      *
@@ -63,21 +70,24 @@ class AntWorker
     /**
      * AntWorker constructor.
      *
-     * @param LoggerInterface     $logger      Logger as it is
-     * @param NormalizerInterface $normalizer  Converts an object into a set of arrays/scalars
-     * @param DecisionInterface   $decision    Decision that should be applied to vacancy data for successful collecting
-     * @param PitInterface        $destination Storage for collected vacancy from website-provider
+     * @param LoggerInterface     $logger         Logger as it is
+     * @param NormalizerInterface $normalizer     Converts an object into a set of arrays/scalars
+     * @param DecisionInterface   $decision       Decision that should be applied to vacancy data for collecting
+     * @param Creator             $vacancyCreator Creates and persists a new vacancy instance in local storage
+     * @param PitInterface        $destination    Storage for collected vacancy from website-provider (workflow queue)
      */
     public function __construct(
         LoggerInterface $logger,
         NormalizerInterface $normalizer,
         DecisionInterface $decision,
+        Creator $vacancyCreator,
         PitInterface $destination
     ) {
-        $this->logger      = $logger;
-        $this->normalizer  = $normalizer;
-        $this->decision    = $decision;
-        $this->destination = $destination;
+        $this->logger         = $logger;
+        $this->normalizer     = $normalizer;
+        $this->decision       = $decision;
+        $this->vacancyCreator = $vacancyCreator;
+        $this->destination    = $destination;
     }
 
     /**
@@ -168,6 +178,7 @@ class AntWorker
         $conditions = $this->decision->getConditions();
         $acceptance->setConditions($conditions);
         $acceptance->setData($scanResult);
+
         $acceptanceNormalized = $this->normalizer->normalize($acceptance);
 
         if (!$this->decision->isApplied($scanResult)) {
@@ -176,9 +187,18 @@ class AntWorker
             return false;
         }
 
-        // TODO: create entity and assign local vacancy identifier.
+        $vacancy   = $this->vacancyCreator->createByParsedDto($scanResult);
+        $vacancyId = $vacancy->getId();
+        $acceptance->setVacancyId($vacancyId);
 
-        $this->logger->info('Vacancy accepted.', ['source' => $sourceName, 'acceptance' => $acceptanceNormalized]);
+        $this->logger->info(
+            'Vacancy accepted.',
+            [
+                'source'     => $sourceName,
+                'vacancyId'  => $vacancyId,
+                'acceptance' => $acceptanceNormalized,
+            ]
+        );
 
         $this->destination->offer($acceptance);
 

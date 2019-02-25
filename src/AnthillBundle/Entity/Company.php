@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Veslo\AnthillBundle\Entity;
 
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -36,7 +37,7 @@ class Company
      *
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, options={"comment": "Company name"})
+     * @ORM\Column(name="name", type="string", length=255, unique=true, options={"comment": "Company name"})
      * @Gedmo\Versioned
      */
     private $name;
@@ -66,7 +67,7 @@ class Company
      *
      * @var Collection<Vacancy>
      *
-     * @ORM\OneToMany(targetEntity="Veslo\AnthillBundle\Entity\Vacancy", mappedBy="company")
+     * @ORM\OneToMany(targetEntity="Veslo\AnthillBundle\Entity\Vacancy", mappedBy="company", cascade={"remove"})
      */
     private $vacancies;
 
@@ -96,6 +97,14 @@ class Company
      * )
      */
     private $deletionDate;
+
+    /**
+     * Company constructor.
+     */
+    public function __construct()
+    {
+        $this->vacancies = new ArrayCollection();
+    }
 
     /**
      * Returns company identifier

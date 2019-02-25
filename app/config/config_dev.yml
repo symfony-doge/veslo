@@ -36,7 +36,7 @@ monolog:
             path: '%kernel.logs_dir%/%kernel.environment%.anthill.collecting.log'
             max_files: 1
             level: debug
-            channels: ['anthill.collecting']
+            channels: ['anthill.collecting', 'doctrine']
         console:
             type: console
             process_psr_3_messages: false

@@ -12,6 +12,13 @@ use Veslo\AnthillBundle\Dto\Vacancy\Parser\ParsedDto;
 class AcceptanceDto
 {
     /**
+     * Assigned identifier for a newly created vacancy entity
+     *
+     * @var int|null
+     */
+    private $vacancyId;
+
+    /**
      * Conditions which has been checked to ensure vacancy data should be collected and analysed
      *
      * @var string[]
@@ -24,6 +31,28 @@ class AcceptanceDto
      * @var ParsedDto
      */
     private $data;
+
+    /**
+     * Returns assigned identifier for a newly created vacancy entity
+     *
+     * @return int|null
+     */
+    public function getVacancyId(): ?int
+    {
+        return $this->vacancyId;
+    }
+
+    /**
+     * Sets assigned identifier for a newly created vacancy entity
+     *
+     * @param int $vacancyId Assigned identifier for a newly created vacancy entity
+     *
+     * @return void
+     */
+    public function setVacancyId(int $vacancyId): void
+    {
+        $this->vacancyId = $vacancyId;
+    }
 
     /**
      * Returns conditions which has been checked to ensure vacancy data should be collected

@@ -10,3 +10,15 @@ services:
         factory: ['@doctrine.orm.anthill_entity_manager', getRepository]
         arguments:
             - 'Veslo\AnthillBundle\Entity\Vacancy'
+
+    veslo.anthill.company_repository:
+        class: Veslo\AppBundle\Entity\Repository\BaseRepository
+        factory: ['@doctrine.orm.anthill_entity_manager', getRepository]
+        arguments:
+            - 'Veslo\AnthillBundle\Entity\Company'
+
+    veslo.anthill.vacancy.category_repository:
+        class: Veslo\AppBundle\Entity\Repository\BaseRepository
+        factory: ['@doctrine.orm.anthill_entity_manager', getRepository]
+        arguments:
+            - 'Veslo\AnthillBundle\Entity\Vacancy\Category'

@@ -34,6 +34,7 @@ final class Version20190223033915 extends AbstractMigration
                 PRIMARY KEY(id)
             )
         ');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_3B8342095E237E06 ON anthill_company (name)');
         $this->addSql('COMMENT ON COLUMN anthill_company.id IS \'Company identifier\'');
         $this->addSql('COMMENT ON COLUMN anthill_company.name IS \'Company name\'');
         $this->addSql('COMMENT ON COLUMN anthill_company.url IS \'Company website URL\'');
@@ -62,10 +63,10 @@ final class Version20190223033915 extends AbstractMigration
                 url VARCHAR(255) NOT NULL, 
                 region_name VARCHAR(255) NOT NULL, 
                 title VARCHAR(255) NOT NULL, 
-                snippet VARCHAR(255) DEFAULT NULL, 
-                text VARCHAR(255) NOT NULL, 
-                salary_from INT DEFAULT NULL, 
-                salary_to INT DEFAULT NULL, 
+                snippet TEXT DEFAULT NULL,
+                text TEXT NOT NULL,
+                salary_from INT DEFAULT NULL,
+                salary_to INT DEFAULT NULL,
                 salary_currency VARCHAR(255) DEFAULT NULL, 
                 publication_date TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
                 synchronization_date TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,

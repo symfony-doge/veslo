@@ -42,7 +42,7 @@ class BaseRepository extends EntityRepository
     }
 
     /**
-     * Calls related EntityManager to persist entity and, optionally, flush
+     * Calls related EntityManager to persist an entity and, optionally, flush
      *
      * @param object $entity  The instance to make managed and persistent.
      * @param bool   $isFlush Whenever EntityManager should perform flush
@@ -55,6 +55,7 @@ class BaseRepository extends EntityRepository
      *
      * @see EntityManagerInterface::persist()
      * @see EntityManagerInterface::flush()
+     * @see https://stackoverflow.com/a/20517528/3121455 (merge logic can be implemented if needed)
      */
     public function save(object $entity, bool $isFlush = true): void
     {

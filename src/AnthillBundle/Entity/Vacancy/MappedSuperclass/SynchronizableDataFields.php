@@ -54,7 +54,7 @@ abstract class SynchronizableDataFields
      *
      * @var string|null
      *
-     * @ORM\Column(name="snippet", type="string", nullable=true, options={"comment": "Vacancy preview text"})
+     * @ORM\Column(name="snippet", type="text", nullable=true, options={"comment": "Vacancy preview text"})
      * @Gedmo\Versioned
      */
     protected $snippet;
@@ -64,7 +64,7 @@ abstract class SynchronizableDataFields
      *
      * @var string
      *
-     * @ORM\Column(name="text", type="string", options={"comment": "Vacancy text"})
+     * @ORM\Column(name="text", type="text", options={"comment": "Vacancy text"})
      * @Gedmo\Versioned
      */
     protected $text;
