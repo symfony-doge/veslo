@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Veslo\AnthillBundle\Vacancy;
 
 use DateTime;
+use Veslo\AnthillBundle\Company\Creator as CompanyCreator;
 use Veslo\AnthillBundle\Dto\Vacancy\ConfigurableRoadmapDto;
 use Veslo\AnthillBundle\Dto\Vacancy\Parser\ParsedDto;
 use Veslo\AnthillBundle\Dto\Vacancy\RawDto;
@@ -13,9 +14,8 @@ use Veslo\AnthillBundle\Entity\Company;
 use Veslo\AnthillBundle\Entity\Repository\VacancyRepository;
 use Veslo\AnthillBundle\Entity\Vacancy;
 use Veslo\AnthillBundle\Entity\Vacancy\Category;
-use Veslo\AppBundle\Entity\Repository\BaseRepository;
-use Veslo\AnthillBundle\Company\Creator as CompanyCreator;
 use Veslo\AnthillBundle\Vacancy\Category\Creator as CategoryCreator;
+use Veslo\AppBundle\Entity\Repository\BaseEntityRepository;
 
 /**
  * Creates and persists a new vacancy instance in local storage
@@ -46,32 +46,32 @@ class Creator
     /**
      * Company repository
      *
-     * @var BaseRepository
+     * @var BaseEntityRepository
      */
     private $companyRepository;
 
     /**
      * Vacancy category repository
      *
-     * @var BaseRepository
+     * @var BaseEntityRepository
      */
     private $categoryRepository;
 
     /**
      * Creator constructor.
      *
-     * @param CompanyCreator    $companyCreator     Creates and persists a new company in local storage
-     * @param CategoryCreator   $categoryCreator    Creates and persists a new category for vacancies in local storage
-     * @param VacancyRepository $vacancyRepository  Vacancy repository
-     * @param BaseRepository    $companyRepository  Company repository
-     * @param BaseRepository    $categoryRepository Vacancy category repository
+     * @param CompanyCreator       $companyCreator     Creates and persists a new company in local storage
+     * @param CategoryCreator      $categoryCreator    Creates and persists a new category for vacancies
+     * @param VacancyRepository    $vacancyRepository  Vacancy repository
+     * @param BaseEntityRepository $companyRepository  Company repository
+     * @param BaseEntityRepository $categoryRepository Vacancy category repository
      */
     public function __construct(
         CompanyCreator $companyCreator,
         CategoryCreator $categoryCreator,
         VacancyRepository $vacancyRepository,
-        BaseRepository $companyRepository,
-        BaseRepository $categoryRepository
+        BaseEntityRepository $companyRepository,
+        BaseEntityRepository $categoryRepository
     ) {
         $this->vacancyRepository  = $vacancyRepository;
         $this->companyCreator     = $companyCreator;

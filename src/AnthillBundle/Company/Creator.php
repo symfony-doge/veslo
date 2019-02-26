@@ -7,7 +7,7 @@ namespace Veslo\AnthillBundle\Company;
 use DateTime;
 use Veslo\AnthillBundle\Dto\Vacancy\RawDto;
 use Veslo\AnthillBundle\Entity\Company;
-use Veslo\AppBundle\Entity\Repository\BaseRepository;
+use Veslo\AppBundle\Entity\Repository\BaseEntityRepository;
 
 /**
  * Creates and persists a new company in local storage
@@ -17,16 +17,16 @@ class Creator
     /**
      * Company repository
      *
-     * @var BaseRepository
+     * @var BaseEntityRepository
      */
     private $companyRepository;
 
     /**
      * Creator constructor.
      *
-     * @param BaseRepository $companyRepository Company repository
+     * @param BaseEntityRepository $companyRepository Company repository
      */
-    public function __construct(BaseRepository $companyRepository)
+    public function __construct(BaseEntityRepository $companyRepository)
     {
         $this->companyRepository = $companyRepository;
     }

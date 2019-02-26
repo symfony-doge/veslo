@@ -4,16 +4,23 @@ declare(strict_types=1);
 
 namespace Veslo\AppBundle\Entity\Repository;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\QueryException;
+use Doctrine\ORM\QueryBuilder;
 use Veslo\AppBundle\Exception\EntityNotFoundException;
 
 /**
- * Provides additional contract-based methods for standard repository api.
+ * Provides additional contract-based methods for standard ORM repository API.
+ *
+ * - Custom methods should use {getQueryBuilder} as starting point for query building.
+ * - Custom methods should build Criteria object and pass it to {getQuery} before result evaluation.
  */
-class BaseRepository extends EntityRepository
+class BaseEntityRepository extends EntityRepository
 {
     /**
      * Returns an entity by its identifier or throws exception
@@ -65,5 +72,41 @@ class BaseRepository extends EntityRepository
         if ($isFlush) {
             $entityManager->flush();
         }
+    }
+
+    /**
+     * Returns base query instance for each request to the entity repository
+     *
+     * Using such kind of methods directly via third-party services in common cases is not recommended,
+     * because it exposes encapsulated implementation of database layer to the other application domains
+     * For example, in case of pagination, a custom method should be implemented
+     * that gets a paginator service and returns result by contract.
+     *
+     * Custom methods should build Criteria object and pass it to this method before result evaluation.
+     *
+     * @param Criteria $criteria Criteria for filtering data which will be selected by query
+     *
+     * @return Query
+     *
+     * @throws QueryException
+     */
+    protected function getQuery(?Criteria $criteria = null): Query
+    {
+        $queryBuilder = $this->getQueryBuilder();
+        $queryBuilder->addCriteria($criteria);
+
+        return $queryBuilder->getQuery();
+    }
+
+    /**
+     * Returns base query builder for each request to the entity repository
+     *
+     * Custom methods should use this method as starting point for query building.
+     *
+     * @return QueryBuilder
+     */
+    protected function getQueryBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder('e');
     }
 }

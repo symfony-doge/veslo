@@ -6,3 +6,6 @@ veslo_anthill:
                 attempts_until_pause: 3
                 # Give up time in seconds for cranky dung beetle after too much unsuccessful vacancy search attempts
                 pause_duration: 120
+        provider:
+            # Vacancies count per page for rendering during list action
+            per_page: 10

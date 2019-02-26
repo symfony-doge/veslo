@@ -1,8 +1,8 @@
 <?php
 
+use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Veslo\AppBundle\VesloAppBundle(),
             new Veslo\AnthillBundle\VesloAnthillBundle(),
             new Veslo\SanityBundle\VesloSanityBundle(),

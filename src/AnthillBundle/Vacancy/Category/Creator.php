@@ -6,8 +6,7 @@ namespace Veslo\AnthillBundle\Vacancy\Category;
 
 use Veslo\AnthillBundle\Dto\Vacancy\Roadmap\ConfigurationDto;
 use Veslo\AnthillBundle\Entity\Vacancy\Category;
-use Veslo\AnthillBundle\Vacancy\Roadmap\ConfigurationInterface;
-use Veslo\AppBundle\Entity\Repository\BaseRepository;
+use Veslo\AppBundle\Entity\Repository\BaseEntityRepository;
 
 /**
  * Creates and persists a new category for vacancies in local storage
@@ -17,16 +16,16 @@ class Creator
     /**
      * Vacancy category repository
      *
-     * @var BaseRepository
+     * @var BaseEntityRepository
      */
     private $categoryRepository;
 
     /**
      * Creator constructor.
      *
-     * @param BaseRepository $categoryRepository Vacancy category repository
+     * @param BaseEntityRepository $categoryRepository Vacancy category repository
      */
-    public function __construct(BaseRepository $categoryRepository)
+    public function __construct(BaseEntityRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
     }

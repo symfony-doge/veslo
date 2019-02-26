@@ -26,9 +26,9 @@ use Veslo\AnthillBundle\Entity\Vacancy\MappedSuperclass\SynchronizableDataFields
  *     }
  * )
  * @ORM\Entity(repositoryClass="Veslo\AnthillBundle\Entity\Repository\VacancyRepository")
- * @ORM\Cache(usage="NONSTRICT_READ_WRITE", region="vacancies")
+ * @ORM\Cache(usage="READ_ONLY", region="vacancies")
  * @Gedmo\Loggable(logEntryClass="Veslo\AnthillBundle\Entity\Vacancy\History\Entry")
- * @Gedmo\SoftDeleteable(fieldName="deletionDate", timeAware=true, hardDelete=false)
+ * @Gedmo\SoftDeleteable(fieldName="deletionDate", hardDelete=false)
  */
 class Vacancy extends SynchronizableDataFields
 {

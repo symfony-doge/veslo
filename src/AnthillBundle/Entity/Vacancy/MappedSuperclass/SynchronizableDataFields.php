@@ -11,7 +11,7 @@ use Veslo\AnthillBundle\Entity\Vacancy;
 
 /**
  * Surrogate class for managing complexity of main vacancy entity
- * Contains base entity fields only which will be synchronized with data from an external job website
+ * Contains base entity fields only, which will be synchronized with data from an external job website
  *
  * @ORM\MappedSuperclass
  *

@@ -2,14 +2,31 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>
+            Veslo.IT | {% block title %}{% endblock %}
+        </title>
+
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('build/app.css') }}" />
         {% endblock %}
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div class="container-fluid">
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    {% include '::_veslo_ascii.html.twig' only %}
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+
         {% block javascripts %}
             <script src="{{ asset('build/manifest.js') }}"></script>
             <script src="{{ asset('build/vendor.js') }}"></script>

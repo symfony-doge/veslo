@@ -6,6 +6,7 @@ namespace Veslo\AnthillBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
+use Veslo\AnthillBundle\Vacancy\Provider\Journal;
 
 /**
  * Vacancy controller.
@@ -17,33 +18,52 @@ class VacancyController
      *
      * @var EngineInterface
      */
-    protected $templateEngine;
+    private $templateEngine;
+
+    /**
+     * Provides vacancies by a simple abstract concept of journal with pages, using pagination internally
+     *
+     * @var Journal
+     */
+    private $vacancyJournal;
 
     /**
      * VacancyController constructor.
      *
      * @param EngineInterface $templateEngine Template engine
+     * @param Journal         $vacancyJournal Provides vacancies by a simple abstract concept of journal with pages
      */
-    public function __construct(EngineInterface $templateEngine)
+    public function __construct(EngineInterface $templateEngine, Journal $vacancyJournal)
     {
         $this->templateEngine = $templateEngine;
+        $this->vacancyJournal = $vacancyJournal;
     }
 
     /**
-     * Renders vacancy list
+     * Renders a list of vacancies
+     *
+     * @param int $page Page in vacancy journal
      *
      * @return Response
      */
-    public function listAction(): Response
+    public function listAction(int $page): Response
     {
-        $content = $this->templateEngine->render(':default:index.html.twig');
+        $pagination = $this->vacancyJournal->read($page);
+        $pagination->setUsedRoute('anthill_vacancy_list');
+
+        $content = $this->templateEngine->render(
+            '@VesloAnthill/Vacancy/list.html.twig',
+            [
+                'pagination' => $pagination,
+            ]
+        );
 
         $response = new Response($content);
 
         return $response;
     }
 
-    public function viewAction()
+    public function showAction()
     {
     }
 }

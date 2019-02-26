@@ -41,5 +41,13 @@ class VesloAnthillExtension extends Extension
             'veslo.anthill.vacancy.digging.roadmap.pause_duration',
             $config['vacancy']['digging']['roadmap']['pause_duration']
         );
+
+        // Provider parameters.
+        $container->setParameter(
+            'veslo.anthill.vacancy.provider.options',
+            [
+                'per_page' => $config['vacancy']['provider']['per_page']
+            ]
+        );
     }
 }

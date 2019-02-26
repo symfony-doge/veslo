@@ -9,12 +9,12 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters\HeadHunter as HeadHunterParameters;
 use Veslo\AnthillBundle\Exception\Vacancy\Roadmap\ConfigurationNotFoundException;
-use Veslo\AppBundle\Entity\Repository\BaseRepository;
+use Veslo\AppBundle\Entity\Repository\BaseEntityRepository;
 
 /**
  * Repository for HeadHunter vacancy searching parameters
  */
-class HeadHunterRepository extends BaseRepository
+class HeadHunterRepository extends BaseEntityRepository
 {
     /**
      * Returns vacancy searching parameters for HeadHunter website by roadmap configuration key

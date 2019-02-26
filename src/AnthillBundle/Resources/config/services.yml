@@ -80,6 +80,13 @@ services:
         arguments:
             - '@serializer'
 
+    veslo.anthill.vacancy.provider.journal:
+        class: Veslo\AnthillBundle\Vacancy\Provider\Journal
+        arguments:
+            - '@veslo.anthill.vacancy_repository'
+            - '@knp_paginator'
+            - '%veslo.anthill.vacancy.provider.options%'
+
     veslo.anthill.vacancy.creator:
         class: Veslo\AnthillBundle\Vacancy\Creator
         arguments:

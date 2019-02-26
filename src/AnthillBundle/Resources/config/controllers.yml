@@ -4,3 +4,4 @@ services:
         public: true
         arguments:
             - '@templating'
+            - '@veslo.anthill.vacancy.provider.journal'

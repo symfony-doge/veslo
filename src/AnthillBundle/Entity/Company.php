@@ -15,9 +15,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="anthill_company")
  * @ORM\Entity
- * @ORM\Cache(usage="NONSTRICT_READ_WRITE", region="vacancies")
+ * @ORM\Cache(usage="READ_ONLY", region="vacancies")
  * @Gedmo\Loggable(logEntryClass="Veslo\AnthillBundle\Entity\Company\History\Entry")
- * @Gedmo\SoftDeleteable(fieldName="deletionDate", timeAware=true, hardDelete=false)
+ * @Gedmo\SoftDeleteable(fieldName="deletionDate", hardDelete=false)
  */
 class Company
 {

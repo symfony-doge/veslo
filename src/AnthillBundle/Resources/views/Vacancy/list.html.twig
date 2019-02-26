@@ -1,0 +1,38 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}
+    {# TODO: translation! #}
+    Вакансии
+{% endblock %}
+
+{% block body %}
+
+{% set paginationHtml = knp_pagination_render(
+    pagination,
+    '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'
+) %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row mb-5">
+            <div class="col-md-9 offset-md-3">
+                {{ paginationHtml|raw }}
+            </div>
+        </div>
+
+        {% for vacancy in pagination %}
+        <div class="row mb-5">
+            <div class="col-md-9 offset-md-3">
+                {% include '@VesloAnthill/Vacancy/_item.html.twig' with {'vacancy': vacancy} only %}
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="row mb-5">
+            <div class="col-md-9 offset-md-3">
+                {{ paginationHtml|raw }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
