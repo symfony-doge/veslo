@@ -154,9 +154,12 @@ class Conveyor
             } catch (Exception $e) {
                 $channel->txRollback();
 
-                $channel->close()->then(function () {
-                    $this->amqpClient->disconnect();
-                });
+                $channel->close()->then(
+                    function () {
+                        $this->amqpClient->disconnect();
+                    }
+                )
+                ;
 
                 $this->logger->critical(
                     'Payload publish failed.',
@@ -194,7 +197,16 @@ class Conveyor
         $channel->publish($message, ['content_type' => 'application/json'], '', $queueName);
     }
 
-    // TODO: extract into gateway +descr
+
+    /**
+     * Returns a dto by specified classname filled up with payload data from queue
+     *
+     * @param string $dtoClass  Class of data transfer object
+     * @param string $queueName Queue name for payload data fetching
+     *
+     * @return object|null Dto or null if target queue is empty
+     */
+    // TODO: extract into gateway
     private function get(string $dtoClass, string $queueName): ?object
     {
         $this->ensureConnection();
@@ -208,7 +220,7 @@ class Conveyor
             return null;
         }
 
-        return $this->serializer->deserialize($message->content, $dtoClass,'json');
+        return $this->serializer->deserialize($message->content, $dtoClass, 'json');
     }
 
     /**

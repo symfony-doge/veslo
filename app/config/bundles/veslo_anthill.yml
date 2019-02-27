@@ -16,4 +16,4 @@ veslo_anthill:
             cache_result_namespace: 'veslo.anthill.vacancy_repository.'
             # How long query result cache will be available after successful put,
             # during this time some data changes on website will not be seen, for example, vacancy list
-            cache_result_lifetime: 300
+            cache_result_lifetime: '%anthill.vacancies.cache_lifetime%'

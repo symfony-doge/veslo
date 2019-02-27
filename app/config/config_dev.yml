@@ -70,3 +70,6 @@ monolog:
 
 #swiftmailer:
 #    delivery_addresses: ['me@example.com']
+
+twig:
+    auto_reload: true

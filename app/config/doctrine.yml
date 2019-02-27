@@ -34,8 +34,7 @@ doctrine:
                                 host: '%app.redis.host%'
                                 port: '%app.redis.port%'
                                 database: 3
-                            # TODO: in config. with vacancy pagination result cache lifetime, probably.
-                            lifetime: 300
+                            lifetime: '%anthill.vacancies.cache_lifetime%'
                         history:
                             type: default
                             cache_driver:

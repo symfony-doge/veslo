@@ -102,7 +102,6 @@ class VacancyRepository extends BaseEntityRepository implements PaginateableInte
         $query
             ->setCacheable(true)
             ->setCacheMode(Cache::MODE_NORMAL)
-            // TODO: load values from config. (mb same value as lifetime of vacancies cache region)
             ->useResultCache(
                 true,
                 $this->options['cache_result_lifetime'],
