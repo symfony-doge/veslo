@@ -109,4 +109,4 @@ nelmio_alice:
     max_unique_values_retry: 150
 
 knp_paginator:
-    page_range: 9
+    page_range: 7
