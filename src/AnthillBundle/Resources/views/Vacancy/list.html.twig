@@ -6,33 +6,36 @@
 {% endblock %}
 
 {% block body %}
+    {% set paginationHtml = knp_pagination_render(
+        pagination,
+        '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'
+    ) %}
 
-{% set paginationHtml = knp_pagination_render(
-    pagination,
-    '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'
-) %}
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="row mb-5">
-            <div class="col-md-9 offset-md-3">
-                {{ paginationHtml|raw }}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row mb-5">
+                <div class="col-md-9 offset-md-3">
+                    {{ paginationHtml|raw }}
+                </div>
             </div>
-        </div>
 
-        {% for vacancy in pagination %}
-        <div class="row mb-5">
-            <div class="col-md-9 offset-md-3">
-                {% include '@VesloAnthill/Vacancy/_item.html.twig' with {'vacancy': vacancy} only %}
-            </div>
-        </div>
-        {% endfor %}
+            {% for vacancy in pagination %}
+                <div class="row mb-5">
+                    <div class="col-md-12">
+                        {% include '@VesloAnthill/Vacancy/list/_item.html.twig' with {
+                            'vacancy': vacancy,
+                            'snippet_length_max': 140,
+                            'route_show': route_vacancy_show
+                        } only %}
+                    </div>
+                </div>
+            {% endfor %}
 
-        <div class="row mb-5">
-            <div class="col-md-9 offset-md-3">
-                {{ paginationHtml|raw }}
+            <div class="row mb-5">
+                <div class="col-md-9 offset-md-3">
+                    {{ paginationHtml|raw }}
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

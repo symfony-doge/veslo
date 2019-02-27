@@ -1,0 +1,10 @@
+services:
+    app.twig.extension.text:
+        class: Twig\Extensions\TextExtension
+        tags:
+            - 'twig.extension'
+
+    app.twig.extension.intl:
+        class: Twig\Extensions\IntlExtension
+        tags:
+            - 'twig.extension'

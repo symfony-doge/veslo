@@ -54,7 +54,8 @@ class VacancyController
         $content = $this->templateEngine->render(
             '@VesloAnthill/Vacancy/list.html.twig',
             [
-                'pagination' => $pagination,
+                'pagination'         => $pagination,
+                'route_vacancy_show' => 'anthill_vacancy_show',
             ]
         );
 

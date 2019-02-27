@@ -154,12 +154,9 @@ class Conveyor
             } catch (Exception $e) {
                 $channel->txRollback();
 
-                $channel->close()->then(
-                    function () {
-                        $this->amqpClient->disconnect();
-                    }
-                )
-                ;
+                $channel->close()->then(function () {
+                    $this->amqpClient->disconnect();
+                });
 
                 $this->logger->critical(
                     'Payload publish failed.',

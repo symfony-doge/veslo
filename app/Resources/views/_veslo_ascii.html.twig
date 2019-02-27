@@ -1,3 +1,5 @@
+{% set version = shivas_app_version %}
+
 <div class="row d-none d-md-block">
     <div class="col-md-9 offset-md-3">
         <pre>
@@ -7,8 +9,14 @@
 |  |________________________________________/_____________________      |
 |  |______________________________________________________________)     |
 |  |                                        \                           |
-`--'                                         \                          |
+`--'                                         \                  {{ version }} α |
                                               \________________________/
         </pre>
+    </div>
+</div>
+
+<div class="row d-md-none">
+    <div class="col-md-9 offset-md-3">
+        <pre>{{ version }} α</pre>
     </div>
 </div>

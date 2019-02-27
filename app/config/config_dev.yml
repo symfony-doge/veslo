@@ -72,4 +72,5 @@ monolog:
 #    delivery_addresses: ['me@example.com']
 
 twig:
+    strict_variables: true
     auto_reload: true

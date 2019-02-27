@@ -12,7 +12,9 @@ USER root
 # system
 RUN apt-get update && apt-get install --no-install-recommends -qy \
         openssl \
-        libpq-dev
+        libpq-dev \
+        # intl
+        zlib1g-dev libicu-dev g++
 
 # php
 #RUN docker-php-ext-install \
@@ -31,6 +33,10 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} > /etc/timezone && \
     printf '[PHP]\ndate.timezone = "%s"\n', ${TIMEZONE} > /usr/local/etc/php/conf.d/tzone.ini && \
     date
+
+# intl
+RUN docker-php-ext-configure intl && \
+    docker-php-ext-install intl
 
 # db
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \

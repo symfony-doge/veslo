@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Shivas\VersioningBundle\ShivasVersioningBundle(),
             new Veslo\AppBundle\VesloAppBundle(),
             new Veslo\AnthillBundle\VesloAnthillBundle(),
             new Veslo\SanityBundle\VesloSanityBundle(),

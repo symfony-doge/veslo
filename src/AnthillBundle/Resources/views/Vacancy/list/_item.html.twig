@@ -1,0 +1,105 @@
+{#
+    vacancy                 - vacancy entity
+    snippet_length_max      - max length for snippet to show
+    route_show              - route to vacancy show action
+#}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-12">
+                {% if vacancy.company.logoUrl is defined and vacancy.company.logoUrl is not empty %}
+                    <img src="{{- vacancy.company.logoUrl -}}" class="float-md-right" />
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="row mt-2 mt-md-0">
+            <div class="col-md-12">
+                <span class="font-weight-bold">
+                    {{- vacancy.company.name -}}
+                </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <span>
+                    {{- vacancy.regionName -}}
+
+                    {# {%- if vacancy.company.url is defined and vacancy.company.url is not empty -%}
+                        ,
+                        <a href="{{- vacancy.company.url -}}" class="underline">
+                            {{- vacancy.company.url -}}
+                        </a>
+                    {% endif %} #}
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-md-12">
+                <a href="{{ url(route_show, {'slug': vacancy.slug}) }}" class="underline">
+                    {{- vacancy.title -}}
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <span class="font-weight-bold">
+                    {% set isSalaryFromPresent = (vacancy.salaryFrom is defined and vacancy.salaryFrom is not empty) %}
+
+                    {% if isSalaryFromPresent %}
+                        {{- vacancy.salaryFrom|localizednumber -}}
+                    {% endif %}
+
+                    {% if vacancy.salaryTo is defined and vacancy.salaryTo is not empty %}
+                        {% if isSalaryFromPresent %}
+                            —
+                        {% endif %}
+
+                        {{- vacancy.salaryTo|localizednumber -}}
+                    {% endif %}
+
+                    {% if vacancy.salaryCurrency is defined and vacancy.salaryCurrency is not empty %}
+                        {{- vacancy.salaryCurrency -}}
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-sm-9">
+                {% set snippet = (vacancy.snippet is defined and vacancy.snippet is not empty)
+                    ? vacancy.snippet
+                    : vacancy.text
+                %}
+
+                {{- snippet|striptags|truncate(snippet_length_max, true, '...')|nl2br -}}
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-md-12">
+                <div class="badge badge-primary">
+                    {{- vacancy.roadmapName -}}
+                </div>
+
+                {% for category in vacancy.categories %}
+                    <div class="badge badge-info">
+                        {{- category.name -}}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-md-12">
+                {{- vacancy.publicationDate|localizeddate('medium') -}}
+            </div>
+        </div>
+    </div>
+</div>

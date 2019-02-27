@@ -22,7 +22,7 @@ use Veslo\AnthillBundle\Vacancy\Scanner\StrategyInterface;
 class Version20190213 implements StrategyInterface
 {
     /**
-     * Describes schema translation for vacancy data, from website format to local
+     * Describes schema translation for vacancy data, from external website format to local
      * Map structure: [propertyFrom => [propertyTo, isRequired]]
      *
      * @const array
