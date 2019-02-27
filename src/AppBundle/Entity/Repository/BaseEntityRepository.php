@@ -84,7 +84,7 @@ class BaseEntityRepository extends EntityRepository
      *
      * Custom methods should build Criteria object and pass it to this method before result evaluation.
      *
-     * @param Criteria $criteria Criteria for filtering data which will be selected by query
+     * @param Criteria|null $criteria Criteria for filtering data which will be selected by query
      *
      * @return Query
      *
@@ -93,7 +93,10 @@ class BaseEntityRepository extends EntityRepository
     protected function getQuery(?Criteria $criteria = null): Query
     {
         $queryBuilder = $this->getQueryBuilder();
-        $queryBuilder->addCriteria($criteria);
+
+        if ($criteria instanceof Criteria) {
+            $queryBuilder->addCriteria($criteria);
+        }
 
         return $queryBuilder->getQuery();
     }

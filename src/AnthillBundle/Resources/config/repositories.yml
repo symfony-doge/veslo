@@ -8,6 +8,13 @@ services:
     veslo.anthill.vacancy_repository:
         class: Veslo\AnthillBundle\Entity\Repository\VacancyRepository
         factory: ['@doctrine.orm.anthill_entity_manager', getRepository]
+        calls:
+            - method: setPaginator
+              arguments:
+                  - '@knp_paginator'
+            - method: setOptions
+              arguments:
+                  - '%veslo.anthill.vacancy_repository.options%'
         arguments:
             - 'Veslo\AnthillBundle\Entity\Vacancy'
 

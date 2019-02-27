@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Veslo\AnthillBundle\Vacancy\Provider;
 
 use Knp\Component\Pager\Pagination\AbstractPagination;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Veslo\AnthillBundle\Entity\Vacancy;
 use Veslo\AppBundle\Dto\Paginator\CriteriaDto;
@@ -24,13 +23,6 @@ class Journal
     private $vacancyRepository;
 
     /**
-     * Modifies vacancy search query to provide data in small bunches
-     *
-     * @var PaginatorInterface
-     */
-    private $paginator;
-
-    /**
      * Options for vacancy provider, ex. number per page
      *
      * @var array
@@ -41,13 +33,11 @@ class Journal
      * Journal constructor.
      *
      * @param PaginateableInterface $vacancyRepository Vacancy repository
-     * @param PaginatorInterface    $paginator         Modifies vacancy search query to provide data in small bunches
      * @param array                 $options           Options for vacancy provider, ex. number per page
      */
-    public function __construct(PaginateableInterface $vacancyRepository, PaginatorInterface $paginator, array $options)
+    public function __construct(PaginateableInterface $vacancyRepository, array $options)
     {
         $this->vacancyRepository = $vacancyRepository;
-        $this->paginator         = $paginator;
 
         // For readability purposes.
         $optionsResolver = new OptionsResolver();
@@ -73,7 +63,7 @@ class Journal
         $paginationCriteria->setPage($pageNormalized);
         $paginationCriteria->setLimit($this->options['per_page']);
 
-        $pagination = $this->vacancyRepository->getPaginatedResult($this->paginator, $paginationCriteria);
+        $pagination = $this->vacancyRepository->getPagination($paginationCriteria);
 
         return $pagination;
     }

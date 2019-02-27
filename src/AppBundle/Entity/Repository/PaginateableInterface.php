@@ -14,12 +14,20 @@ use Veslo\AppBundle\Dto\Paginator\CriteriaDto;
 interface PaginateableInterface
 {
     /**
+     * Sets paginator for search query modification
+     *
+     * @param PaginatorInterface $paginator Modifies vacancy search query to provide data in small bunches
+     *
+     * @return void
+     */
+    public function setPaginator(PaginatorInterface $paginator): void;
+
+    /**
      * Returns pagination meta-object with entity array selected by modified query
      *
-     * @param PaginatorInterface $paginator Modifies search query to provide data in small bunches
-     * @param CriteriaDto        $criteria  Pagination criteria
+     * @param CriteriaDto $criteria Pagination criteria
      *
      * @return AbstractPagination
      */
-    public function getPaginatedResult(PaginatorInterface $paginator, CriteriaDto $criteria): AbstractPagination;
+    public function getPagination(CriteriaDto $criteria): AbstractPagination;
 }

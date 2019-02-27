@@ -42,11 +42,20 @@ class VesloAnthillExtension extends Extension
             $config['vacancy']['digging']['roadmap']['pause_duration']
         );
 
-        // Provider parameters.
+        // Provider options.
         $container->setParameter(
             'veslo.anthill.vacancy.provider.options',
             [
-                'per_page' => $config['vacancy']['provider']['per_page']
+                'per_page' => $config['vacancy']['provider']['per_page'],
+            ]
+        );
+
+        // Vacancy repository options.
+        $container->setParameter(
+            'veslo.anthill.vacancy_repository.options',
+            [
+                'cache_result_namespace' => $config['vacancy']['repository']['cache_result_namespace'],
+                'cache_result_lifetime'  => $config['vacancy']['repository']['cache_result_lifetime'],
             ]
         );
     }
