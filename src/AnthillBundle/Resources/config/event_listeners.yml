@@ -1,0 +1,9 @@
+services:
+    veslo.anthill.event.listener.menu_configure_listener:
+        class: Veslo\AnthillBundle\Event\Listener\MenuConfigureListener
+        tags:
+            -   name: kernel.event_listener
+                event: !php/const Veslo\AppBundle\Event\Menu\ConfigureEvent::NAME
+                method: onMenuConfigure
+        arguments:
+            - '@veslo.anthill.menu.builder'

@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Shivas\VersioningBundle\ShivasVersioningBundle(),
             new Veslo\AppBundle\VesloAppBundle(),

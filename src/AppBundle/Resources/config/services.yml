@@ -20,3 +20,13 @@ services:
             - '@serializer'
             - '@veslo.app.amqp_client'
             - '%veslo.app.workflow.vacancy_research.transitions.queue_prefix%'
+
+    veslo.app.menu.builder:
+        class: Veslo\AppBundle\Menu\Builder
+        arguments:
+            - '@knp_menu.factory'
+            - '@event_dispatcher'
+        tags:
+            -   name: knp_menu.menu_builder
+                method: createMainMenu
+                alias: main

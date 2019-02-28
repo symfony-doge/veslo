@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-md-9 offset-md-3">
+        {% set root = knp_menu_get('main') %}
+
+        {% do root.setChildrenAttribute('class', 'navbar-nav') %}
+
+        {{ knp_menu_render(
+            root,
+            {
+                currentClass: 'active',
+                leaf_class: 'nav-item',
+                currentAsLink: false,
+            }
+        ) }}
+    </div>
+</div>

@@ -1,0 +1,31 @@
+services:
+    veslo.anthill.vacancy.digger.cranky_dung_beetle:
+        class: Veslo\AnthillBundle\Vacancy\Digger\CrankyDungBeetle
+        arguments:
+            - '@veslo.anthill.vacancy.digger.dung_beetle'
+            - '@cache.app'
+            - '%veslo.anthill.vacancy.digging.roadmap.attempts_until_pause%'
+            - '%veslo.anthill.vacancy.digging.roadmap.pause_duration%'
+
+    veslo.anthill.vacancy.digger.dung_beetle:
+        class: Veslo\AnthillBundle\Vacancy\Digger\DungBeetle
+        arguments:
+            - '@monolog.logger.anthill.digging'
+            - '@veslo.anthill.vacancy.dung_pit'
+
+    veslo.anthill.vacancy.parser.earwig:
+        class: Veslo\AnthillBundle\Vacancy\Parser\Earwig
+        arguments:
+            - '@monolog.logger.anthill.parsing'
+            - '@veslo.anthill.vacancy.scan_result_normalizer'
+            - '@veslo.anthill.vacancy.scanner_pool.conveyor_aware_scanner_pool'
+            - '@veslo.anthill.vacancy.chewed_dung_pit'
+
+    veslo.anthill.vacancy.collector.ant_worker:
+        class: Veslo\AnthillBundle\Vacancy\Collector\AntWorker
+        arguments:
+            - '@monolog.logger.anthill.collecting'
+            - '@veslo.anthill.vacancy.acceptance_normalizer'
+            - '@veslo.anthill.vacancy.decision.is_collectable'
+            - '@veslo.anthill.vacancy.creator'
+            - '@veslo.anthill.vacancy.dung_pit'

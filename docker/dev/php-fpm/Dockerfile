@@ -34,13 +34,13 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
     printf '[PHP]\ndate.timezone = "%s"\n', ${TIMEZONE} > /usr/local/etc/php/conf.d/tzone.ini && \
     date
 
-# intl
-RUN docker-php-ext-configure intl && \
-    docker-php-ext-install intl
-
 # db
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
     docker-php-ext-install pdo_pgsql pgsql
+
+# intl
+RUN docker-php-ext-configure intl && \
+    docker-php-ext-install intl
 
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY php.ini /usr/local/etc/php/conf.d/php.ini
