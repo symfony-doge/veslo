@@ -1,0 +1,27 @@
+{#
+    Renders formatted vacancy salary.
+
+    {
+        vacancy                 // vacancy entity
+    }
+#}
+
+{% macro salary(vacancy) %}
+    {% set isSalaryFromPresent = (vacancy.salaryFrom is defined and vacancy.salaryFrom is not empty) %}
+
+    {% if isSalaryFromPresent %}
+        {{- vacancy.salaryFrom|localizednumber -}}
+    {% endif %}
+
+    {% if vacancy.salaryTo is defined and vacancy.salaryTo is not empty %}
+        {% if isSalaryFromPresent %}
+            —
+        {% endif %}
+
+        {{- vacancy.salaryTo|localizednumber -}}
+    {% endif %}
+
+    {% if vacancy.salaryCurrency is defined and vacancy.salaryCurrency is not empty %}
+        {{- vacancy.salaryCurrency -}}
+    {% endif %}
+{% endmacro salary %}

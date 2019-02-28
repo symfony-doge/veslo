@@ -18,25 +18,23 @@
                 </div>
             </div>
 
-            {% if 0 < pagination.count %}
-                {% for vacancy in pagination %}
-                    <div class="row mb-5">
-                        <div class="col-md-12">
-                            {% include '@VesloAnthill/Vacancy/list/_item.html.twig' with {
-                                'vacancy': vacancy,
-                                'snippet_length_max': 140,
-                                'route_show': route_vacancy_show
-                            } only %}
-                        </div>
+            {% for vacancy in pagination %}
+                <div class="row mb-5">
+                    <div class="col-md-12">
+                        {% include '@VesloAnthill/Vacancy/list/_item.html.twig' with {
+                            'vacancy': vacancy,
+                            'snippet_length_max': 140,
+                            'route_show': route_vacancy_show
+                        } only %}
                     </div>
-                {% endfor %}
+                </div>
             {% else %}
                 <div class="row mb-5">
-                    <div class="col-md-12 text-center">
+                    <div class="col-md-12">
                         {{ 'vacancies_is_not_found'|trans }}
                     </div>
                 </div>
-            {% endif %}
+            {% endfor %}
 
             <div class="row mb-5">
                 <div class="col-md-9 offset-md-3">

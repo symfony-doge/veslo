@@ -1,0 +1,17 @@
+{#
+    Renders formatted vacancy categories.
+
+    {
+        vacancy                 // vacancy entity
+    }
+#}
+
+{% macro categories(vacancy) %}
+    {% for category in vacancy.categories %}
+        <div class="badge badge-info">
+            {{- category.name -}}
+        </div>
+    {% else %}
+        {{ 'no_categories_assigned'|trans }}
+    {% endfor %}
+{% endmacro categories %}

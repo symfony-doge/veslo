@@ -1,0 +1,98 @@
+{#
+    Vacancy item on show page.
+
+    {
+        vacancy                 // vacancy entity
+    }
+#}
+
+{% import '@VesloAnthill/Vacancy/macro/salary.html.twig' as salary %}
+{% import '@VesloAnthill/Vacancy/macro/categories.html.twig' as categories %}
+{% import '@VesloAnthill/Company/macro/name.html.twig' as companyName %}
+{% import '@VesloAnthill/Company/macro/logo.html.twig' as companyLogo %}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="row mt-1">
+            <div class="col-md-12">
+                {{ companyLogo.logo(vacancy.company, 'float-md-right') }}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="row mt-2 mt-md-0">
+            <div class="col-md-9">
+                <h1>
+                    {{- vacancy.title -}}
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-9">
+                <h2>
+                    {{ salary.salary(vacancy) }}
+                </h2>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-md-12">
+                {{ 'for_company'|trans({}, 'misc') }}
+
+                <span class="font-weight-bold">
+                    {{- companyName.name(vacancy.company) -}}
+                </span>,
+
+                <span>
+                    {{- vacancy.regionName -}}
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-md-12">
+                {{ 'vacancy_posted_on'|trans }}
+
+                <mark>
+                    {{ vacancy.publicationDate|localizeddate }}
+                </mark>
+
+                <a href="{{- vacancy.url -}}" target="_blank" class="underline"></a>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-sm-9">
+                {{- vacancy.text|striptags('<ul><li><p><br><strong>')|stripattributes|raw -}}
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-sm-9">
+                {{ 'vacancy_has_found'|trans }}
+
+                <mark>
+                    {{- vacancy.synchronizationDate|localizeddate -}}
+                </mark>
+
+                {{ 'by_roadmap'|trans }}
+
+                <mark>
+                    {{- vacancy.roadmapName -}}
+                </mark>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-sm-9">
+                {{ 'categories'|trans({}, 'entities') }}:
+
+                <span class="ml-2">
+                    {{ categories.categories(vacancy) }}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

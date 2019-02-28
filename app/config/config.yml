@@ -77,6 +77,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        truncate_separator: '...'
 
 # Swiftmailer Configuration
 swiftmailer:

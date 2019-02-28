@@ -1,1 +1,6 @@
-vacancies_is_not_found: Вакансии не найдены.
+vacancies_is_not_found: 'Вакансии не найдены.'
+vacancy_is_not_found: 'Вакансия не найдена.'
+vacancy_has_found: 'Вакансия найдена'
+vacancy_posted_on: 'Опубликована'
+no_categories_assigned: 'Категорий не назначено'
+by_roadmap: 'по поисковому плану'

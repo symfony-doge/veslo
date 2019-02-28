@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Veslo\AnthillBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Templating\EngineInterface;
+use Veslo\AnthillBundle\Entity\Vacancy;
 use Veslo\AnthillBundle\Vacancy\Provider\Journal;
 
 /**
@@ -64,7 +66,24 @@ class VacancyController
         return $response;
     }
 
-    public function showAction()
+    /**
+     * Renders a vacancy show page
+     *
+     * @param string $slug SEO-friendly vacancy identifier
+     *
+     * @return Response
+     */
+    public function showAction(string $slug): Response
     {
+        $vacancy = $this->vacancyJournal->find($slug);
+
+        if (!$vacancy instanceof Vacancy) {
+            throw new NotFoundHttpException();
+        }
+
+        $content  = $this->templateEngine->render('@VesloAnthill/Vacancy/show.html.twig', ['vacancy' => $vacancy]);
+        $response = new Response($content);
+
+        return $response;
     }
 }

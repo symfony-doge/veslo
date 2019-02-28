@@ -1,0 +1,11 @@
+{#
+    Renders formatted company name.
+
+    {
+        company                 // company entity
+    }
+#}
+
+{% macro name(company) %}
+    {{- company.name|truncate(40, true, truncate_separator) -}}
+{% endmacro name %}

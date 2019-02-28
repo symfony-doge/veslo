@@ -1,0 +1,14 @@
+{#
+    Renders logo of specified company.
+
+    {
+        company                 // company entity
+        class                   // class attribute for img tag
+    }
+#}
+
+{% macro logo(company, class) %}
+    {% if company.logoUrl is defined and company.logoUrl is not empty %}
+        <img src="{{- company.logoUrl -}}" alt="{{- company.name -}}" class="{{- class -}}" />
+    {% endif %}
+{% endmacro logo %}

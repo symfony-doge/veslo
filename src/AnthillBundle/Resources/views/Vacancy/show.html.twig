@@ -1,0 +1,27 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}
+    {% if vacancy is not empty %}
+        {{ vacancy.title }} ({{ vacancy.regionName }})
+    {% else %}
+        {{ 'vacancy_is_not_found'|trans }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row mb-5">
+                <div class="col-md-9 offset-md-3">
+                    <input type="button" value="{{ 'back'|trans({}, 'menu') }}" class="btn btn-secondary btn-sm" onclick="window.history.back()" />
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-12">
+                    {% include '@VesloAnthill/Vacancy/show/_item.html.twig' with {'vacancy': vacancy} only %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

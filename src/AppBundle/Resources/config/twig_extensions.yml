@@ -8,3 +8,8 @@ services:
         class: Twig\Extensions\IntlExtension
         tags:
             - 'twig.extension'
+
+    app.twig.extension.strip_attributes:
+        class: Veslo\AppBundle\Twig\Extension\StripAttributesExtension
+        tags:
+            - 'twig.extension'

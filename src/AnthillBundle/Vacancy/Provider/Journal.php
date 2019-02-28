@@ -6,9 +6,9 @@ namespace Veslo\AnthillBundle\Vacancy\Provider;
 
 use Knp\Component\Pager\Pagination\AbstractPagination;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Veslo\AnthillBundle\Entity\Repository\VacancyRepository;
 use Veslo\AnthillBundle\Entity\Vacancy;
 use Veslo\AppBundle\Dto\Paginator\CriteriaDto;
-use Veslo\AppBundle\Entity\Repository\PaginateableInterface;
 
 /**
  * Provides vacancies by a simple concept of journal with pages, using pagination internally
@@ -18,7 +18,7 @@ class Journal
     /**
      * Vacancy repository
      *
-     * @var PaginateableInterface
+     * @var VacancyRepository
      */
     private $vacancyRepository;
 
@@ -32,10 +32,10 @@ class Journal
     /**
      * Journal constructor.
      *
-     * @param PaginateableInterface $vacancyRepository Vacancy repository
-     * @param array                 $options           Options for vacancy provider, ex. number per page
+     * @param VacancyRepository $vacancyRepository Vacancy repository
+     * @param array             $options           Options for vacancy provider, ex. number per page
      */
-    public function __construct(PaginateableInterface $vacancyRepository, array $options)
+    public function __construct(VacancyRepository $vacancyRepository, array $options)
     {
         $this->vacancyRepository = $vacancyRepository;
 
@@ -66,5 +66,17 @@ class Journal
         $pagination = $this->vacancyRepository->getPagination($paginationCriteria);
 
         return $pagination;
+    }
+
+    /**
+     * Returns vacancy by specified SEO-friendly identifier
+     *
+     * @param string $slug SEO-friendly vacancy identifier
+     *
+     * @return Vacancy|null
+     */
+    public function find(string $slug): ?Vacancy
+    {
+        return $this->vacancyRepository->findBySlug($slug);
     }
 }

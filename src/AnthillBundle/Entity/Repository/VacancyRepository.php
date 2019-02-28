@@ -60,6 +60,21 @@ class VacancyRepository extends BaseEntityRepository implements PaginateableInte
     }
 
     /**
+     * Returns vacancy by specified SEO-friendly identifier
+     *
+     * @param string $slug SEO-friendly vacancy identifier
+     *
+     * @return Vacancy|null
+     */
+    public function findBySlug(string $slug): ?Vacancy
+    {
+        $criteria = new Criteria();
+        $criteria->andWhere($criteria->expr()->eq('e.slug', $slug));
+
+        return $this->getQuery($criteria)->getOneOrNullResult();
+    }
+
+    /**
      * Returns vacancy by roadmap name and identifier on external job website
      *
      * @param string $roadmapName        Roadmap name
