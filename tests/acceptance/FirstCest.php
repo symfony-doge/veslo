@@ -7,6 +7,6 @@ class FirstCest
     public function homepageWorks(AcceptanceTester $I)
     {
         $I->amOnPage('/');
-        $I->see('Under development.');
+        $I->see('#главная');
     }
 }

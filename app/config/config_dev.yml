@@ -20,9 +20,25 @@ monolog:
             level: debug
             channels:
                 - '!event'
+                - '!app.http'
+                - '!app.workflow'
                 - '!anthill.digging'
                 - '!anthill.parsing'
                 - '!anthill.collecting'
+        app.http:
+            type: rotating_file
+            path: '%kernel.logs_dir%/%kernel.environment%.app.http.log'
+            max_files: 1
+            level: debug
+            channels:
+                - 'app.http'
+        app.workflow:
+            type: rotating_file
+            path: '%kernel.logs_dir%/%kernel.environment%.app.workflow.log'
+            max_files: 1
+            level: debug
+            channels:
+                - 'app.workflow'
         anthill.digging:
             type: rotating_file
             path: '%kernel.logs_dir%/%kernel.environment%.anthill.digging.log'
@@ -30,7 +46,6 @@ monolog:
             level: debug
             channels:
                 - 'anthill.digging'
-                - 'doctrine'
         anthill.parsing:
             type: rotating_file
             path: '%kernel.logs_dir%/%kernel.environment%.anthill.parsing.log'
@@ -45,7 +60,6 @@ monolog:
             level: debug
             channels:
                 - 'anthill.collecting'
-                - 'doctrine'
         console:
             type: console
             process_psr_3_messages: false

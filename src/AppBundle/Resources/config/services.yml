@@ -1,8 +1,39 @@
 services:
-    veslo.app.http_client:
+    # Global http client for application level, silent/verbose, based on debug option
+    # Alias: veslo.app.http.client.base
+
+    veslo.app.http.client.silent:
         class: GuzzleHttp\Client
         arguments:
-            - '%veslo.app.http_client.config%'
+            - '%veslo.app.http.client.config%'
+
+    veslo.app.http.client.verbose:
+        class: Veslo\AppBundle\Http\Client\VerboseClient
+        lazy: true
+        arguments:
+            - '@monolog.logger.app.http'
+            - '@serializer'
+            - '@veslo.app.http.client.silent'
+
+    veslo.app.http.client.batman:
+        class: Veslo\AppBundle\Http\Client\Batman
+        lazy: true
+        arguments:
+            - '@veslo.app.http.client.base'
+            - '@veslo.app.http.proxy.manager.alfred'
+            - '%veslo.app.http.client.stability_options%'
+
+    veslo.app.http.proxy.manager.alfred:
+        class: Veslo\AppBundle\Http\Proxy\Manager\Alfred
+        lazy: true
+        arguments:
+            - '@veslo.app.http.proxy.locator.static_array_locator'
+
+    veslo.app.http.proxy.locator.static_array_locator:
+        class: Veslo\AppBundle\Http\Proxy\Locator\StaticArrayLocator
+        lazy: true
+        arguments:
+            - '%veslo.app.http.client.proxy.static_list%'
 
     veslo.app.amqp_client:
         class: Bunny\Client

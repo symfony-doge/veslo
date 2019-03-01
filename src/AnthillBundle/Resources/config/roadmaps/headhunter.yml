@@ -22,7 +22,7 @@ services:
         class: Veslo\AnthillBundle\Vacancy\Roadmap\Strategy\HeadHunter\Api\Version20190213
         arguments:
             - '@monolog.logger.anthill.digging'
-            - '@veslo.app.http_client'
+            - '@veslo.app.http.client.batman'
             - '@serializer.encoder.json'
 
     # Scanner
@@ -45,6 +45,6 @@ services:
         class: Veslo\AnthillBundle\Vacancy\Scanner\Strategy\HeadHunter\Api\Version20190213
         arguments:
             - '@monolog.logger.anthill.parsing'
-            - '@veslo.app.http_client'
+            - '@veslo.app.http.client.batman'
             - '@serializer.encoder.json'
             - '@property_accessor'

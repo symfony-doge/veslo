@@ -90,6 +90,7 @@ swiftmailer:
 
 monolog:
     channels:
+        - 'app.http'
         - 'app.workflow'
         - 'anthill.digging'
         - 'anthill.parsing'

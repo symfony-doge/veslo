@@ -23,7 +23,11 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->append($this->getHttpClientNode())
+                ->arrayNode('http')
+                    ->children()
+                        ->append($this->getHttpClientNode())
+                    ->end()
+                ->end()
                 ->append($this->getAmqpClientNode())
                 ->arrayNode('workflow')
                     ->children()
@@ -55,16 +59,37 @@ class Configuration implements ConfigurationInterface
     private function getHttpClientNode(): ArrayNodeDefinition
     {
         $treeBuilder = new TreeBuilder();
-        $node        = $treeBuilder->root('http_client');
+        $node        = $treeBuilder->root('client');
 
         $node
             ->children()
+                ->booleanNode('logging')
+                    ->defaultFalse()
+                ->end()
                 ->arrayNode('headers')
                     ->children()
                         ->scalarNode('user_agent')
                             ->isRequired()
                             ->cannotBeEmpty()
                         ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('proxy')
+                    ->canBeEnabled()
+                    ->children()
+                        ->arrayNode('static_list')
+                            ->scalarPrototype()->end()
+                        ->end()
+                    ->end()
+                    ->beforeNormalization()
+                        ->ifTrue(function ($v) {
+                            if (!$v['enabled']) {
+                                return false;
+                            }
+
+                            return !is_array($v['static_list']) || !array_key_exists(0, $v['static_list']);
+                        })
+                        ->thenInvalid('Proxy list must have at least one entry if proxy is enabled %s')
                     ->end()
                 ->end()
             ->end()

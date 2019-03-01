@@ -21,6 +21,9 @@ parameters:
     app.redis.port: '%env(int:REDIS_PORT)%'
 
     # Http client
+    app.http_client.logging: '%kernel.debug%'
+    app.http_client.proxy.enabled: false
+    app.http_client.proxy.static_list: []
     app.http_client.headers.user_agent: 'Veslo/dev-master (https://github.com/symfony-doge/veslo)'
 
     # Amqp client
