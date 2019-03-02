@@ -87,7 +87,7 @@ class Configuration implements ConfigurationInterface
                                 return false;
                             }
 
-                            return !is_array($v['static_list']) || !array_key_exists(0, $v['static_list']);
+                            return !is_array($v['static_list']) || empty($v['static_list']);
                         })
                         ->thenInvalid('Proxy list must have at least one entry if proxy is enabled %s')
                     ->end()

@@ -38,12 +38,14 @@ class Alfred
     {
         $proxies = $this->getProxyList();
 
-        if (empty($proxies) || array_keys($proxies) !== range(0, count($proxies) - 1)) {
+        if (empty($proxies)) {
             throw new ProxyNotFoundException();
         }
 
-        $randomIndex = mt_rand(0, count($proxies) - 1);
-        $proxy       = $proxies[$randomIndex];
+        $numericProxyList = array_values($proxies);
+
+        $randomIndex = mt_rand(0, count($numericProxyList) - 1);
+        $proxy       = $numericProxyList[$randomIndex];
 
         return $proxy;
     }
