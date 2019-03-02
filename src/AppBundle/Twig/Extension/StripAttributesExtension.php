@@ -49,6 +49,14 @@ class StripAttributesExtension extends AbstractExtension
             $node->parentNode->removeAttribute($node->nodeName);
         }
 
-        return $dom->saveHTML();
+        $bodyNodeList = $dom->getElementsByTagName('body');
+        $bodyNode     = $bodyNodeList->item(0);
+        $resultHtml   = '';
+
+        foreach ($bodyNode->childNodes as $childNode) {
+            $resultHtml .= $dom->saveHTML($childNode);
+        }
+
+        return $resultHtml;
     }
 }
