@@ -217,6 +217,15 @@ class Conveyor
             return null;
         }
 
+        $this->logger->debug(
+            'Payload received.',
+            [
+                'dtoClass'       => $dtoClass,
+                'queueName'      => $queueName,
+                'messageContent' => $message->content,
+            ]
+        );
+
         return $this->serializer->deserialize($message->content, $dtoClass, 'json');
     }
 

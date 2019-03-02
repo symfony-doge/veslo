@@ -4,11 +4,22 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Dto\Vacancy\Roadmap;
 
+use Veslo\AnthillBundle\Vacancy\Normalizer\Roadmap\StrategyDtoDenormalizer;
+
 /**
  * Context of searching algorithm used by roadmap
+ *
+ * @see StrategyDtoDenormalizer
  */
 class StrategyDto
 {
+    /**
+     * Property for strategy name
+     *
+     * @const string
+     */
+    public const PROPERTY_NAME = 'name';
+
     /**
      * Searching algorithm name
      *

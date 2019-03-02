@@ -1,0 +1,25 @@
+services:
+    veslo.anthill.vacancy.normalizer.acceptance_normalizer:
+        class: Veslo\AnthillBundle\Vacancy\Normalizer\AcceptanceNormalizer
+        arguments:
+            - '@veslo.anthill.vacancy.normalizer.scan_result_normalizer'
+
+    veslo.anthill.vacancy.normalizer.scan_result_normalizer:
+        class: Veslo\AnthillBundle\Vacancy\Normalizer\ScanResultNormalizer
+        arguments:
+            - '@serializer'
+
+    veslo.anthill.vacancy.normalizer.roadmap_dto_denormalizer:
+        class: Veslo\AnthillBundle\Vacancy\Normalizer\RoadmapDtoDenormalizer
+        tags:
+            -   name: 'serializer.normalizer'
+                priority: 100
+        arguments:
+            - '@veslo.anthill.vacancy.normalizer.roadmap.strategy_dto_denormalizer'
+            - '@veslo.anthill.vacancy.normalizer.roadmap.configuration_dto_denormalizer'
+
+    veslo.anthill.vacancy.normalizer.roadmap.strategy_dto_denormalizer:
+        class: Veslo\AnthillBundle\Vacancy\Normalizer\Roadmap\StrategyDtoDenormalizer
+
+    veslo.anthill.vacancy.normalizer.roadmap.configuration_dto_denormalizer:
+        class: Veslo\AnthillBundle\Vacancy\Normalizer\Roadmap\ConfigurationDtoDenormalizer

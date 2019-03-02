@@ -4,11 +4,22 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Dto\Vacancy;
 
+use Veslo\AnthillBundle\Vacancy\Normalizer\RoadmapDtoDenormalizer;
+
 /**
  * Context of roadmap by which the vacancy was found
+ *
+ * @see RoadmapDtoDenormalizer
  */
 class RoadmapDto
 {
+    /**
+     * Property with roadmap name
+     *
+     * @const string
+     */
+    public const PROPERTY_NAME = 'name';
+
     /**
      * Roadmap name
      *

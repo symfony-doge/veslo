@@ -17,7 +17,7 @@ services:
         class: Veslo\AnthillBundle\Vacancy\Parser\Earwig
         arguments:
             - '@monolog.logger.anthill.parsing'
-            - '@veslo.anthill.vacancy.scan_result_normalizer'
+            - '@veslo.anthill.vacancy.normalizer.scan_result_normalizer'
             - '@veslo.anthill.vacancy.scanner_pool.conveyor_aware_scanner_pool'
             - '@veslo.anthill.vacancy.chewed_dung_pit'
 
@@ -25,7 +25,7 @@ services:
         class: Veslo\AnthillBundle\Vacancy\Collector\AntWorker
         arguments:
             - '@monolog.logger.anthill.collecting'
-            - '@veslo.anthill.vacancy.acceptance_normalizer'
+            - '@veslo.anthill.vacancy.normalizer.acceptance_normalizer'
             - '@veslo.anthill.vacancy.decision.is_collectable'
             - '@veslo.anthill.vacancy.creator'
             - '@veslo.anthill.vacancy.dung_pit'

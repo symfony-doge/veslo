@@ -20,7 +20,7 @@ class LocationDto
     /**
      * Context of roadmap by which the vacancy was found
      *
-     * @var ConfigurableRoadmapDto|RoadmapDto
+     * @var RoadmapDto
      */
     private $roadmap;
 

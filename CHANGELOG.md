@@ -17,7 +17,8 @@ and conveyor processing w/ [rabbitmq](https://github.com/rabbitmq)
 - Vacancy roadmap configuration for PHP category (HeadHunter)
 - Vacancy list action
 - Vacancy show action
-- Vacancy data is shown "as is", w/o any ratings or transformations
+
+Vacancy data is shown "as is", w/o any ratings or transformations.
 
 [Unreleased]: https://github.com/symfony-doge/veslo/compare/0.1.0...HEAD
 [0.2.0]: https://github.com/symfony-doge/veslo/compare/0.1.0..0.2.0

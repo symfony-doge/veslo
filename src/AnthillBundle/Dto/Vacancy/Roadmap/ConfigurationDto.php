@@ -4,11 +4,22 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Dto\Vacancy\Roadmap;
 
+use Veslo\AnthillBundle\Vacancy\Normalizer\Roadmap\ConfigurationDtoDenormalizer;
+
 /**
  * Context of configuration for searching algorithm used by roadmap
+ *
+ * @see ConfigurationDtoDenormalizer
  */
 class ConfigurationDto
 {
+    /**
+     * Property for configuration key
+     *
+     * @const string
+     */
+    public const PROPERTY_KEY = 'key';
+
     /**
      * Configuration key
      *

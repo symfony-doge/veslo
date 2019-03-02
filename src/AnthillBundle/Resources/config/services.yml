@@ -39,16 +39,6 @@ services:
             - '@logger'
             - '@veslo.anthill.vacancy_repository'
 
-    veslo.anthill.vacancy.acceptance_normalizer:
-        class: Veslo\AnthillBundle\Vacancy\Normalizer\AcceptanceNormalizer
-        arguments:
-            - '@veslo.anthill.vacancy.scan_result_normalizer'
-
-    veslo.anthill.vacancy.scan_result_normalizer:
-        class: Veslo\AnthillBundle\Vacancy\Normalizer\ScanResultNormalizer
-        arguments:
-            - '@serializer'
-
     veslo.anthill.vacancy.provider.journal:
         class: Veslo\AnthillBundle\Vacancy\Provider\Journal
         arguments:
