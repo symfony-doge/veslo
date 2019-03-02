@@ -117,11 +117,11 @@ class VacancyRepository extends BaseEntityRepository implements PaginateableInte
         $query
             ->setCacheable(true)
             ->setCacheMode(Cache::MODE_NORMAL)
-            ->useResultCache(
-                true,
-                $this->options['cache_result_lifetime'],
-                $this->options['cache_result_namespace'] . $page
-            )
+//            ->useResultCache(
+//                true,
+//                $this->options['cache_result_lifetime'],
+//                $this->options['cache_result_namespace'] . $page
+//            )
         ;
 
         /** @var AbstractPagination $pagination */
