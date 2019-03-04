@@ -2,11 +2,19 @@
 # Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
 # https://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
+    # Anthill database connection
     doctrine.dbal.connections.anthill.database_host: '%env(string:POSTGRES_HOST)%'
     doctrine.dbal.connections.anthill.database_port: '%env(int:POSTGRES_PORT)%'
     doctrine.dbal.connections.anthill.database_name: '%env(string:POSTGRES_DB)%'
     doctrine.dbal.connections.anthill.database_user: '%env(string:POSTGRES_USER)%'
     doctrine.dbal.connections.anthill.database_password: '%env(string:POSTGRES_PASSWORD)%'
+
+    # Sanity database connection
+    doctrine.dbal.connections.sanity.database_host: '%env(string:POSTGRES_HOST)%'
+    doctrine.dbal.connections.sanity.database_port: '%env(int:POSTGRES_PORT)%'
+    doctrine.dbal.connections.sanity.database_name: '%env(string:POSTGRES_DB)%'
+    doctrine.dbal.connections.sanity.database_user: '%env(string:POSTGRES_USER)%'
+    doctrine.dbal.connections.sanity.database_password: '%env(string:POSTGRES_PASSWORD)%'
 
     app.mailer_transport: smtp
     app.mailer_host: 127.0.0.1

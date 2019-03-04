@@ -55,6 +55,38 @@ doctrine:
                     softdeleteable:
                         class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                         enabled: true
+            sanity:
+                connection: sanity
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                default_repository_class: Veslo\AppBundle\Entity\Repository\BaseEntityRepository
+                metadata_cache_driver:
+                    type: predis
+                    host: '%app.redis.host%'
+                    port: '%app.redis.port%'
+                    database: 5
+                result_cache_driver:
+                    cache_provider: doctrine.orm.sanity_metadata_cache
+                query_cache_driver:
+                    cache_provider: doctrine.orm.sanity_metadata_cache
+                second_level_cache:
+                    region_cache_driver:
+                        cache_provider: doctrine.orm.sanity_metadata_cache
+                    region_lifetime: 14400
+                    regions:
+                        index:
+                            type: default
+                            cache_driver:
+                                type: predis
+                                host: '%app.redis.host%'
+                                port: '%app.redis.port%'
+                                database: 6
+                            lifetime: 0
+                mappings:
+                    VesloSanityBundle:
+                        type: annotation
+                        dir: '%kernel.project_dir%/src/SanityBundle/Entity'
+                        prefix: Veslo\SanityBundle\Entity
+                        alias: VesloSanity
     dbal:
         default_connection: anthill
         connections:
@@ -65,6 +97,14 @@ doctrine:
                 dbname: '%doctrine.dbal.connections.anthill.database_name%'
                 user: '%doctrine.dbal.connections.anthill.database_user%'
                 password: '%doctrine.dbal.connections.anthill.database_password%'
+                charset: UTF8
+            sanity:
+                driver: pdo_pgsql
+                host: '%doctrine.dbal.connections.sanity.database_host%'
+                port: '%doctrine.dbal.connections.sanity.database_port%'
+                dbname: '%doctrine.dbal.connections.sanity.database_name%'
+                user: '%doctrine.dbal.connections.sanity.database_user%'
+                password: '%doctrine.dbal.connections.sanity.database_password%'
                 charset: UTF8
 
 doctrine_migrations:
