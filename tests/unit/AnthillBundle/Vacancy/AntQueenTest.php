@@ -44,8 +44,6 @@ class AntQueenTest extends Unit
                 verify($this->antQueen->getRoadmaps())->containsOnlyInstancesOf(RoadmapInterface::class);
             });
         });
-
-        verify('Specifications must be met.', $this->getTestResultObject()->failureCount())->isEmpty();
     }
 
     public function testGetRoadmaps()
@@ -66,8 +64,6 @@ class AntQueenTest extends Unit
                 verify($this->antQueen->getRoadmaps())->containsOnlyInstancesOf(RoadmapInterface::class);
             });
         });
-
-        verify('Specifications must be met.', $this->getTestResultObject()->failureCount())->isEmpty();
     }
 
     public function testRequireRoadmap()
@@ -89,8 +85,6 @@ class AntQueenTest extends Unit
                 }
             });
         });
-
-        verify('Specifications must be met.', $this->getTestResultObject()->failureCount())->isEmpty();
     }
 
     public function testBuildRoadmap()
@@ -136,8 +130,6 @@ class AntQueenTest extends Unit
                 }
             });
         });
-
-        verify('Specifications must be met.', $this->getTestResultObject()->failureCount())->isEmpty();
     }
 
     private function makeConfigurableRoadmapStub()

@@ -16,11 +16,14 @@ use Veslo\AnthillBundle\Vacancy\Roadmap\ConfigurationInterface;
 use Veslo\AnthillBundle\Vacancy\Roadmap\StrategyInterface;
 
 /**
- * Represents vacancy searching algorithm for HeadHunter site based on public API
+ * Represents vacancy search algorithm for HeadHunter site based on public API
  *
  * The problem is that we can't sort vacancies by publication_date in ascending order. Only in descending.
  * This algorithm performs vacancy fetching in ascending order by managing additional parameter - received count.
  * So it provides vacancy fetching in real time by their actual publication order.
+ *
+ * Request example:
+ * https://api.hh.ru/vacancies?text=php&area=113&order_by=publication_time&date_from=2019-02-13T00:00:00&date_to=2019-02-14T00:00:00&per_page=1&page=0
  *
  * @see https://github.com/hhru/api/blob/master/docs/general.md
  */
