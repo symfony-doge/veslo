@@ -15,6 +15,7 @@ echo 'Applying environment variables and configs...'
 cp .env.dev.dist .env
 cp docker-compose.dev.yml.dist docker-compose.yml
 cp app/config/parameters.yml.dist app/config/parameters.yml
+cp webpack.env.dev.js.dist ./webpack.env.js
 source .env
 
 echo 'Fixing permissions...'

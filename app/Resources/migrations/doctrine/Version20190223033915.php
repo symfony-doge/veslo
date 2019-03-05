@@ -115,22 +115,22 @@ final class Version20190223033915 extends AbstractMigration
                 anthill_vacancy 
             ADD CONSTRAINT 
                 FK_DD0827FB979B1AD6 
-            FOREIGN KEY (company_id) REFERENCES anthill_company (id) NOT DEFERRABLE INITIALLY IMMEDIATE'
-        );
+            FOREIGN KEY (company_id) REFERENCES anthill_company (id) NOT DEFERRABLE INITIALLY IMMEDIATE
+        ');
         $this->addSql('
             ALTER TABLE 
                 anthill_vacancy_anthill_vacancy_category 
             ADD CONSTRAINT 
                 FK_EF8DA9A6433B78C4 
-            FOREIGN KEY (vacancy_id) REFERENCES anthill_vacancy (id) NOT DEFERRABLE INITIALLY IMMEDIATE'
-        );
+            FOREIGN KEY (vacancy_id) REFERENCES anthill_vacancy (id) NOT DEFERRABLE INITIALLY IMMEDIATE
+        ');
         $this->addSql('
             ALTER TABLE 
                 anthill_vacancy_anthill_vacancy_category 
             ADD CONSTRAINT
                 FK_EF8DA9A612469DE2
-            FOREIGN KEY (category_id) REFERENCES anthill_vacancy_category (id) NOT DEFERRABLE INITIALLY IMMEDIATE'
-        );
+            FOREIGN KEY (category_id) REFERENCES anthill_vacancy_category (id) NOT DEFERRABLE INITIALLY IMMEDIATE
+        ');
     }
 
     public function down(Schema $schema) : void

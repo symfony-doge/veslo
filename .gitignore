@@ -66,6 +66,7 @@ docker-compose.yml
 
 # nodejs & yarn
 /node_modules/
+webpack.env.js
 yarn-error.log
 
 # tests

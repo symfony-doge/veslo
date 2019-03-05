@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Veslo\SanityBundle\Entity\Vacancy;
 
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -33,7 +34,7 @@ class Index
      * @var int
      *
      * @ORM\Column(
-     *     name="vacancyId",
+     *     name="vacancy_id",
      *     type="integer",
      *     unique=true,
      *     options={"comment": "Vacancy identifier to which sanity index belongs to"}
@@ -57,6 +58,20 @@ class Index
     private $value;
 
     /**
+     * Sanity tags which was offered for vacancy by indexation result
+     *
+     * @var ArrayCollection<Tag>
+     *
+     * @ORM\ManyToMany(targetEntity="Veslo\SanityBundle\Entity\Vacancy\Tag", inversedBy="indexes")
+     * @ORM\JoinTable(
+     *     name="sanity_vacancy_index_sanity_vacancy_tag",
+     *     joinColumns={@ORM\JoinColumn(name="index_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
+     * )
+     */
+    private $tags;
+
+    /**
      * Date and time when sanity index was created
      *
      * @var DateTimeInterface
@@ -68,6 +83,14 @@ class Index
      * )
      */
     private $indexationDate;
+
+    /**
+     * Index constructor.
+     */
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     /**
      * Returns sanity index identifier
@@ -121,6 +144,33 @@ class Index
     public function setValue(float $value): void
     {
         $this->value = $value;
+    }
+
+    /**
+     * Returns sanity tags which was offered for vacancy by indexation result
+     *
+     * @return Tag[]
+     */
+    public function getTags(): array
+    {
+        return $this->tags->toArray();
+    }
+
+    /**
+     * Adds a sanity tag which was offered for vacancy by indexation result
+     *
+     * @param Tag $tag Sanity tag
+     *
+     * @return void
+     */
+    public function addTag(Tag $tag): void
+    {
+        if ($this->tags->contains($tag)) {
+            return;
+        }
+
+        $this->tags->add($tag);
+        $tag->addIndex($this);
     }
 
     /**

@@ -98,6 +98,9 @@ doctrine:
                 user: '%doctrine.dbal.connections.anthill.database_user%'
                 password: '%doctrine.dbal.connections.anthill.database_password%'
                 charset: UTF8
+                # Preserve schema from other entity managers in the same database.
+                # https://symfony.com/doc/master/bundles/DoctrineMigrationsBundle/index.html#manual-tables
+                schema_filter: ~^(?!sanity_)~
             sanity:
                 driver: pdo_pgsql
                 host: '%doctrine.dbal.connections.sanity.database_host%'
@@ -106,6 +109,7 @@ doctrine:
                 user: '%doctrine.dbal.connections.sanity.database_user%'
                 password: '%doctrine.dbal.connections.sanity.database_password%'
                 charset: UTF8
+                schema_filter: ~^(?!anthill_)~
 
 doctrine_migrations:
     dir_name: "%kernel.root_dir%/Resources/migrations/doctrine"

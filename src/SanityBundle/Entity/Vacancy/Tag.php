@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Veslo\SanityBundle\Entity\Vacancy;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Veslo\SanityBundle\Entity\Vacancy\Tag\Group;
 
@@ -69,12 +70,29 @@ class Tag
      *
      * @var string
      *
-     * @ORM\Column(name="color", type="string", length=255, options={"comment": "Sanity tag image URL"})
+     * @ORM\Column(name="image_url", type="string", length=255, options={"comment": "Sanity tag image URL"})
      */
     private $imageUrl;
 
     /**
-     * Returns sanity index identifier
+     * Indexes to which sanity tag was offered by indexation result
+     *
+     * @var ArrayCollection<Index>
+     *
+     * @ORM\ManyToMany(targetEntity="Veslo\SanityBundle\Entity\Vacancy\Index", mappedBy="tags")
+     */
+    private $indexes;
+
+    /**
+     * Tag constructor.
+     */
+    public function __construct()
+    {
+        $this->indexes = new ArrayCollection();
+    }
+
+    /**
+     * Returns sanity tag identifier
      *
      * @return int
      */
@@ -196,5 +214,32 @@ class Tag
     public function setImageUrl(string $imageUrl): void
     {
         $this->imageUrl = $imageUrl;
+    }
+
+    /**
+     * Returns indexes to which sanity tag was offered
+     *
+     * @return Index[]
+     */
+    public function getIndexes(): array
+    {
+        return $this->indexes->toArray();
+    }
+
+    /**
+     * Adds an index to which sanity tag was offered
+     *
+     * @param Index $index Index to which sanity tag was offered
+     *
+     * @return void
+     */
+    public function addIndex(Index $index): void
+    {
+        if ($this->indexes->contains($index)) {
+            return;
+        }
+
+        $this->indexes->add($index);
+        $index->addTag($this);
     }
 }

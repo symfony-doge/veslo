@@ -65,6 +65,14 @@ class Group
     private $tags;
 
     /**
+     * Group constructor.
+     */
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
+
+    /**
      * Returns identifier for group of sanity tags
      *
      * @return int

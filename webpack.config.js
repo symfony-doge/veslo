@@ -1,12 +1,15 @@
 // webpack.config.js
 let Encore = require('@symfony/webpack-encore');
+let Env    = require('./webpack.env');
 
 Encore
 // the project directory where all compiled assets will be stored
     .setOutputPath('web/build/')
 
     // the public path used by the web server to access the previous directory
-    .setPublicPath('/build')
+    .setPublicPath(Env.publicPath)
+
+    .setManifestKeyPrefix('build/')
 
     // will create web/build/app.js and web/build/app.css
     .addEntry('app', './app/Resources/public/js/app.js')
@@ -36,14 +39,6 @@ Encore
     // allow sass/scss files to be processed
     .enableSassLoader()
 ;
-
-if (Encore.isProduction()) {
-    Encore.setPublicPath('https://cdn.veslo.it/current');
-
-    // guarantee that the keys in manifest.json are *still* prefixed with build/
-    // (e.g. "build/dashboard.js": "https://my-cool-app.com.global.prod.fastly.net/dashboard.js")
-    Encore.setManifestKeyPrefix('build/');
-}
 
 // export the final configuration
 module.exports = Encore.getWebpackConfig();
