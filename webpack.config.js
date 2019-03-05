@@ -16,10 +16,9 @@ Encore
 
     // this creates a 'vendor.js' file with jquery and the bootstrap JS module
     // these modules will *not* be included in page1.js or page2.js anymore
-    .createSharedEntry('vendor', [
-        'jquery',
-        'bootstrap'
-    ])
+    .createSharedEntry('vendor', './app/Resources/public/js/shared_entry.js')
+
+    .enableSingleRuntimeChunk()
 
     // allow legacy applications to use $/jQuery as a global variable
     //.autoProvidejQuery()
