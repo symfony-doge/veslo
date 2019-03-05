@@ -37,5 +37,13 @@ Encore
     .enableSassLoader()
 ;
 
+if (Encore.isProduction()) {
+    Encore.setPublicPath('https://cdn.veslo.it/current');
+
+    // guarantee that the keys in manifest.json are *still* prefixed with build/
+    // (e.g. "build/dashboard.js": "https://my-cool-app.com.global.prod.fastly.net/dashboard.js")
+    Encore.setManifestKeyPrefix('build/');
+}
+
 // export the final configuration
 module.exports = Encore.getWebpackConfig();

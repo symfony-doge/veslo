@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Veslo\SanityBundle\Entity\Vacancy\Tag;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Veslo\SanityBundle\Entity\Vacancy\Tag;
 
 /**
  * Group for sanity tags
@@ -36,6 +38,15 @@ class Group
     private $name;
 
     /**
+     * Sanity tags group description
+     *
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", options={"comment": "Sanity tags group description"})
+     */
+    private $description;
+
+    /**
      * Sanity tags group color
      *
      * @var string
@@ -45,13 +56,13 @@ class Group
     private $color;
 
     /**
-     * Sanity tags group description
+     * Sanity tags in this group
      *
-     * @var string
+     * @var ArrayCollection<Tag>
      *
-     * @ORM\Column(name="description", type="text", options={"comment": "Sanity tags group description")
+     * @ORM\OneToMany(targetEntity="Veslo\SanityBundle\Entity\Vacancy\Tag", mappedBy="group")
      */
-    private $description;
+    private $tags;
 
     /**
      * Returns identifier for group of sanity tags
@@ -86,6 +97,28 @@ class Group
     }
 
     /**
+     * Returns sanity tags group description
+     *
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * Sets sanity tags group description
+     *
+     * @param string $description Sanity tags group description
+     *
+     * @return void
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
      * Returns sanity tags group color
      *
      * @return string
@@ -108,24 +141,29 @@ class Group
     }
 
     /**
-     * Returns sanity tags group description
+     * Returns sanity tags that belongs to the group
      *
-     * @return string
+     * @return Tag[]
      */
-    public function getDescription(): string
+    public function getTags(): array
     {
-        return $this->description;
+        return $this->tags->toArray();
     }
 
     /**
-     * Sets sanity tags group description
+     * Adds a sanity tag to the group
      *
-     * @param string $description Sanity tags group description
+     * @param Tag $tag Sanity tag
      *
      * @return void
      */
-    public function setDescription(string $description): void
+    public function addTag(Tag $tag): void
     {
-        $this->description = $description;
+        if ($this->tags->contains($tag)) {
+            return;
+        }
+
+        $this->tags->add($tag);
+        $tag->setGroup($this);
     }
 }
