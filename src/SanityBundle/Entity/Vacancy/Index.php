@@ -6,6 +6,7 @@ namespace Veslo\SanityBundle\Entity\Vacancy;
 
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -60,7 +61,7 @@ class Index
     /**
      * Sanity tags which was offered for vacancy by indexation result
      *
-     * @var ArrayCollection<Tag>
+     * @var Collection<Tag>
      *
      * @ORM\ManyToMany(targetEntity="Veslo\SanityBundle\Entity\Vacancy\Tag", inversedBy="indexes")
      * @ORM\JoinTable(

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Veslo\SanityBundle\Entity\Vacancy;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Veslo\SanityBundle\Entity\Vacancy\Tag\Group;
 
@@ -77,7 +78,7 @@ class Tag
     /**
      * Indexes to which sanity tag was offered by indexation result
      *
-     * @var ArrayCollection<Index>
+     * @var Collection<Index>
      *
      * @ORM\ManyToMany(targetEntity="Veslo\SanityBundle\Entity\Vacancy\Index", mappedBy="tags")
      */
