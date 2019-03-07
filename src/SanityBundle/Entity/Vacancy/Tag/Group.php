@@ -7,7 +7,9 @@ namespace Veslo\SanityBundle\Entity\Vacancy\Tag;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Veslo\SanityBundle\Entity\Vacancy\Tag;
+use Veslo\SanityBundle\Entity\Vacancy\Tag\Group\Translation\Entry;
 
 /**
  * Group for sanity tags
@@ -15,6 +17,7 @@ use Veslo\SanityBundle\Entity\Vacancy\Tag;
  * @ORM\Table(name="sanity_vacancy_tag_group")
  * @ORM\Entity(readOnly=true)
  * @ORM\Cache(usage="READ_ONLY", region="index")
+ * @Gedmo\TranslationEntity(class="Veslo\SanityBundle\Entity\Vacancy\Tag\Group\Translation\Entry")
  */
 class Group
 {
@@ -44,6 +47,7 @@ class Group
      * @var string
      *
      * @ORM\Column(name="description", type="text", options={"comment": "Sanity tags group description"})
+     * @Gedmo\Translatable
      */
     private $description;
 
@@ -55,6 +59,19 @@ class Group
      * @ORM\Column(name="color", type="string", length=255, options={"comment": "Sanity tags group color"})
      */
     private $color;
+
+    /**
+     * Translation entries for sanity group fields
+     *
+     * @var Collection<Entry>
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="Veslo\SanityBundle\Entity\Vacancy\Tag\Group\Translation\Entry",
+     *     mappedBy="object",
+     *     cascade={"persist"}
+     * )
+     */
+    private $translations;
 
     /**
      * Sanity tags in this group
@@ -70,7 +87,8 @@ class Group
      */
     public function __construct()
     {
-        $this->tags = new ArrayCollection();
+        $this->translations = new ArrayCollection();
+        $this->tags         = new ArrayCollection();
     }
 
     /**
@@ -147,6 +165,33 @@ class Group
     public function setColor(string $color): void
     {
         $this->color = $color;
+    }
+
+    /**
+     * Returns translation entries for sanity group fields
+     *
+     * @return Entry[]
+     */
+    public function getTranslations(): array
+    {
+        return $this->translations->toArray();
+    }
+
+    /**
+     * Adds a translation entry for sanity group fields
+     *
+     * @param Entry $translation Sanity group translation entry
+     *
+     * @return void
+     */
+    public function addTranslation(Entry $translation): void
+    {
+        if ($this->translations->contains($translation)) {
+            return;
+        }
+
+        $this->translations->add($translation);
+        $translation->setObject($this);
     }
 
     /**

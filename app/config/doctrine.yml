@@ -120,10 +120,13 @@ doctrine_migrations:
     custom_template: ~ # Version >= 1.2, path to your custom migrations template
 
 stof_doctrine_extensions:
-    default_locale: en_US
     orm:
         anthill:
             sluggable: true
             timestampable: true
             loggable: true
             softdeleteable: true
+        sanity:
+            translatable: true
+    default_locale: '%locale%'
+    persist_default_translation: true

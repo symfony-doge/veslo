@@ -47,7 +47,7 @@ final class Version20190305164059 extends AbstractMigration
                 PRIMARY KEY(id)
             )
         ');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_63CA8DC63FD21740 ON sanity_vacancy_index (vacancy_id)');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_63CA8DC6433B78C4 ON sanity_vacancy_index (vacancy_id)');
         $this->addSql('COMMENT ON COLUMN sanity_vacancy_index.id IS \'Sanity index identifier\'');
         $this->addSql('COMMENT ON COLUMN sanity_vacancy_index.vacancy_id IS \'Vacancy identifier to which sanity index belongs to\'');
         $this->addSql('COMMENT ON COLUMN sanity_vacancy_index.value IS \'Sanity index value, from 0.00 to 100.00\'');
