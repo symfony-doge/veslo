@@ -7,7 +7,9 @@ namespace Veslo\SanityBundle\Entity\Vacancy;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Veslo\SanityBundle\Entity\Vacancy\Tag\Group;
+use Veslo\SanityBundle\Entity\Vacancy\Tag\Translation\Entry;
 
 /**
  * Sanity tag
@@ -15,6 +17,7 @@ use Veslo\SanityBundle\Entity\Vacancy\Tag\Group;
  * @ORM\Table(name="sanity_vacancy_tag")
  * @ORM\Entity(readOnly=true)
  * @ORM\Cache(usage="READ_ONLY", region="index")
+ * @Gedmo\TranslationEntity(class="Veslo\SanityBundle\Entity\Vacancy\Tag\Translation\Entry")
  */
 class Tag
 {
@@ -54,6 +57,7 @@ class Tag
      * @var string
      *
      * @ORM\Column(name="description", type="text", options={"comment": "Sanity tag description"})
+     * @Gedmo\Translatable
      */
     private $description;
 
@@ -76,6 +80,19 @@ class Tag
     private $imageUrl;
 
     /**
+     * Translation entries for sanity tag fields
+     *
+     * @var Collection<Entry>
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="Veslo\SanityBundle\Entity\Vacancy\Tag\Translation\Entry",
+     *     mappedBy="object",
+     *     cascade={"persist"}
+     * )
+     */
+    private $translations;
+
+    /**
      * Indexes to which sanity tag was offered by indexation result
      *
      * @var Collection<Index>
@@ -89,7 +106,8 @@ class Tag
      */
     public function __construct()
     {
-        $this->indexes = new ArrayCollection();
+        $this->translations = new ArrayCollection();
+        $this->indexes      = new ArrayCollection();
     }
 
     /**
@@ -215,6 +233,33 @@ class Tag
     public function setImageUrl(string $imageUrl): void
     {
         $this->imageUrl = $imageUrl;
+    }
+
+    /**
+     * Returns translation entries for sanity tag fields
+     *
+     * @return Entry[]
+     */
+    public function getTranslations(): array
+    {
+        return $this->translations->toArray();
+    }
+
+    /**
+     * Adds a translation entry for sanity tag field
+     *
+     * @param Entry $translation Sanity tag translation entry
+     *
+     * @return void
+     */
+    public function addTranslation(Entry $translation): void
+    {
+        if ($this->translations->contains($translation)) {
+            return;
+        }
+
+        $this->translations->add($translation);
+        $translation->setObject($this);
     }
 
     /**

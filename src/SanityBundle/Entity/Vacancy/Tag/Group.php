@@ -178,7 +178,7 @@ class Group
     }
 
     /**
-     * Adds a translation entry for sanity group fields
+     * Adds a translation entry for sanity group field
      *
      * @param Entry $translation Sanity group translation entry
      *
