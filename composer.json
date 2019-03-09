@@ -29,6 +29,7 @@
             "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
         ]
     },
+    "minimum-stability": "stable",
     "require": {
         "php": ">=7.2",
         "bunny/bunny": "^0.4.1",
