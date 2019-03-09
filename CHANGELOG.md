@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- No changes yet.
+
+- Integration with MoT API 0.x.
 
 ## [0.2.0] - 2019-03-06
 ### Security

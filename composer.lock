@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93f2c6de740fb4b24a822fba44f4e04c",
+    "content-hash": "6093b91516d9761594edfffd2ec8b934",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -3652,6 +3652,62 @@
             "time": "2018-07-31T09:26:32+00:00"
         },
         {
+            "name": "symfony-doge/ministry-of-truth-client",
+            "version": "0.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony-doge/ministry-of-truth-client.git",
+                "reference": "976a9e81d75e10a4b230c8a829e30fb28472b2e4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony-doge/ministry-of-truth-client/zipball/976a9e81d75e10a4b230c8a829e30fb28472b2e4",
+                "reference": "976a9e81d75e10a4b230c8a829e30fb28472b2e4",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.0",
+                "php": ">=7.2",
+                "symfony/property-access": "~3.4 || ~4.0",
+                "symfony/property-info": "~3.4 || ~4.0",
+                "symfony/serializer": "~3.4 || ~4.0"
+            },
+            "require-dev": {
+                "psr/log": "^1.0"
+            },
+            "suggest": {
+                "psr/log": "^1.0 is required for using a log functional"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MinistryOfTruthClient\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pavel Petrov",
+                    "email": "itnelo@gmail.com",
+                    "homepage": "https://ppetrov.it",
+                    "role": "Developer"
+                }
+            ],
+            "description": "An interface between vacancy aggregator & sanity index provider",
+            "homepage": "https://github.com/symfony-doge/ministry-of-truth-client",
+            "time": "2019-03-09T16:07:06+00:00"
+        },
+        {
             "name": "symfony/monolog-bundle",
             "version": "v3.3.1",
             "source": {
@@ -3815,7 +3871,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -6135,9 +6191,11 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
-    "prefer-stable": false,
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "symfony-doge/ministry-of-truth-client": 20
+    },
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.2"

@@ -59,6 +59,7 @@
 !/web/bundles/.gitkeep
 /web/tests
 .idea
+VERSION
 
 # docker
 .env

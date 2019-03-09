@@ -25,6 +25,7 @@ echo 'Building docker-compose services...'
 docker-compose build --force-rm
 
 echo 'Updating composer dependencies...'
+# app -d memory_limit=-1
 docker-compose run app composer install --no-interaction
 
 echo 'Updating yarn dependencies...'
@@ -42,6 +43,9 @@ docker-compose run app ./bin/console cache:warmup --env=dev
 
 echo 'Applying migrations...'
 docker-compose run app ./bin/console doctrine:migrations:migrate --env=dev --no-interaction --allow-no-migration
+
+echo 'Updating build version...'
+rm -f VERSION && docker-compose run --no-deps app bin/console app:version:bump --build=`date +"%Y%m%d%H%M%S"`
 
 echo 'Starting docker-compose services...'
 docker-compose up -d
