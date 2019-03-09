@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b28d161385475886adf31045d2a8389a",
+    "content-hash": "93f2c6de740fb4b24a822fba44f4e04c",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2305,16 +2305,16 @@
         },
         {
             "name": "nelmio/alice",
-            "version": "v3.5.3",
+            "version": "v3.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/alice.git",
-                "reference": "e8f6cc331eca745ccc155402500901cebfc1444f"
+                "reference": "a14e89380ce7435d6b27164b8cb182ad4be5d8d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/alice/zipball/e8f6cc331eca745ccc155402500901cebfc1444f",
-                "reference": "e8f6cc331eca745ccc155402500901cebfc1444f",
+                "url": "https://api.github.com/repos/nelmio/alice/zipball/a14e89380ce7435d6b27164b8cb182ad4be5d8d6",
+                "reference": "a14e89380ce7435d6b27164b8cb182ad4be5d8d6",
                 "shasum": ""
             },
             "require": {
@@ -2381,7 +2381,7 @@
                 "faker",
                 "test"
             ],
-            "time": "2018-12-22T21:25:49+00:00"
+            "time": "2019-02-28T18:11:10+00:00"
         },
         {
             "name": "nikolaposa/version",
@@ -2441,16 +2441,16 @@
         },
         {
             "name": "ocramius/package-versions",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ocramius/PackageVersions.git",
-                "reference": "4489d5002c49d55576fa0ba786f42dbb009be46f"
+                "reference": "a4d4b60d0e60da2487bd21a2c6ac089f85570dbb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/4489d5002c49d55576fa0ba786f42dbb009be46f",
-                "reference": "4489d5002c49d55576fa0ba786f42dbb009be46f",
+                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/a4d4b60d0e60da2487bd21a2c6ac089f85570dbb",
+                "reference": "a4d4b60d0e60da2487bd21a2c6ac089f85570dbb",
                 "shasum": ""
             },
             "require": {
@@ -2459,6 +2459,7 @@
             },
             "require-dev": {
                 "composer/composer": "^1.6.3",
+                "doctrine/coding-standard": "^5.0.1",
                 "ext-zip": "*",
                 "infection/infection": "^0.7.1",
                 "phpunit/phpunit": "^7.0.0"
@@ -2486,7 +2487,7 @@
                 }
             ],
             "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
-            "time": "2018-02-05T13:05:30+00:00"
+            "time": "2019-02-21T12:16:21+00:00"
         },
         {
             "name": "ocramius/proxy-manager",
@@ -4172,16 +4173,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.4.22",
+            "version": "v3.4.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "907d4d1d1a419663c3c37cfb33dd65c48fa62d1b"
+                "reference": "336cf12e5e82d71874e8522e0879794340351b56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/907d4d1d1a419663c3c37cfb33dd65c48fa62d1b",
-                "reference": "907d4d1d1a419663c3c37cfb33dd65c48fa62d1b",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/336cf12e5e82d71874e8522e0879794340351b56",
+                "reference": "336cf12e5e82d71874e8522e0879794340351b56",
                 "shasum": ""
             },
             "require": {
@@ -4323,7 +4324,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2019-02-03T12:23:08+00:00"
+            "time": "2019-03-03T18:52:48+00:00"
         },
         {
             "name": "twig/extensions",
@@ -4653,16 +4654,16 @@
         },
         {
             "name": "codeception/codeception",
-            "version": "2.5.3",
+            "version": "2.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "19f0fe845c0af5af2a6c094dc0df3a178a3fd5b0"
+                "reference": "a2ecfe2f3ad36cc29904d2d566b0d7280854e6c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/19f0fe845c0af5af2a6c094dc0df3a178a3fd5b0",
-                "reference": "19f0fe845c0af5af2a6c094dc0df3a178a3fd5b0",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/a2ecfe2f3ad36cc29904d2d566b0d7280854e6c9",
+                "reference": "a2ecfe2f3ad36cc29904d2d566b0d7280854e6c9",
                 "shasum": ""
             },
             "require": {
@@ -4741,31 +4742,31 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2019-02-02T15:39:58+00:00"
+            "time": "2019-02-20T20:45:25+00:00"
         },
         {
             "name": "codeception/phpunit-wrapper",
-            "version": "7.6.1",
+            "version": "7.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/phpunit-wrapper.git",
-                "reference": "ed4b12beb167dc2ecea293b4f6df6c20ce8d280f"
+                "reference": "ab04a956264291505ea84998f43cf91639b4575d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/phpunit-wrapper/zipball/ed4b12beb167dc2ecea293b4f6df6c20ce8d280f",
-                "reference": "ed4b12beb167dc2ecea293b4f6df6c20ce8d280f",
+                "url": "https://api.github.com/repos/Codeception/phpunit-wrapper/zipball/ab04a956264291505ea84998f43cf91639b4575d",
+                "reference": "ab04a956264291505ea84998f43cf91639b4575d",
                 "shasum": ""
             },
             "require": {
                 "phpunit/php-code-coverage": "^6.0",
-                "phpunit/phpunit": ">=7.1 <7.6",
+                "phpunit/phpunit": "7.5.*",
                 "sebastian/comparator": "^3.0",
                 "sebastian/diff": "^3.0"
             },
             "require-dev": {
                 "codeception/specify": "*",
-                "vlucas/phpdotenv": "^2.4"
+                "vlucas/phpdotenv": "^3.0"
             },
             "type": "library",
             "autoload": {
@@ -4784,7 +4785,7 @@
                 }
             ],
             "description": "PHPUnit classes used by Codeception",
-            "time": "2019-01-13T10:34:39+00:00"
+            "time": "2019-02-26T20:35:32+00:00"
         },
         {
             "name": "codeception/specify",
@@ -4826,20 +4827,20 @@
         },
         {
             "name": "codeception/stub",
-            "version": "2.0.4",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Stub.git",
-                "reference": "f50bc271f392a2836ff80690ce0c058efe1ae03e"
+                "reference": "853657f988942f7afb69becf3fd0059f192c705a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Stub/zipball/f50bc271f392a2836ff80690ce0c058efe1ae03e",
-                "reference": "f50bc271f392a2836ff80690ce0c058efe1ae03e",
+                "url": "https://api.github.com/repos/Codeception/Stub/zipball/853657f988942f7afb69becf3fd0059f192c705a",
+                "reference": "853657f988942f7afb69becf3fd0059f192c705a",
                 "shasum": ""
             },
             "require": {
-                "phpunit/phpunit": ">=4.8 <8.0"
+                "codeception/phpunit-wrapper": ">6.0.15 <6.1.0 | ^6.6.1 | ^7.7.1 | ^8.0.3"
             },
             "type": "library",
             "autoload": {
@@ -4852,7 +4853,7 @@
                 "MIT"
             ],
             "description": "Flexible Stub wrapper for PHPUnit's Mock Builder",
-            "time": "2018-07-26T11:55:37+00:00"
+            "time": "2019-03-02T15:35:10+00:00"
         },
         {
             "name": "codeception/verify",
@@ -5416,16 +5417,16 @@
         },
         {
             "name": "phpunit/php-timer",
-            "version": "2.0.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-timer.git",
-                "reference": "8b8454ea6958c3dee38453d3bd571e023108c91f"
+                "reference": "8b389aebe1b8b0578430bda0c7c95a829608e059"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/8b8454ea6958c3dee38453d3bd571e023108c91f",
-                "reference": "8b8454ea6958c3dee38453d3bd571e023108c91f",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/8b389aebe1b8b0578430bda0c7c95a829608e059",
+                "reference": "8b389aebe1b8b0578430bda0c7c95a829608e059",
                 "shasum": ""
             },
             "require": {
@@ -5437,7 +5438,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "2.1-dev"
                 }
             },
             "autoload": {
@@ -5461,7 +5462,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2018-02-01T13:07:23+00:00"
+            "time": "2019-02-20T10:12:59+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -5514,16 +5515,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.5.4",
+            "version": "7.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "2896657da5fb237bc316bdfc18c2650efeee0dc0"
+                "reference": "09c85e14994df92e5ff1f5ec0b481bdb7d3d3df9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2896657da5fb237bc316bdfc18c2650efeee0dc0",
-                "reference": "2896657da5fb237bc316bdfc18c2650efeee0dc0",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/09c85e14994df92e5ff1f5ec0b481bdb7d3d3df9",
+                "reference": "09c85e14994df92e5ff1f5ec0b481bdb7d3d3df9",
                 "shasum": ""
             },
             "require": {
@@ -5594,7 +5595,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-02-07T14:15:04+00:00"
+            "time": "2019-02-18T09:24:50+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -5978,16 +5979,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v3.4.22",
+            "version": "v3.4.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "6a2148bfc6ca0016846a32bdc55a317274283709"
+                "reference": "b539f37134c10edbf85dc0567be4151c56870f5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/6a2148bfc6ca0016846a32bdc55a317274283709",
-                "reference": "6a2148bfc6ca0016846a32bdc55a317274283709",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/b539f37134c10edbf85dc0567be4151c56870f5e",
+                "reference": "b539f37134c10edbf85dc0567be4151c56870f5e",
                 "shasum": ""
             },
             "require": {
@@ -5997,7 +5998,6 @@
                 "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0"
             },
             "suggest": {
-                "ext-zip": "Zip support is required when using bin/simple-phpunit",
                 "symfony/debug": "For tracking deprecated interfaces usages at runtime with DebugClassLoader"
             },
             "bin": [
@@ -6040,7 +6040,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2019-01-30T13:30:37+00:00"
+            "time": "2019-02-16T18:50:26+00:00"
         },
         {
             "name": "theseer/tokenizer",
