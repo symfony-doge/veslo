@@ -32,7 +32,7 @@ parameters:
     app.http_client.logging: '%kernel.debug%'
     app.http_client.proxy.enabled: false
     app.http_client.proxy.static_list: []
-    app.http_client.headers.user_agent: 'Veslo/dev-master (https://github.com/symfony-doge/veslo)'
+    app.http_client.headers.user_agent: 'Veslo/0.x-dev (https://github.com/symfony-doge/veslo)'
 
     # Amqp client
     app.amqp_client.host: '%env(string:RABBITMQ_HOST)%'

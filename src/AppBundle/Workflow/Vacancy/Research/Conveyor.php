@@ -222,7 +222,12 @@ class Conveyor
         $channel = $this->amqpClient->channel();
         $channel->queueDeclare($queueName);
 
+        // Immediate Ack here; we CAN afford a message loss as the trade-off
+        // between "a single vacancy loss" and CPU & RAM cost
+        // while trying to process unnecessary, duplicate data in whole conveyor.
         $message = $channel->get($queueName, true);
+        // Также хорошая статья по теме:
+        // https://habr.com/ru/company/yandex/blog/442762/ (Идемпотентность при внешних операциях)
 
         if (!$message instanceof Message) {
             return null;
