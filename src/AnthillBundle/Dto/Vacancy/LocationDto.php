@@ -36,6 +36,16 @@ class LocationDto
     private $roadmap;
 
     /**
+     * Returns vacancy URL
+     *
+     * @return string|null
+     */
+    public function getVacancyUrl(): ?string
+    {
+        return $this->vacancyUrl;
+    }
+
+    /**
      * Sets vacancy URL
      *
      * @param string $vacancyUrl Vacancy URL for parsing
@@ -48,13 +58,13 @@ class LocationDto
     }
 
     /**
-     * Returns vacancy URL
+     * Returns context of roadmap by which the vacancy was found
      *
-     * @return string|null
+     * @return RoadmapDto|null
      */
-    public function getVacancyUrl(): ?string
+    public function getRoadmap(): ?RoadmapDto
     {
-        return $this->vacancyUrl;
+        return $this->roadmap;
     }
 
     /**
@@ -67,15 +77,5 @@ class LocationDto
     public function setRoadmap(RoadmapDto $roadmap): void
     {
         $this->roadmap = $roadmap;
-    }
-
-    /**
-     * Returns context of roadmap by which the vacancy was found
-     *
-     * @return RoadmapDto|null
-     */
-    public function getRoadmap(): ?RoadmapDto
-    {
-        return $this->roadmap;
     }
 }

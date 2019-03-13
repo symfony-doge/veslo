@@ -103,7 +103,7 @@ class Conveyor
         $payload     = new Payload($dto);
         $transitions = $this->workflow->getEnabledTransitions($payload);
 
-        if (empty($transitions)) {
+        if (0 >= count($transitions)) {
             return;
         }
 

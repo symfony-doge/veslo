@@ -49,7 +49,7 @@ class Alfred
     {
         $proxies = $this->getProxyList();
 
-        if (empty($proxies)) {
+        if (0 >= count($proxies)) {
             throw new ProxyNotFoundException();
         }
 
