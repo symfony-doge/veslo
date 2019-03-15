@@ -36,6 +36,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Shivas\VersioningBundle\ShivasVersioningBundle(),
+            new SymfonyDoge\MinistryOfTruthClient\Bridge\Symfony\SymfonyDogeMotcBundle(),
             new Veslo\AppBundle\VesloAppBundle(),
             new Veslo\AnthillBundle\VesloAnthillBundle(),
             new Veslo\SanityBundle\VesloSanityBundle(),

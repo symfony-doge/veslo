@@ -19,6 +19,7 @@ use Exception;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Veslo\AnthillBundle\Dto\Vacancy\RawDto;
@@ -108,7 +109,7 @@ class Version20190213 implements StrategyInterface
     public function fetch(string $vacancyUrl): string
     {
         try {
-            $response = $this->httpClient->request('GET', $vacancyUrl);
+            $response = $this->httpClient->request(Request::METHOD_GET, $vacancyUrl);
         } catch (GuzzleException $e) {
             $message = $e->getMessage();
             $this->logger->error('Request to website failed.', ['message' => $message, 'uri' => $vacancyUrl]);

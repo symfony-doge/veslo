@@ -113,3 +113,7 @@ nelmio_alice:
 
 knp_paginator:
     page_range: 7
+
+symfony_doge_motc:
+    api:
+        base_uri: '%symfony_doge_motc.api.base_uri%'

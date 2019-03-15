@@ -3668,15 +3668,18 @@
             "require": {
                 "guzzlehttp/guzzle": "^6.0",
                 "php": ">=7.2",
+                "symfony/http-foundation": "~3.4 || ~4.0",
+                "symfony/options-resolver": "~3.4 || ~4.0",
                 "symfony/property-access": "~3.4 || ~4.0",
                 "symfony/property-info": "~3.4 || ~4.0",
-                "symfony/serializer": "~3.4 || ~4.0"
+                "symfony/serializer": "~3.4 || ~4.0",
+                "symfony/validator": "~3.4 || ~4.0"
             },
             "require-dev": {
                 "psr/log": "^1.0"
             },
             "suggest": {
-                "psr/log": "^1.0 is required for using a log functional"
+                "psr/log": "^1.0 is required for using a logging"
             },
             "type": "library",
             "extra": {
@@ -3686,7 +3689,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "MinistryOfTruthClient\\": [
+                    "SymfonyDoge\\MinistryOfTruthClient\\": [
                         "src/"
                     ]
                 }

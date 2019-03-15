@@ -43,3 +43,6 @@ parameters:
 
     # Vacancy-related data cache
     anthill.vacancies.cache_lifetime: 60   # sec
+
+    # Ministry of Truth API
+    symfony_doge_motc.api.base_uri: '//null'

@@ -20,6 +20,7 @@ use Exception;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters\HeadHunter as HeadHunterParameters;
 use Veslo\AnthillBundle\Exception\Vacancy\Roadmap\Strategy\LookupFailedException;
@@ -271,7 +272,7 @@ class Version20190213 implements StrategyInterface
         }
 
         try {
-            $response = $this->httpClient->request('GET', $uri, ['query' => $query]);
+            $response = $this->httpClient->request(Request::METHOD_GET, $uri, ['query' => $query]);
         } catch (GuzzleException $e) {
             $this->logger->error(
                 'Request to website failed.',
