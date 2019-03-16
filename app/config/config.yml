@@ -117,3 +117,8 @@ knp_paginator:
 symfony_doge_motc:
     api:
         base_uri: '%symfony_doge_motc.api.base_uri%'
+        requests:
+            index:
+                path: '/index'
+            get_tag_groups:
+                path: '/tag/groups'
