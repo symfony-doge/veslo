@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace Veslo;
 
-class FirstCest
+class VacancyShowCest
 {
     public function homepageWorks(AcceptanceTester $I)
     {

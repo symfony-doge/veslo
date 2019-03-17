@@ -27,4 +27,11 @@ final class Group
      * @const string
      */
     public const PRODUCTION = 'prod';
+
+    /**
+     * Tagged fixtures should be executed in dev or test environment only
+     *
+     * @const string
+     */
+    public const TEST = 'test';
 }

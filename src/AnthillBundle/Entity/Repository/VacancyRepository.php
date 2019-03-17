@@ -116,9 +116,14 @@ class VacancyRepository extends BaseEntityRepository implements PaginateableInte
     {
         $queryBuilder = $this->createQueryBuilder('e');
         $queryBuilder
-            ->select('e', 'c')
+            ->select('e', 'c', 'ct')
             // fetch join for caching.
-            ->innerJoin('e.categories', 'c')
+            ->innerJoin('e.company', 'c')
+            // inner join for company is required. due to fixtures loading logic there are some cases
+            // when a deletion date can be set in company and not present in related vacancies at the same time.
+            // it leads to inconsistent state in test environment;
+            // normally (prod), a soft delete logic should be properly applied for all relations.
+            ->leftJoin('e.categories', 'ct')
             ->orderBy('e.id', Criteria::DESC)
         ;
 
@@ -128,11 +133,6 @@ class VacancyRepository extends BaseEntityRepository implements PaginateableInte
         $query
             ->setCacheable(true)
             ->setCacheMode(Cache::MODE_NORMAL)
-//            ->useResultCache(
-//                true,
-//                $this->options['cache_result_lifetime'],
-//                $this->options['cache_result_namespace'] . $page
-//            )
         ;
 
         /** @var AbstractPagination $pagination */

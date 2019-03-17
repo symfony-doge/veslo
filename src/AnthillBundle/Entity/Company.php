@@ -251,4 +251,16 @@ class Company
     {
         return $this->deletionDate;
     }
+
+    /**
+     * Sets date when company was deleted
+     *
+     * @param DateTimeInterface|null $deletionDate Date when company was deleted
+     *
+     * @return void
+     */
+    public function setDeletionDate(?DateTimeInterface $deletionDate): void
+    {
+        $this->deletionDate = $deletionDate;
+    }
 }

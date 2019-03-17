@@ -13,17 +13,22 @@
 
 declare(strict_types=1);
 
-namespace Veslo\AnthillBundle\Fixture\Vacancy\Roadmap\Configuration;
+namespace Veslo\AnthillBundle\Fixture;
 
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
-use Veslo\AnthillBundle\Enum\Fixture\Group as AnthillGroup;
 use Veslo\AppBundle\Enum\Fixture\Group as ApplicationGroup;
 use Veslo\AppBundle\Fixture\FileFixture;
 
 /**
- * Configuration parameters fixture for HeadHunter vacancy search algorithms
+ * Fixture for vacancies w/ related companies & categories
+ *
+ * Merged in a single one unit to simplify work with relations
+ * (alice requires a custom provider like "entity_reference()" for separated fixtures, which is redundant)
+ *
+ * @see https://github.com/nelmio/alice/blob/master/doc/relations-handling.md
+ * @see https://github.com/nelmio/alice/issues/598
  */
-class HeadHunterParametersFixture extends FileFixture implements FixtureGroupInterface
+class VacancyWithCompanyAndCategoriesFixture extends FileFixture implements FixtureGroupInterface
 {
     /**
      * {@inheritdoc}
@@ -31,8 +36,7 @@ class HeadHunterParametersFixture extends FileFixture implements FixtureGroupInt
     public static function getGroups(): array
     {
         return [
-            ApplicationGroup::PRODUCTION,
-            AnthillGroup::ROADMAP_CONFIGURATION_PARAMETERS,
+            ApplicationGroup::TEST,
         ];
     }
 }

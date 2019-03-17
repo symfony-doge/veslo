@@ -1,0 +1,8 @@
+Veslo\AnthillBundle\Entity\Company:
+    company{1..8}:
+        name (unique): '<company()>'
+        url: <url()>
+        logoUrl: <imageUrl(100, 100)>
+        synchronizationDate: <dateTimeBetween('-30 days', '-14 days')>
+        # leads to desync with deletionDate field in vacancy entity
+        deletionDate: '10%? <dateTimeBetween("-14 days", "now")>'

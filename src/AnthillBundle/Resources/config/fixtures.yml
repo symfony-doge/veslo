@@ -7,3 +7,12 @@ services:
             - '@@VesloAnthillBundle/Resources/fixtures/roadmap/head_hunter_parameters.yml'
         tags:
             - !php/const Doctrine\Bundle\FixturesBundle\DependencyInjection\CompilerPass\FixturesCompilerPass::FIXTURE_TAG
+
+    veslo.anthill.fixture.vacancy_with_company_and_categories_fixture:
+        class: Veslo\AnthillBundle\Fixture\VacancyWithCompanyAndCategoriesFixture
+        arguments:
+            - '@file_locator'
+            - '@nelmio_alice.file_loader.simple'
+            - '@@VesloAnthillBundle/Resources/fixtures/vacancies.yml'
+        tags:
+            - !php/const Doctrine\Bundle\FixturesBundle\DependencyInjection\CompilerPass\FixturesCompilerPass::FIXTURE_TAG

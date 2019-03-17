@@ -1,0 +1,31 @@
+include:
+    - 'companies.yml'
+
+parameters:
+    roadmap_names:
+        - 'hh'
+        - 'sj'
+        - 'wua'
+    languages:
+        - 'PHP'
+        - 'Java'
+        - 'Ruby'
+        - 'Python'
+
+Veslo\AnthillBundle\Entity\Vacancy:
+    vacancy{1..55}:
+        roadmapName: <randomElement(<{roadmap_names}>)>
+        externalIdentifier (unique): <numberBetween(1000000, 2000000)>
+        company: '@company*'
+        url: <url()>
+        regionName: <city()>
+        title: '<randomElement(<{languages}>)> <jobTitle()>'
+        snippet: '20%? <text(200)>'
+        text: <text(1000)>
+        salaryFrom: '50%? <numberBetween(10000, 100000)>'
+        salaryTo: '50%? <numberBetween(100000, 300000)>'
+        salaryCurrency: <currencyCode()>
+        publicationDate: <dateTimeBetween('-60 days', '-30 days')>
+        synchronizationDate: <dateTimeBetween('-30 days', '-14 days')>
+        # leads to desync with company.deletionDate
+        deletionDate: '10%? <dateTimeBetween("-14 days", "now")>'

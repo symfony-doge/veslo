@@ -322,4 +322,16 @@ class Vacancy extends SynchronizableDataFields
     {
         return $this->deletionDate;
     }
+
+    /**
+     * Sets date when vacancy was deleted
+     *
+     * @param DateTimeInterface|null $deletionDate Date when vacancy was deleted
+     *
+     * @return void
+     */
+    public function setDeletionDate(?DateTimeInterface $deletionDate): void
+    {
+        $this->deletionDate = $deletionDate;
+    }
 }
