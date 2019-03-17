@@ -68,7 +68,8 @@ final class Version20190305164059 extends AbstractMigration
             CREATE TABLE sanity_vacancy_tag (
                 id INT NOT NULL, 
                 group_id INT DEFAULT NULL, 
-                name VARCHAR(255) NOT NULL, 
+                name VARCHAR(255) NOT NULL,
+                title VARCHAR(255) NOT NULL,
                 description TEXT NOT NULL, 
                 color VARCHAR(255) NOT NULL, 
                 image_url VARCHAR(255) NOT NULL, 
@@ -80,6 +81,7 @@ final class Version20190305164059 extends AbstractMigration
         $this->addSql('COMMENT ON COLUMN sanity_vacancy_tag.id IS \'Sanity tag identifier\'');
         $this->addSql('COMMENT ON COLUMN sanity_vacancy_tag.group_id IS \'Identifier for group of sanity tags\'');
         $this->addSql('COMMENT ON COLUMN sanity_vacancy_tag.name IS \'Sanity tag name\'');
+        $this->addSql('COMMENT ON COLUMN sanity_vacancy_tag.title IS \'Sanity tag title\'');
         $this->addSql('COMMENT ON COLUMN sanity_vacancy_tag.description IS \'Sanity tag description\'');
         $this->addSql('COMMENT ON COLUMN sanity_vacancy_tag.color IS \'Sanity tag color\'');
         $this->addSql('COMMENT ON COLUMN sanity_vacancy_tag.image_url IS \'Sanity tag image URL\'');

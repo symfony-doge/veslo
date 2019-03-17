@@ -63,6 +63,16 @@ class Tag
     private $name;
 
     /**
+     * Sanity tag title
+     *
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, options={"comment": "Sanity tag title"})
+     * @Gedmo\Translatable
+     */
+    private $title;
+
+    /**
      * Sanity tag description
      *
      * @var string
@@ -180,6 +190,28 @@ class Tag
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * Returns sanity tag title
+     *
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * Sets sanity tag title
+     *
+     * @param string $title Sanity tag title
+     *
+     * @return void
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
     }
 
     /**
