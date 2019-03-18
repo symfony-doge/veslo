@@ -13,13 +13,27 @@
 
 declare(strict_types=1);
 
-namespace Veslo;
+namespace Veslo\Tests\_pages\Page;
 
-class VacancyShowCest
+use Veslo\Tests\_pages\Page;
+
+/**
+ * Main page
+ */
+class MainPage extends Page
 {
-    public function homepageWorks(AcceptanceTester $I)
+    /**
+     * Page route
+     *
+     * @const string
+     */
+    private const ROUTE = '/';
+
+    /**
+     * {@inheritdoc}
+     */
+    protected static function getRoute(): string
     {
-        $I->amOnPage('/');
-        $I->see('#главная');
+        return self::ROUTE;
     }
 }

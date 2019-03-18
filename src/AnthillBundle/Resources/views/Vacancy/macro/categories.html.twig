@@ -24,6 +24,8 @@
             {{- category.name -}}
         </div>
     {% else %}
-        {{ 'no_categories_assigned'|trans }}
+        <span class="font-italic">
+            {{ 'no_categories_assigned'|trans }}
+        </span>
     {% endfor %}
 {% endmacro categories %}

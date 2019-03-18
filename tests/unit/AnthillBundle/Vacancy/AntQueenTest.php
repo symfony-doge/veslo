@@ -13,7 +13,7 @@
 
 declare(strict_types=1);
 
-namespace Veslo;
+namespace Veslo\Tests\Unit\AnthillBundle\Vacancy;
 
 use Codeception\AssertThrows;
 use Codeception\Specify;
@@ -26,6 +26,7 @@ use Veslo\AnthillBundle\Vacancy\Roadmap\ConfigurationInterface;
 use Veslo\AnthillBundle\Vacancy\Roadmap\ConveyorAwareRoadmap;
 use Veslo\AnthillBundle\Vacancy\RoadmapInterface;
 
+// TODO: assertThrows is waiting for a fix or should be forked
 class AntQueenTest extends Unit
 {
     use Specify;

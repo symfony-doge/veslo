@@ -1,5 +1,6 @@
 include:
     - 'companies.yml'
+    - 'vacancy/categories.yml'
 
 parameters:
     roadmap_names:
@@ -26,6 +27,7 @@ Veslo\AnthillBundle\Entity\Vacancy:
         salaryTo: '50%? <numberBetween(100000, 300000)>'
         salaryCurrency: <currencyCode()>
         publicationDate: <dateTimeBetween('-60 days', '-30 days')>
+        categories: '<numberBetween(0, 3)>x @category*'
         synchronizationDate: <dateTimeBetween('-30 days', '-14 days')>
         # leads to desync with company.deletionDate
         deletionDate: '10%? <dateTimeBetween("-14 days", "now")>'

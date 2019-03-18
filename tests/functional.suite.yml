@@ -9,4 +9,4 @@ actor: FunctionalTester
 modules:
     enabled:
         # add a framework module here
-        - \Veslo\Helper\Functional
+        - \Veslo\Tests\Helper\Functional

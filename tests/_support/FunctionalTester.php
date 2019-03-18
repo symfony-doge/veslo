@@ -13,7 +13,7 @@
 
 declare(strict_types=1);
 
-namespace Veslo;
+namespace Veslo\Tests;
 
 /**
  * Inherited Methods

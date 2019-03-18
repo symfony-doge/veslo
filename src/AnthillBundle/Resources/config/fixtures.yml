@@ -4,7 +4,7 @@ services:
         arguments:
             - '@file_locator'
             - '@nelmio_alice.file_loader.simple'
-            - '@@VesloAnthillBundle/Resources/fixtures/roadmap/head_hunter_parameters.yml'
+            - '@@VesloAnthillBundle/Resources/fixtures/vacancy/roadmap/head_hunter_parameters.yml'
         tags:
             - !php/const Doctrine\Bundle\FixturesBundle\DependencyInjection\CompilerPass\FixturesCompilerPass::FIXTURE_TAG
 

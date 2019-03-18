@@ -10,5 +10,5 @@ modules:
         - WebDriver:
             url: '%suite.acceptance.web_driver.url%'
             host: '%suite.acceptance.web_driver.host%'
-            browser: chrome
-        - \Veslo\Helper\Acceptance
+            browser: 'chrome'
+        - \Veslo\Tests\Helper\Acceptance

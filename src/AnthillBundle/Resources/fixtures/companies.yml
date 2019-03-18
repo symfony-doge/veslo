@@ -1,6 +1,6 @@
 Veslo\AnthillBundle\Entity\Company:
     company{1..8}:
-        name (unique): '<company()>'
+        name (unique): <company()>
         url: <url()>
         logoUrl: <imageUrl(100, 100)>
         synchronizationDate: <dateTimeBetween('-30 days', '-14 days')>

@@ -1,4 +1,4 @@
-namespace: Veslo
+namespace: Veslo\Tests
 paths:
     tests: tests
     output: tests/_output

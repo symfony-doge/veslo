@@ -1,0 +1,3 @@
+Veslo\AnthillBundle\Entity\Vacancy\Category:
+    category{1..5}:
+        name (unique): <word()>
