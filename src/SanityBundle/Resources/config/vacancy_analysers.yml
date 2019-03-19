@@ -1,0 +1,6 @@
+services:
+    veslo.sanity.vacancy.analyser.ministry_of_truth:
+        class: Veslo\SanityBundle\Vacancy\Analyser\MinistryOfTruth
+        arguments:
+            - '@symfony_doge.motc.client'
+            - '%veslo.sanity.vacancy.analyser.ministry_of_truth.options%'

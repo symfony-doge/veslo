@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Veslo\AnthillBundle\Dto\Vacancy\LocationDto;
 use Veslo\AnthillBundle\Vacancy\ScannerPool\ConveyorAwareScannerPool;
 use Veslo\AppBundle\Workflow\Vacancy\PitInterface;
-use Veslo\AppBundle\Workflow\Vacancy\Worker\Iteration\Loop;
+use Veslo\AppBundle\Workflow\Vacancy\Worker\Iteration;
 use Veslo\AppBundle\Workflow\Vacancy\WorkerInterface;
 
 /**
@@ -93,7 +93,7 @@ class Earwig implements WorkerInterface
         $this->logger->debug('Parsing started.', ['source' => $sourceName, 'iterations' => $iterations]);
 
         $iteration     = Closure::fromCallable([$this, 'parseIteration']);
-        $iterationLoop = new Loop($this, $iteration, 'An error has been occurred during vacancy parsing.');
+        $iterationLoop = new Iteration\Loop($this, $iteration, 'An error has been occurred during vacancy parsing.');
 
         $successfulIterations = $iterationLoop->execute($pit, $iterations);
 

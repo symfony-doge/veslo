@@ -1,1 +1,12 @@
 veslo_sanity:
+    vacancy:
+        analyser:
+            # By an external microservice
+            ministry_of_truth:
+                # Used by the mot client to send index requests to external microservice
+                authorization_token: '%sanity.vacancy.analyser.ministry_of_truth.authorization_token%'
+                # Locale which will be used as a default sanity data translation locale
+                default_locale: '%locale%'
+                # All locales which are supported for sanity data translations
+                locales:
+                    - 'ru'

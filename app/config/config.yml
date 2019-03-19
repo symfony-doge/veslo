@@ -14,7 +14,9 @@ parameters:
 
 framework:
     #esi: ~
-    translator: { fallbacks: ['en'] }
+    translator:
+        fallbacks:
+            - 'en'
     default_locale: '%locale%'
     secret: '%app.secret%'
     router:
@@ -117,8 +119,7 @@ knp_paginator:
 
 symfony_doge_motc:
     transport:
-        http:
-            service_id: 'veslo.app.http.client.base'
+        http: 'veslo.app.http.client.base'
     api:
         base_uri: '%symfony_doge_motc.api.base_uri%'
         requests:

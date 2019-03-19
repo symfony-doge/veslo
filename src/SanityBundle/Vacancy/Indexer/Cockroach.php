@@ -15,8 +15,15 @@ declare(strict_types=1);
 
 namespace Veslo\SanityBundle\Vacancy\Indexer;
 
+use Closure;
 use Psr\Log\LoggerInterface;
+use Veslo\AnthillBundle\Dto\Vacancy\Collector\AcceptanceDto;
+use Veslo\AnthillBundle\Entity\Repository\VacancyRepository;
+use Veslo\AnthillBundle\Entity\Vacancy;
+use Veslo\AppBundle\Workflow\Vacancy\PitInterface;
+use Veslo\AppBundle\Workflow\Vacancy\Worker\Iteration;
 use Veslo\AppBundle\Workflow\Vacancy\WorkerInterface;
+use Veslo\SanityBundle\Vacancy\AnalyserInterface;
 
 /**
  * Delivers a vacancy to the Ministry of Truth for analysis and sanity index calculation
@@ -44,31 +51,68 @@ class Cockroach implements WorkerInterface
      *
      * @var LoggerInterface
      */
-    protected $logger;
+    private $logger;
+
+    /**
+     * Vacancy repository
+     *
+     * @var VacancyRepository
+     */
+    private $vacancyRepository;
+
+    /**
+     * Performs a contextual analysis of vacancy data
+     *
+     * @var AnalyserInterface
+     */
+    private $vacancyAnalyser;
 
     /**
      * Cockroach constructor.
      *
-     * @param LoggerInterface $logger Logger
+     * @param LoggerInterface   $logger            Logger
+     * @param VacancyRepository $vacancyRepository Vacancy repository
+     * @param AnalyserInterface $vacancyAnalyser   Performs a contextual analysis of vacancy data
      */
-    public function __construct(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
+    public function __construct(
+        LoggerInterface $logger,
+        VacancyRepository $vacancyRepository,
+        AnalyserInterface $vacancyAnalyser
+    ) {
+        $this->logger            = $logger;
+        $this->vacancyRepository = $vacancyRepository;
+        $this->vacancyAnalyser   = $vacancyAnalyser;
     }
 
     /**
-     * Performs vacancy deliver iteration
+     * Performs vacancy indexation iteration
+     *
+     * @param PitInterface $pit        Vacancy indexation queue
+     * @param int          $iterations Indexing iterations count, at least one expected
      *
      * @return int
      */
-    public function deliver(): int
+    public function deliver(PitInterface $pit, int $iterations = 1): int
     {
-        // TODO: deliver faithfully...
-        sleep(5);
+        $sourceName = get_class($pit);
 
-        $this->logger->log('info', 'Delivering iteration complete.');
+        $this->logger->debug('Indexing started.', ['source' => $sourceName, 'iterations' => $iterations]);
 
-        return 0;
+        $iteration     = Closure::fromCallable([$this, 'deliverIteration']);
+        $iterationLoop = new Iteration\Loop($this, $iteration, 'An error has been occurred during vacancy indexing.');
+
+        $successfulIterations = $iterationLoop->execute($pit, $iterations);
+
+        $this->logger->debug(
+            'Indexing completed.',
+            [
+                'source'     => $sourceName,
+                'iterations' => $iterations,
+                'successful' => $successfulIterations,
+            ]
+        );
+
+        return $successfulIterations;
     }
 
     /**
@@ -77,5 +121,55 @@ class Cockroach implements WorkerInterface
     public function getLogger(): ?LoggerInterface
     {
         return $this->logger;
+    }
+
+    /**
+     * Returns positive if vacancy is successfully indexed
+     *
+     * @param PitInterface $pit Vacancy indexation queue
+     *
+     * @return bool Positive, if vacancy data was successfully indexed, negative otherwise
+     */
+    private function deliverIteration(PitInterface $pit): bool
+    {
+        $sourceName = get_class($pit);
+
+        /** @var AcceptanceDto $acceptance */
+        $acceptance = $pit->poll();
+
+        if (!$acceptance instanceof AcceptanceDto) {
+            $this->logger->debug(
+                'No more vacancies to index.',
+                [
+                    'source' => $sourceName,
+                    'input'  => gettype($acceptance),
+                ]
+            );
+
+            return false;
+        }
+
+        $vacancyId = $acceptance->getVacancyId();
+
+        /** @var Vacancy $vacancy */
+        $vacancy = $this->vacancyRepository->require($vacancyId);
+
+        $vacancyIndex = $this->vacancyAnalyser->analyse($vacancy);
+
+        // todo: vacancy index preview normalizer.
+        $vacancyIndexNormalized = [];
+
+        // todo: persist sanity data, sync tag groups / translations
+
+        $this->logger->info(
+            'Vacancy indexed.',
+            [
+                'source'       => $sourceName,
+                'vacancyId'    => $vacancyId,
+                'vacancyIndex' => $vacancyIndexNormalized,
+            ]
+        );
+
+        return true;
     }
 }

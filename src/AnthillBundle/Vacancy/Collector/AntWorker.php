@@ -23,7 +23,7 @@ use Veslo\AnthillBundle\Dto\Vacancy\Parser\ParsedDto;
 use Veslo\AnthillBundle\Vacancy\Creator;
 use Veslo\AnthillBundle\Vacancy\DecisionInterface;
 use Veslo\AppBundle\Workflow\Vacancy\PitInterface;
-use Veslo\AppBundle\Workflow\Vacancy\Worker\Iteration\Loop;
+use Veslo\AppBundle\Workflow\Vacancy\Worker\Iteration;
 use Veslo\AppBundle\Workflow\Vacancy\WorkerInterface;
 
 /**
@@ -118,7 +118,7 @@ class AntWorker implements WorkerInterface
         $this->logger->debug('Collecting started.', ['source' => $sourceName, 'iterations' => $iterations]);
 
         $iteration     = Closure::fromCallable([$this, 'collectIteration']);
-        $iterationLoop = new Loop($this, $iteration, 'An error has been occurred during vacancy collecting.');
+        $iterationLoop = new Iteration\Loop($this, $iteration, 'An error has been occurred during vacancy collecting.');
 
         $successfulIterations = $iterationLoop->execute($pit, $iterations);
 
