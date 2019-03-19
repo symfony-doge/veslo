@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Vacancy\Collector;
 
-use Exception;
+use Closure;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Veslo\AnthillBundle\Dto\Vacancy\Collector\AcceptanceDto;
@@ -23,6 +23,8 @@ use Veslo\AnthillBundle\Dto\Vacancy\Parser\ParsedDto;
 use Veslo\AnthillBundle\Vacancy\Creator;
 use Veslo\AnthillBundle\Vacancy\DecisionInterface;
 use Veslo\AppBundle\Workflow\Vacancy\PitInterface;
+use Veslo\AppBundle\Workflow\Vacancy\Worker\Iteration\Loop;
+use Veslo\AppBundle\Workflow\Vacancy\WorkerInterface;
 
 /**
  * Collects dung (vacancies) from queue and persists in local storage
@@ -40,7 +42,7 @@ use Veslo\AppBundle\Workflow\Vacancy\PitInterface;
  *           /   |   |   \
  *         -'    \___/    `-
  */
-class AntWorker
+class AntWorker implements WorkerInterface
 {
     /**
      * Logger as it is
@@ -115,7 +117,10 @@ class AntWorker
 
         $this->logger->debug('Collecting started.', ['source' => $sourceName, 'iterations' => $iterations]);
 
-        $successfulIterations = $this->collectInternal($pit, $iterations);
+        $iteration     = Closure::fromCallable([$this, 'collectIteration']);
+        $iterationLoop = new Loop($this, $iteration, 'An error has been occurred during vacancy collecting.');
+
+        $successfulIterations = $iterationLoop->execute($pit, $iterations);
 
         $this->logger->debug(
             'Collecting completed.',
@@ -130,32 +135,11 @@ class AntWorker
     }
 
     /**
-     * Performs dung (vacancies) collecting loop
-     *
-     * @param PitInterface $pit        Parsed vacancy data storage
-     * @param int          $iterations Collecting iterations count
-     *
-     * @return int Successful collect attempts count
+     * {@inheritdoc}
      */
-    private function collectInternal(PitInterface $pit, int $iterations): int
+    public function getLogger(): ?LoggerInterface
     {
-        $iterationRemains = max(1, $iterations);
-        $iterationSuccess = 0;
-
-        while ($iterationRemains > 0) {
-            try {
-                if ($this->collectIteration($pit)) {
-                    ++$iterationSuccess;
-                }
-            } catch (Exception $e) {
-                $context = ['source' => get_class($pit), 'message' => $e->getMessage()];
-                $this->logger->error('An error has been occurred during vacancy collecting.', $context);
-            }
-
-            --$iterationRemains;
-        }
-
-        return $iterationSuccess;
+        return $this->logger;
     }
 
     /**

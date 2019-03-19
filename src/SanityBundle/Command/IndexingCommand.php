@@ -13,55 +13,57 @@
 
 declare(strict_types=1);
 
-namespace Veslo\AnthillBundle\Command;
+namespace Veslo\SanityBundle\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Veslo\AnthillBundle\Dto\Vacancy\Parser\ParsedDto;
-use Veslo\AnthillBundle\Vacancy\Collector\AntWorker;
+use Veslo\AnthillBundle\Dto\Vacancy\Collector\AcceptanceDto;
 use Veslo\AppBundle\Workflow\Vacancy\PitInterface;
+use Veslo\SanityBundle\Vacancy\Indexer\Cockroach;
 
 /**
- * Represents dung (vacancies) collecting process.
- * This is 'to_collect' transition of vacancy research workflow, from 'parsed' to 'collected'
+ * Represents dung (vacancies) indexing process.
+ * This is 'to_index' transition of vacancy research workflow, from 'collected' to 'indexed'
  *
  * Usage example:
  * ```
- * bin/console veslo:anthill:collecting --iterations=10
+ * bin/console veslo:sanity:indexing --iterations=10
  * ```
+ *
+ * @see https://en.wikipedia.org/wiki/Ministries_of_Nineteen_Eighty-Four#Ministry_of_Truth
  */
-class CollectingCommand extends Command
+class IndexingCommand extends Command
 {
     /**
-     * Vacancy parsed data storage
-     * Should return ParsedDto instances or null if storage is empty
+     * Collected vacancy data storage
+     * Provides AcceptanceDto instances for indexing or null if storage is empty
      *
      * @var PitInterface
      *
-     * @see ParsedDto
+     * @see AcceptanceDto
      */
     private $source;
 
     /**
-     * Collects raw vacancy data from queue and transforms it to the local persistent entities
+     * Delivers a vacancy to the Ministry of Truth for analysis and sanity index calculation
      *
-     * @var AntWorker
+     * @var Cockroach
      */
-    private $antWorker;
+    private $indexer;
 
     /**
      * CollectingCommand constructor.
      *
-     * @param PitInterface $source    Vacancy parsed data storage
-     * @param AntWorker    $antWorker Collects raw vacancy data from queue and transforms it to the local entities
-     * @param string|null  $name      The name of the command; passing null means it must be set in configure()
+     * @param PitInterface $source  Collected vacancy data storage
+     * @param Cockroach    $indexer Delivers a vacancy to the Ministry of Truth for sanity index calculation
+     * @param string|null  $name    The name of the command; passing null means it must be set in configure()
      */
-    public function __construct(PitInterface $source, AntWorker $antWorker, ?string $name = null)
+    public function __construct(PitInterface $source, Cockroach $indexer, ?string $name = null)
     {
-        $this->source    = $source;
-        $this->antWorker = $antWorker;
+        $this->source  = $source;
+        $this->indexer = $indexer;
 
         parent::__construct($name);
     }
@@ -72,12 +74,12 @@ class CollectingCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Collects dung (vacancies) from queue and sends to the Ministry of Truth for analysis')
+            ->setDescription('Calculates a sanity index for vacancies via "Ministry of Truth" API')
             ->addOption(
                 'iterations',
                 'i',
                 InputOption::VALUE_REQUIRED,
-                'Maximum count of vacancy data entries to proceed during command\'s single run',
+                'Maximum count of vacancies to proceed for a single run',
                 10
             )
         ;
@@ -90,12 +92,12 @@ class CollectingCommand extends Command
     {
         $iterations = (int) $input->getOption('iterations');
 
-        $successfulIterations = $this->antWorker->collect($this->source, $iterations);
+        $successfulIterations = $this->indexer->deliver($this->source, $iterations);
 
         $messageComplete = str_replace(
             ['{iterations}', '{successful}', '{memory}', '{memoryPeak}'],
             [$iterations, $successfulIterations, memory_get_usage(), memory_get_peak_usage()],
-            'Collecting complete ({iterations} iterations, {successful} successful).'
+            'Indexing complete ({iterations} iterations, {successful} successful).'
             . ' Memory usage: {memory}/{memoryPeak}'
         );
         $output->writeln($messageComplete);

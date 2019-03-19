@@ -25,6 +25,7 @@ monolog:
                 - '!anthill.digging'
                 - '!anthill.parsing'
                 - '!anthill.collecting'
+                - '!sanity.indexing'
         app.http:
             type: rotating_file
             path: '%kernel.logs_dir%/%kernel.environment%.app.http.log'
@@ -60,6 +61,13 @@ monolog:
             level: debug
             channels:
                 - 'anthill.collecting'
+        sanity.indexing:
+            type: rotating_file
+            path: '%kernel.logs_dir%/%kernel.environment%.sanity.indexing.log'
+            max_files: 1
+            level: debug
+            channels:
+                - 'sanity.indexing'
         console:
             type: console
             process_psr_3_messages: false

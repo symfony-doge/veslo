@@ -20,6 +20,7 @@ use Psr\Log\LoggerInterface;
 use Veslo\AnthillBundle\Vacancy\DiggerInterface;
 use Veslo\AnthillBundle\Vacancy\Roadmap\ConveyorAwareRoadmap;
 use Veslo\AppBundle\Workflow\Vacancy\PitInterface;
+use Veslo\AppBundle\Workflow\Vacancy\WorkerInterface;
 
 /**
  * Digs some dung (vacancies) from internet and sends to conveyor for processing
@@ -48,7 +49,7 @@ use Veslo\AppBundle\Workflow\Vacancy\PitInterface;
  *
  * @see RoadmapInterface
  */
-class DungBeetle implements DiggerInterface
+class DungBeetle implements WorkerInterface, DiggerInterface
 {
     /**
      * Logger as it is
@@ -100,11 +101,9 @@ class DungBeetle implements DiggerInterface
     }
 
     /**
-     * Returns logger configured for dung beetle
-     *
-     * @return LoggerInterface
+     * {@inheritdoc}
      */
-    public function getLogger(): LoggerInterface
+    public function getLogger(): ?LoggerInterface
     {
         return $this->logger;
     }

@@ -1,0 +1,8 @@
+services:
+    veslo.sanity.command.indexing:
+        class: Veslo\SanityBundle\Command\IndexingCommand
+        arguments:
+            - '@veslo.anthill.vacancy.sinful_dung_pit'
+            - '@veslo.sanity.vacancy.indexer.cockroach'
+        tags:
+            - { name: 'console.command', command: 'veslo:sanity:indexing' }

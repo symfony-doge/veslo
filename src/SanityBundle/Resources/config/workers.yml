@@ -1,0 +1,5 @@
+services:
+    veslo.sanity.vacancy.indexer.cockroach:
+        class: Veslo\SanityBundle\Vacancy\Indexer\Cockroach
+        arguments:
+            - '@monolog.logger.sanity.indexing'

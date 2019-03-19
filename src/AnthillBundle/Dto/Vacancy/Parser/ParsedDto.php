@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Veslo\AnthillBundle\Dto\Vacancy\Parser;
 
 use Veslo\AnthillBundle\Dto\Vacancy\LocationDto;
-use Veslo\AnthillBundle\Dto\Vacancy\MultistrategicScannerDto;
 use Veslo\AnthillBundle\Dto\Vacancy\RawDto;
 use Veslo\AnthillBundle\Dto\Vacancy\ScannerDto;
 
@@ -38,7 +37,7 @@ class ParsedDto
     /**
      * Context of executed scanner
      *
-     * @var MultistrategicScannerDto|ScannerDto
+     * @var ScannerDto
      */
     private $scanner;
 

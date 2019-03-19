@@ -13,12 +13,13 @@
 
 declare(strict_types=1);
 
-namespace Veslo\SanityBundle\Index;
+namespace Veslo\SanityBundle\Vacancy\Indexer;
 
 use Psr\Log\LoggerInterface;
+use Veslo\AppBundle\Workflow\Vacancy\WorkerInterface;
 
 /**
- * Delivers vacancy to the Ministry of Truth for analysis and sanity index evaluation
+ * Delivers a vacancy to the Ministry of Truth for analysis and sanity index calculation
  *
  *           .--.       .--.
  *       _  `    \     /    `  _
@@ -36,7 +37,7 @@ use Psr\Log\LoggerInterface;
  *       _,'                 `,_
  *       `                     `
  */
-class Cockroach
+class Cockroach implements WorkerInterface
 {
     /**
      * Logger
@@ -58,13 +59,23 @@ class Cockroach
     /**
      * Performs vacancy deliver iteration
      *
-     * @return void
+     * @return int
      */
-    public function deliver(): void
+    public function deliver(): int
     {
         // TODO: deliver faithfully...
         sleep(5);
 
         $this->logger->log('info', 'Delivering iteration complete.');
+
+        return 0;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLogger(): ?LoggerInterface
+    {
+        return $this->logger;
     }
 }

@@ -1,5 +1,1 @@
 services:
-    veslo.sanity.index.cockroach:
-        class: Veslo\SanityBundle\Index\Cockroach
-        arguments:
-            - '@logger'

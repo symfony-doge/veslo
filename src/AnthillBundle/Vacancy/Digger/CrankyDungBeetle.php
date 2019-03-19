@@ -16,10 +16,12 @@ declare(strict_types=1);
 namespace Veslo\AnthillBundle\Vacancy\Digger;
 
 use Psr\Cache\InvalidArgumentException;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\Cache\CacheItem;
 use Veslo\AnthillBundle\Vacancy\DiggerInterface;
 use Veslo\AnthillBundle\Vacancy\Roadmap\ConveyorAwareRoadmap;
+use Veslo\AppBundle\Workflow\Vacancy\WorkerInterface;
 
 /**
  * Cranky dung beetle temporarily refuses to dig if it had too much unsuccessful attempts in a row
@@ -27,7 +29,7 @@ use Veslo\AnthillBundle\Vacancy\Roadmap\ConveyorAwareRoadmap;
  *
  * @see DungBeetle
  */
-class CrankyDungBeetle implements DiggerInterface
+class CrankyDungBeetle implements WorkerInterface, DiggerInterface
 {
     /**
      * Cache for handling pause on too much unsuccessful search attempts and other values
@@ -98,10 +100,12 @@ class CrankyDungBeetle implements DiggerInterface
     public function dig(ConveyorAwareRoadmap $roadmap, int $iterations = 1): int
     {
         if ($this->isPaused($roadmap)) {
-            $logger      = $this->_dungBeetle->getLogger();
-            $roadmapName = $roadmap->getName();
+            $logger = $this->getLogger();
 
-            $logger->debug('Roadmap is on pause.', ['roadmap' => $roadmapName]);
+            if ($logger instanceof LoggerInterface) {
+                $roadmapName = $roadmap->getName();
+                $logger->debug('Roadmap is on pause.', ['roadmap' => $roadmapName]);
+            }
 
             return 0;
         }
@@ -113,6 +117,14 @@ class CrankyDungBeetle implements DiggerInterface
         }
 
         return $successfulIterations;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLogger(): ?LoggerInterface
+    {
+        return $this->_dungBeetle->getLogger();
     }
 
     /**

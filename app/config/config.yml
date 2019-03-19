@@ -95,6 +95,7 @@ monolog:
         - 'anthill.digging'
         - 'anthill.parsing'
         - 'anthill.collecting'
+        - 'sanity.indexing'
 
 nelmio_alice:
     # Default locale for the Faker Generator

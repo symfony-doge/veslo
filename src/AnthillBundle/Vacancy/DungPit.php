@@ -19,7 +19,7 @@ use Veslo\AppBundle\Workflow\Vacancy\PitInterface;
 use Veslo\AppBundle\Workflow\Vacancy\Research\Conveyor;
 
 /**
- * This pit is full of dung (vacancies, especially for PHP engineers).
+ * This pit is full of dung (vacancies, especially for PHP engineers)
  */
 class DungPit implements PitInterface
 {

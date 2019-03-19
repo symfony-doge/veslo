@@ -15,17 +15,19 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Vacancy\Parser;
 
-use Exception;
+use Closure;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Veslo\AnthillBundle\Dto\Vacancy\LocationDto;
 use Veslo\AnthillBundle\Vacancy\ScannerPool\ConveyorAwareScannerPool;
 use Veslo\AppBundle\Workflow\Vacancy\PitInterface;
+use Veslo\AppBundle\Workflow\Vacancy\Worker\Iteration\Loop;
+use Veslo\AppBundle\Workflow\Vacancy\WorkerInterface;
 
 /**
  * TODO: ascii image and descr
  */
-class Earwig
+class Earwig implements WorkerInterface
 {
     /**
      * Logger as it is
@@ -90,7 +92,10 @@ class Earwig
 
         $this->logger->debug('Parsing started.', ['source' => $sourceName, 'iterations' => $iterations]);
 
-        $successfulIterations = $this->parseInternal($pit, $iterations);
+        $iteration     = Closure::fromCallable([$this, 'parseIteration']);
+        $iterationLoop = new Loop($this, $iteration, 'An error has been occurred during vacancy parsing.');
+
+        $successfulIterations = $iterationLoop->execute($pit, $iterations);
 
         $this->logger->debug(
             'Parsing completed.',
@@ -105,32 +110,11 @@ class Earwig
     }
 
     /**
-     * Performs dung (vacancies) parsing loop
-     *
-     * @param PitInterface $pit        Vacancy URL storage
-     * @param int          $iterations Parsing iterations count
-     *
-     * @return int Successful parse attempts count
+     * {@inheritdoc}
      */
-    private function parseInternal(PitInterface $pit, int $iterations): int
+    public function getLogger(): ?LoggerInterface
     {
-        $iterationRemains = max(1, $iterations);
-        $iterationSuccess = 0;
-
-        while ($iterationRemains > 0) {
-            try {
-                if ($this->parseIteration($pit)) {
-                    ++$iterationSuccess;
-                }
-            } catch (Exception $e) {
-                $context = ['source' => get_class($pit), 'message' => $e->getMessage()];
-                $this->logger->error('An error has been occurred during vacancy parsing.', $context);
-            }
-
-            --$iterationRemains;
-        }
-
-        return $iterationSuccess;
+        return $this->logger;
     }
 
     /**
