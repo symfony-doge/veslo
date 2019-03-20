@@ -60,11 +60,13 @@ class Batman implements ClientInterface
         $this->proxyManager = $proxyManager;
 
         $optionsResolver = new OptionsResolver();
-        $optionsResolver->setDefaults([
-            'proxy' => [
-                'enabled' => false,
-            ],
-        ]);
+        $optionsResolver->setDefaults(
+            [
+                'proxy' => [
+                    'enabled' => false,
+                ],
+            ]
+        );
 
         $this->options = $optionsResolver->resolve($options);
     }
@@ -92,7 +94,6 @@ class Batman implements ClientInterface
     {
         if ($this->options['proxy']['enabled']) {
             $options = array_replace_recursive($options, $this->getProxyOptions());
-
             // TODO: log appended stability options at debug level.
         }
 

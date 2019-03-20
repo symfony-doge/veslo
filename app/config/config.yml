@@ -75,14 +75,12 @@ framework:
     php_errors:
         log: true
 
-# Twig Configuration
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     globals:
         truncate_separator: '...'
 
-# Swiftmailer Configuration
 swiftmailer:
     transport: '%app.mailer_transport%'
     host: '%app.mailer_host%'

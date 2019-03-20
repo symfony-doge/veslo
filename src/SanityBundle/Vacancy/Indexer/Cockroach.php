@@ -17,6 +17,7 @@ namespace Veslo\SanityBundle\Vacancy\Indexer;
 
 use Closure;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Veslo\AnthillBundle\Dto\Vacancy\Collector\AcceptanceDto;
 use Veslo\AnthillBundle\Entity\Repository\VacancyRepository;
 use Veslo\AnthillBundle\Entity\Vacancy;
@@ -68,20 +69,30 @@ class Cockroach implements WorkerInterface
     private $vacancyAnalyser;
 
     /**
+     * Converts a sanity index data to array format for third-party services (e.g. logger)
+     *
+     * @var NormalizerInterface
+     */
+    private $sanityIndexNormalizer;
+
+    /**
      * Cockroach constructor.
      *
-     * @param LoggerInterface   $logger            Logger
-     * @param VacancyRepository $vacancyRepository Vacancy repository
-     * @param AnalyserInterface $vacancyAnalyser   Performs a contextual analysis of vacancy data
+     * @param LoggerInterface     $logger                Logger
+     * @param VacancyRepository   $vacancyRepository     Vacancy repository
+     * @param AnalyserInterface   $vacancyAnalyser       Performs a contextual analysis of vacancy data
+     * @param NormalizerInterface $sanityIndexNormalizer Converts a sanity index data to array for third-party services
      */
     public function __construct(
         LoggerInterface $logger,
         VacancyRepository $vacancyRepository,
-        AnalyserInterface $vacancyAnalyser
+        AnalyserInterface $vacancyAnalyser,
+        NormalizerInterface $sanityIndexNormalizer
     ) {
-        $this->logger            = $logger;
-        $this->vacancyRepository = $vacancyRepository;
-        $this->vacancyAnalyser   = $vacancyAnalyser;
+        $this->logger                = $logger;
+        $this->vacancyRepository     = $vacancyRepository;
+        $this->vacancyAnalyser       = $vacancyAnalyser;
+        $this->sanityIndexNormalizer = $sanityIndexNormalizer;
     }
 
     /**
@@ -154,19 +165,19 @@ class Cockroach implements WorkerInterface
         /** @var Vacancy $vacancy */
         $vacancy = $this->vacancyRepository->require($vacancyId);
 
-        $vacancyIndex = $this->vacancyAnalyser->analyse($vacancy);
-
-        // todo: vacancy index preview normalizer.
-        $vacancyIndexNormalized = [];
+        $sanityIndex = $this->vacancyAnalyser->analyse($vacancy);
 
         // todo: persist sanity data, sync tag groups / translations
+
+
+        $sanityIndexNormalized = $this->sanityIndexNormalizer->normalize($sanityIndex);
 
         $this->logger->info(
             'Vacancy indexed.',
             [
-                'source'       => $sourceName,
-                'vacancyId'    => $vacancyId,
-                'vacancyIndex' => $vacancyIndexNormalized,
+                'source'    => $sourceName,
+                'vacancyId' => $vacancyId,
+                'index'     => $sanityIndexNormalized,
             ]
         );
 

@@ -70,7 +70,7 @@ class Index
     private $value;
 
     /**
-     * Sanity tags which was offered for vacancy by indexation result
+     * Sanity tags which was offered for a vacancy by indexation result
      *
      * @var Collection<Tag>
      *

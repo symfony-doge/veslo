@@ -62,10 +62,12 @@ class VacancyRepository extends BaseEntityRepository implements PaginateableInte
     public function setOptions(array $options): void
     {
         $optionsResolver = new OptionsResolver();
-        $optionsResolver->setDefaults([
-            'cache_result_namespace' => 'veslo.anthill.vacancy_repository.',
-            'cache_result_lifetime'  => 300,
-        ]);
+        $optionsResolver->setDefaults(
+            [
+                'cache_result_namespace' => 'veslo.anthill.vacancy_repository.',
+                'cache_result_lifetime'  => 300,
+            ]
+        );
 
         $this->options = $optionsResolver->resolve($options);
     }

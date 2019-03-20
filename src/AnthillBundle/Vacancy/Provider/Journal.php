@@ -52,9 +52,7 @@ class Journal
 
         // For readability purposes.
         $optionsResolver = new OptionsResolver();
-        $optionsResolver->setDefaults([
-            'per_page' => 10,
-        ]);
+        $optionsResolver->setDefaults(['per_page' => 10]);
 
         $this->options = $optionsResolver->resolve($options);
     }

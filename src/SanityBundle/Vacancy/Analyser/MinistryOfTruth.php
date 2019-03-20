@@ -22,7 +22,8 @@ use SymfonyDoge\MinistryOfTruthClient\ClientInterface;
 use SymfonyDoge\MinistryOfTruthClient\Dto\Request\Index\RequestDto as IndexRequest;
 use SymfonyDoge\MinistryOfTruthClient\Enum\Request\Index\Context;
 use Veslo\AnthillBundle\Entity\Vacancy;
-use Veslo\SanityBundle\Entity\Vacancy\Index as VacancyIndex;
+use Veslo\SanityBundle\Dto\Vacancy\IndexDto;
+use Veslo\SanityBundle\Vacancy\Analyser\MinistryOfTruth\DataConverter;
 use Veslo\SanityBundle\Vacancy\AnalyserInterface;
 
 /**
@@ -38,6 +39,13 @@ class MinistryOfTruth implements AnalyserInterface
     private $motClient;
 
     /**
+     * Converts data from external format to local dto
+     *
+     * @var DataConverter
+     */
+    private $dataConverter;
+
+    /**
      * Options for the vacancy analyser
      *
      * @var array
@@ -47,12 +55,14 @@ class MinistryOfTruth implements AnalyserInterface
     /**
      * MinistryOfTruth constructor.
      *
-     * @param ClientInterface $motClient The Ministry of Truth API client
-     * @param array           $options   Options for the vacancy analyser
+     * @param ClientInterface $motClient     The Ministry of Truth API client
+     * @param DataConverter   $dataConverter Converts data from external format to local dto
+     * @param array           $options       Options for the vacancy analyser
      */
-    public function __construct(ClientInterface $motClient, array $options)
+    public function __construct(ClientInterface $motClient, DataConverter $dataConverter, array $options)
     {
-        $this->motClient = $motClient;
+        $this->motClient     = $motClient;
+        $this->dataConverter = $dataConverter;
 
         $optionsResolver = new OptionsResolver();
         $this->configureOptions($optionsResolver);
@@ -63,7 +73,7 @@ class MinistryOfTruth implements AnalyserInterface
     /**
      * {@inheritdoc}
      */
-    public function analyse(Vacancy $vacancy): VacancyIndex
+    public function analyse(Vacancy $vacancy): IndexDto
     {
         $localeDefault = $this->options['default_locale'];
 
@@ -76,9 +86,9 @@ class MinistryOfTruth implements AnalyserInterface
      * @param Vacancy $vacancy Vacancy entity
      * @param string  $locale  Locale for sanity data translation
      *
-     * @return VacancyIndex
+     * @return IndexDto
      */
-    public function analyseByLocale(Vacancy $vacancy, string $locale): VacancyIndex
+    public function analyseByLocale(Vacancy $vacancy, string $locale): IndexDto
     {
         $indexRequest = new IndexRequest();
         $indexRequest->setAuthorizationToken($this->options['authorization_token']);
@@ -90,8 +100,9 @@ class MinistryOfTruth implements AnalyserInterface
         $indexResponse = $this->motClient->index($indexRequest);
         $vacancyIndex  = $indexResponse->getIndex();
 
-        // todo: from dto to new index entity with tags
-        return new VacancyIndex();
+        $indexDto = $this->dataConverter->convertIndex($vacancyIndex);
+
+        return $indexDto;
     }
 
     /**
@@ -103,20 +114,20 @@ class MinistryOfTruth implements AnalyserInterface
      */
     protected function configureOptions(OptionsResolver $optionsResolver): void
     {
-        $optionsResolver->setDefaults([
-            'authorization_token' => null,
-            'locales'             => null,
-        ]);
+        $optionsResolver->setDefaults(['authorization_token' => null, 'locales' => null]);
 
-        $optionsResolver->setDefault('default_locale', function (Options $options, $previousValue) {
-            if (!is_array($options['locales']) || !in_array($previousValue, $options['locales'])) {
-                throw new InvalidOptionsException(
-                    'Value of the "default_locale" option is not present in locales array'
-                );
+        $optionsResolver->setDefault(
+            'default_locale',
+            function (Options $options, $previousValue) {
+                if (!is_array($options['locales']) || !in_array($previousValue, $options['locales'])) {
+                    throw new InvalidOptionsException(
+                        'Value of the "default_locale" option is not present in locales array'
+                    );
+                }
+
+                return $previousValue;
             }
-
-            return $previousValue;
-        });
+        );
 
         $optionsResolver->setRequired(['authorization_token', 'default_locale', 'locales']);
     }

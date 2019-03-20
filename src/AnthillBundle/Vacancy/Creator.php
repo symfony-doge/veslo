@@ -92,7 +92,7 @@ class Creator
     }
 
     /**
-     * Creates and returns a new vacancy entity by specified parsing context
+     * Creates and returns a newly vacancy entity by specified parsing context
      *
      * @param ParsedDto $scanResult Context of parsed vacancy data
      *
@@ -118,8 +118,8 @@ class Creator
         $vacancy->setSalaryCurrency($data->getSalaryCurrency());
         $vacancy->setPublicationDate($data->getPublicationDate());
 
-        $company  = $this->createCompany($data);
-        $category = $this->createCategory($roadmap);
+        $company  = $this->resolveCompany($data);
+        $category = $this->resolveCategory($roadmap);
 
         $vacancy->setCompany($company);
 
@@ -133,13 +133,13 @@ class Creator
     }
 
     /**
-     * Creates and returns a company instance by specified raw vacancy data
+     * Returns related company entity if exists or calls the company creator to build a new one
      *
      * @param RawDto $vacancyData Context of raw vacancy data from website
      *
      * @return Company
      */
-    private function createCompany(RawDto $vacancyData): Company
+    private function resolveCompany(RawDto $vacancyData): Company
     {
         $companyName = $vacancyData->getCompanyName();
         $company     = $this->companyRepository->findOneByName($companyName);
@@ -152,13 +152,13 @@ class Creator
     }
 
     /**
-     * Creates and returns a category instance by roadmap
+     * Returns related category entity if exists or calls the category creator to build a new one by roadmap
      *
      * @param RoadmapDto $roadmap Context of roadmap by which the vacancy was found
      *
      * @return Category|null
      */
-    private function createCategory(RoadmapDto $roadmap): ?Category
+    private function resolveCategory(RoadmapDto $roadmap): ?Category
     {
         if (!$roadmap instanceof ConfigurableRoadmapDto) {
             return null;

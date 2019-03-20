@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace Veslo\SanityBundle\Vacancy;
 
 use Veslo\AnthillBundle\Entity\Vacancy;
-use Veslo\SanityBundle\Entity\Vacancy\Index as VacancyIndex;
+use Veslo\SanityBundle\Dto\Vacancy\IndexDto;
 
 /**
  * Should be implemented by service that generates index, tags and other sanity data for a vacancy
@@ -28,7 +28,7 @@ interface AnalyserInterface
      *
      * @param Vacancy $vacancy Vacancy entity
      *
-     * @return VacancyIndex
+     * @return IndexDto
      */
-    public function analyse(Vacancy $vacancy): VacancyIndex;
+    public function analyse(Vacancy $vacancy): IndexDto;
 }
