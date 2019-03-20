@@ -101,7 +101,7 @@ nelmio_alice:
     # Default locale for the Faker Generator
     locale: 'en_US'
     # Value used make sure Faker generates data consistently across runs, set to null to disable.
-    seed: 1
+    seed: ~
     # Some Faker formatter may have the same name as PHP native functions. PHP functions have the priority,
     # so if you want to use a Faker formatter instead, blacklist this function here
     functions_blacklist:
