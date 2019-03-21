@@ -57,7 +57,7 @@ class Group
      *
      * @var string
      *
-     * @ORM\Column(name="description", type="text", options={"comment": "Sanity tags group description"})
+     * @ORM\Column(name="description", type="text", nullable=true, options={"comment": "Sanity tags group description"})
      * @Gedmo\Translatable
      */
     private $description;
@@ -67,7 +67,13 @@ class Group
      *
      * @var string
      *
-     * @ORM\Column(name="color", type="string", length=255, options={"comment": "Sanity tags group color"})
+     * @ORM\Column(
+     *     name="color",
+     *     type="string",
+     *     length=255,
+     *     nullable=true,
+     *     options={"comment": "Sanity tags group color"}
+     * )
      */
     private $color;
 

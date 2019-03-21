@@ -38,8 +38,8 @@ final class Version20190305164059 extends AbstractMigration
             CREATE TABLE sanity_vacancy_tag_group (
                 id INT NOT NULL, 
                 name VARCHAR(255) NOT NULL, 
-                description TEXT NOT NULL, 
-                color VARCHAR(255) NOT NULL, 
+                description TEXT DEFAULT NULL, 
+                color VARCHAR(255) DEFAULT NULL, 
                 PRIMARY KEY(id)
             )
         ');

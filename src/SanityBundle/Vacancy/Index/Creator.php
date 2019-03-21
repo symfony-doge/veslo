@@ -105,7 +105,7 @@ class Creator
      *
      * @param TagDto[] $tagDataArray Tags to be assigned to the vacancy after indexation
      *
-     * @return array
+     * @return Tag[]
      */
     private function resolveTags(array $tagDataArray): array
     {

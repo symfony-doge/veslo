@@ -5,3 +5,5 @@ services:
             - '@monolog.logger.sanity.indexing'
             - '@veslo.anthill.vacancy_repository'
             - '@veslo.sanity.vacancy.analyser.ministry_of_truth'
+            - '@veslo.sanity.vacancy.index.creator'
+            - '@serializer'

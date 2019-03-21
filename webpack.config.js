@@ -15,7 +15,7 @@ let Encore = require('@symfony/webpack-encore');
 let Env    = require('./webpack.env');
 
 Encore
-// the project directory where all compiled assets will be stored
+    // the project directory where all compiled assets will be stored
     .setOutputPath('web/build/')
 
     // the public path used by the web server to access the previous directory
@@ -31,9 +31,6 @@ Encore
     .createSharedEntry('vendor', './app/Resources/public/js/shared_entry.js')
 
     .enableSingleRuntimeChunk()
-
-    // allow legacy applications to use $/jQuery as a global variable
-    //.autoProvidejQuery()
 
     // enable source maps during development
     .enableSourceMaps(!Encore.isProduction())

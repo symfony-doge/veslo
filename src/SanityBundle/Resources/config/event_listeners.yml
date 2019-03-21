@@ -1,0 +1,7 @@
+services:
+    veslo.sanity.event.listener.vacancy.tag.group.sync_listener:
+        class: Veslo\SanityBundle\Event\Listener\Vacancy\Tag\Group\SyncListener
+        tags:
+            -   name: 'kernel.event_listener'
+                event: !php/const Veslo\SanityBundle\Event\Vacancy\Tag\Group\SyncRequestedEvent::NAME
+                method: 'onTagGroupsSync'

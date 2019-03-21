@@ -15,14 +15,13 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Event\Listener;
 
-use Symfony\Component\EventDispatcher\Event;
 use Veslo\AnthillBundle\Menu\Builder;
 use Veslo\AppBundle\Event\Menu\ConfigureEvent;
 
 /**
- * Bridge between application level menu builder and bundle menu builder
+ * A bridge between application level menu builder and bundle menu builder
  */
-class MenuConfigureListener extends Event
+class MenuConfigureListener
 {
     /**
      * Bundle-specific menu builder

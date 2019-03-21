@@ -1,0 +1,18 @@
+services:
+    veslo.sanity.vacancy.index_repository:
+        class: Veslo\AppBundle\Entity\Repository\BaseEntityRepository
+        factory: ['@doctrine.orm.sanity_entity_manager', getRepository]
+        arguments:
+            - 'Veslo\SanityBundle\Entity\Vacancy\Index'
+
+    veslo.sanity.vacancy.tag_repository:
+        class: Veslo\AppBundle\Entity\Repository\BaseEntityRepository
+        factory: ['@doctrine.orm.sanity_entity_manager', getRepository]
+        arguments:
+            - 'Veslo\SanityBundle\Entity\Vacancy\Tag'
+
+    veslo.sanity.vacancy.tag.group_repository:
+        class: Veslo\AppBundle\Entity\Repository\BaseEntityRepository
+        factory: ['@doctrine.orm.sanity_entity_manager', getRepository]
+        arguments:
+            - 'Veslo\SanityBundle\Entity\Vacancy\Tag\Group'

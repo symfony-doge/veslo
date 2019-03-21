@@ -28,6 +28,20 @@ class GroupDto
     private $name;
 
     /**
+     * Tags group description
+     *
+     * @var string|null
+     */
+    private $description;
+
+    /**
+     * Tags group color
+     *
+     * @var string|null
+     */
+    private $color;
+
+    /**
      * Returns vacancy tags group name
      *
      * @return string
@@ -47,5 +61,49 @@ class GroupDto
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * Returns tags group description
+     *
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * Sets tags group description
+     *
+     * @param string $description Tags group description
+     *
+     * @return void
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Returns tags group color
+     *
+     * @return string|null
+     */
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    /**
+     * Sets tags group color
+     *
+     * @param string $color Tags group color
+     *
+     * @return void
+     */
+    public function setColor(string $color): void
+    {
+        $this->color = $color;
     }
 }

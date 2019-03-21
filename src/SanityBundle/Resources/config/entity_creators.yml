@@ -1,0 +1,25 @@
+services:
+    veslo.sanity.vacancy.index.creator:
+        class: Veslo\SanityBundle\Vacancy\Index\Creator
+        arguments:
+            - '@veslo.sanity.vacancy.tag.creator'
+            - '@veslo.sanity.vacancy.index_repository'
+            - '@veslo.sanity.vacancy.tag_repository'
+
+    veslo.sanity.vacancy.tag.creator:
+        class: Veslo\SanityBundle\Vacancy\Tag\Creator
+        arguments:
+            - '@veslo.sanity.vacancy.tag.group.creator.synced_creator'
+            - '@veslo.sanity.vacancy.tag_repository'
+            - '@veslo.sanity.vacancy.tag.group_repository'
+
+    veslo.sanity.vacancy.tag.group.creator.local_storage_creator:
+        class: Veslo\SanityBundle\Vacancy\Tag\Group\Creator\LocalStorageCreator
+        arguments:
+            - '@veslo.sanity.vacancy.tag.group_repository'
+
+    veslo.sanity.vacancy.tag.group.creator.synced_creator:
+        class: Veslo\SanityBundle\Vacancy\Tag\Group\Creator\SyncedCreator
+        arguments:
+            - '@event_dispatcher'
+            - '@veslo.sanity.vacancy.tag.group.creator.local_storage_creator'
