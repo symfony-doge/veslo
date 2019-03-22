@@ -24,7 +24,7 @@ use Veslo\SanityBundle\Dto\Vacancy\IndexDto;
 interface AnalyserInterface
 {
     /**
-     * Performs a contextual analysis of vacancy data and returns assigned sanity index
+     * Performs contextual analysis of vacancy data and returns assigned sanity index
      *
      * @param Vacancy $vacancy Vacancy entity
      *

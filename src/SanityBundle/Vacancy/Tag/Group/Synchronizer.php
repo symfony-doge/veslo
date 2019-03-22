@@ -15,18 +15,15 @@ declare(strict_types=1);
 
 namespace Veslo\SanityBundle\Vacancy\Tag\Group;
 
+use Veslo\AppBundle\Entity\Repository\BaseEntityRepository;
+use Veslo\SanityBundle\Dto\Vacancy\Tag\GroupDto;
+use Veslo\SanityBundle\Entity\Vacancy\Tag\Group;
+
 /**
- * Synchronizes sanity tags group data with external source before entity creation
+ * Synchronizes sanity tags group data with external source
  */
 class Synchronizer
 {
-    /**
-     * Creates and persists sanity tag groups in the local storage
-     *
-     * @var CreatorInterface
-     */
-    private $groupCreator;
-
     /**
      * Provides sanity tag groups which will be used by vacancy analysers
      *
@@ -35,19 +32,102 @@ class Synchronizer
     private $groupProvider;
 
     /**
+     * Creates and persists sanity tag groups in the local storage
+     *
+     * @var CreatorInterface
+     */
+    private $groupCreator;
+
+    /**
+     * Repository where sanity tag groups are stored
+     *
+     * @var BaseEntityRepository
+     */
+    private $groupRepository;
+
+    /**
      * Synchronizer constructor.
      *
-     * @param CreatorInterface  $groupCreator  Creates and persists sanity tag groups in the local storage
-     * @param ProviderInterface $groupProvider Provides sanity tag groups which will be used by vacancy analysers
+     * @param ProviderInterface    $groupProvider   Provides sanity tag groups which will be used by vacancy analysers
+     * @param CreatorInterface     $groupCreator    Creates and persists sanity tag groups in the local storage
+     * @param BaseEntityRepository $groupRepository Repository where sanity tag groups are stored
      */
-    public function __construct(CreatorInterface $groupCreator, ProviderInterface $groupProvider)
-    {
-        $this->groupCreator  = $groupCreator;
-        $this->groupProvider = $groupProvider;
+    public function __construct(
+        ProviderInterface $groupProvider,
+        CreatorInterface $groupCreator,
+        BaseEntityRepository $groupRepository
+    ) {
+        $this->groupProvider   = $groupProvider;
+        $this->groupCreator    = $groupCreator;
+        $this->groupRepository = $groupRepository;
     }
 
-    public function synchronize(): void
+    /**
+     * Performs sanity tag groups sync and returns a set which are not exists yet in the local storage (diff set)
+     *
+     * @param bool $persist Whenever groups which are not exists in the local storage should be saved
+     *
+     * @return GroupDto[]
+     */
+    public function synchronize(bool $persist = true): array
     {
-        // TODO
+        $groupsDataSynced = $this->groupProvider->getTagGroups();
+
+        /** @var Group[] $existentGroups */
+        $existentGroups = $this->groupRepository->findAll();
+
+        $diffSet = $this->calculateDiff($groupsDataSynced, $existentGroups);
+
+        if ($persist) {
+            $this->persist($diffSet);
+        }
+
+        return $diffSet;
+    }
+
+    /**
+     * Calculates a diff set by specified synced groups data and existing ones
+     *
+     * @param GroupDto[] $groupsDataSynced Groups from third-party provider
+     * @param Group[]    $existentGroups   Existing group entities in the local storage
+     *
+     * @return array
+     */
+    private function calculateDiff(array $groupsDataSynced, array $existentGroups): array
+    {
+        $syncedMap = [];
+        foreach ($groupsDataSynced as $groupDataSynced) {
+            $syncedGroupName             = $groupDataSynced->getName();
+            $syncedMap[$syncedGroupName] = $groupDataSynced;
+        }
+
+        $existsMap = [];
+        foreach ($existentGroups as $group) {
+            $groupName             = $group->getName();
+            $existsMap[$groupName] = $group;
+        }
+
+        $diffSet = [];
+        foreach ($syncedMap as $groupName => $groupData) {
+            if (!array_key_exists($groupName, $existsMap)) {
+                $diffSet[] = $groupData;
+            }
+        }
+
+        return $diffSet;
+    }
+
+    /**
+     * Calls the group creator to save groups from a diff set into the local storage
+     *
+     * @param GroupDto[] $diffSet Groups which are not exists in the local storage
+     *
+     * @return void
+     */
+    private function persist(array $diffSet): void
+    {
+        foreach ($diffSet as $groupData) {
+            $this->groupCreator->createByDto($groupData);
+        }
     }
 }

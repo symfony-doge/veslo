@@ -38,6 +38,8 @@ class VesloSanityExtension extends Extension
         $loader->load('config' . DIRECTORY_SEPARATOR . 'entity_repositories.yml');
         $loader->load('config' . DIRECTORY_SEPARATOR . 'entity_creators.yml');
         $loader->load('config' . DIRECTORY_SEPARATOR . 'workers.yml');
+        $loader->load('config' . DIRECTORY_SEPARATOR . 'providers.yml');
+        $loader->load('config' . DIRECTORY_SEPARATOR . 'synchronizers.yml');
         $loader->load('config' . DIRECTORY_SEPARATOR . 'vacancy_analysers.yml');
         $loader->load('config' . DIRECTORY_SEPARATOR . 'services.yml');
 
@@ -45,11 +47,15 @@ class VesloSanityExtension extends Extension
         $config        = $this->processConfiguration($configuration, $configs);
 
         $motAnalyserOptions = [
-            'authorization_token' => $config['vacancy']['analyser']['ministry_of_truth']['authorization_token'],
-            'default_locale'      => $config['vacancy']['analyser']['ministry_of_truth']['default_locale'],
-            'locales'             => $config['vacancy']['analyser']['ministry_of_truth']['locales'],
+            'default_locale' => $config['vacancy']['analyser']['default_locale'],
+            'locales'        => $config['vacancy']['analyser']['locales'],
         ];
 
         $container->setParameter('veslo.sanity.vacancy.analyser.ministry_of_truth.options', $motAnalyserOptions);
+
+        $container->setParameter(
+            'veslo.sanity.vacancy.tag.group.provider.ministry_of_truth.options',
+            $motAnalyserOptions
+        );
     }
 }

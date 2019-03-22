@@ -1,0 +1,7 @@
+services:
+    veslo.sanity.vacancy.tag.group.synchronizer:
+        class: Veslo\SanityBundle\Vacancy\Tag\Group\Synchronizer
+        arguments:
+            - '@veslo.sanity.vacancy.tag.group.provider.ministry_of_truth'
+            - '@veslo.sanity.vacancy.tag.group.creator.local_storage_creator'
+            - '@veslo.sanity.vacancy.tag.group_repository'

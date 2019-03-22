@@ -118,6 +118,8 @@ knp_paginator:
 symfony_doge_motc:
     transport:
         http: 'veslo.app.http.client.base'
+    credentials:
+        authorization_token: '%symfony_doge_motc.credentials.authorization_token%'
     api:
         base_uri: '%symfony_doge_motc.api.base_uri%'
         requests:

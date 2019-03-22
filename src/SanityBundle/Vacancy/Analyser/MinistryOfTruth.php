@@ -18,6 +18,7 @@ namespace Veslo\SanityBundle\Vacancy\Analyser;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use SymfonyDoge\MinistryOfTruthClient\Bridge\Symfony\Credentials\StorageInterface as CredentialsStorageInterface;
 use SymfonyDoge\MinistryOfTruthClient\ClientInterface;
 use SymfonyDoge\MinistryOfTruthClient\Dto\Request\Index\RequestDto as IndexRequest;
 use SymfonyDoge\MinistryOfTruthClient\Enum\Request\Index\Context;
@@ -39,6 +40,13 @@ class MinistryOfTruth implements AnalyserInterface
     private $motClient;
 
     /**
+     * Holds context of security parameters for building requests to the Ministry of Truth API endpoint
+     *
+     * @var CredentialsStorageInterface
+     */
+    private $credentialsStorage;
+
+    /**
      * Converts data from external format to local dto
      *
      * @var DataConverter
@@ -55,14 +63,20 @@ class MinistryOfTruth implements AnalyserInterface
     /**
      * MinistryOfTruth constructor.
      *
-     * @param ClientInterface $motClient     The Ministry of Truth API client
-     * @param DataConverter   $dataConverter Converts data from external format to local dto
-     * @param array           $options       Options for the vacancy analyser
+     * @param ClientInterface             $motClient          The Ministry of Truth API client
+     * @param CredentialsStorageInterface $credentialsStorage Context of security parameters for building requests
+     * @param DataConverter               $dataConverter      Converts data from external format to local dto
+     * @param array                       $options            Options for the vacancy analyser
      */
-    public function __construct(ClientInterface $motClient, DataConverter $dataConverter, array $options)
-    {
-        $this->motClient     = $motClient;
-        $this->dataConverter = $dataConverter;
+    public function __construct(
+        ClientInterface $motClient,
+        CredentialsStorageInterface $credentialsStorage,
+        DataConverter $dataConverter,
+        array $options
+    ) {
+        $this->motClient          = $motClient;
+        $this->credentialsStorage = $credentialsStorage;
+        $this->dataConverter      = $dataConverter;
 
         $optionsResolver = new OptionsResolver();
         $this->configureOptions($optionsResolver);
@@ -91,16 +105,22 @@ class MinistryOfTruth implements AnalyserInterface
     public function analyseByLocale(Vacancy $vacancy, string $locale): IndexDto
     {
         $indexRequest = new IndexRequest();
-        $indexRequest->setAuthorizationToken($this->options['authorization_token']);
         $indexRequest->setLocale($locale);
+
+        $authorizationToken = $this->credentialsStorage->getAuthorizationToken();
+        $indexRequest->setAuthorizationToken($authorizationToken);
 
         $vacancyDescription = $vacancy->getText();
         $indexRequest->addContext(Context\Vacancy::DESCRIPTION, $vacancyDescription);
 
+        // TODO: try-catch client layer exception
         $indexResponse = $this->motClient->index($indexRequest);
         $vacancyIndex  = $indexResponse->getIndex();
 
         $indexDto = $this->dataConverter->convertIndex($vacancyIndex);
+
+        $vacancyId = $vacancy->getId();
+        $indexDto->setVacancyId($vacancyId);
 
         return $indexDto;
     }
@@ -114,7 +134,7 @@ class MinistryOfTruth implements AnalyserInterface
      */
     protected function configureOptions(OptionsResolver $optionsResolver): void
     {
-        $optionsResolver->setDefaults(['authorization_token' => null, 'locales' => null]);
+        $optionsResolver->setDefault('locales', null);
 
         $optionsResolver->setDefault(
             'default_locale',
@@ -129,6 +149,6 @@ class MinistryOfTruth implements AnalyserInterface
             }
         );
 
-        $optionsResolver->setRequired(['authorization_token', 'default_locale', 'locales']);
+        $optionsResolver->setRequired(['default_locale', 'locales']);
     }
 }
