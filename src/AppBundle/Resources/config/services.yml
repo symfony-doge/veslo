@@ -61,3 +61,22 @@ services:
             -   name: knp_menu.menu_builder
                 method: createMainMenu
                 alias: main
+
+    veslo.app.cache.array.no_serialization:
+        # TODO: [upgrade] Will be available in framework bundle by default since 4.1 release
+        # https://github.com/symfony/symfony/commit/f92e03de974fd1728582cbc124e570a0a5376434
+        # parent: 'cache.adapter.array'
+        # TODO: move to Symfony\Contracts\Cache\CacheInterface since 4.2 release
+        class: Symfony\Component\Cache\Adapter\ArrayAdapter
+        arguments:
+            - 0
+            - false
+        calls:
+            -   method: setLogger
+                arguments:
+                    - '@?monolog.logger'
+        tags:
+            -   name: 'cache.pool'
+                clearer: 'cache.default_clearer'
+            -   name: 'monolog.logger'
+                channel: 'cache'

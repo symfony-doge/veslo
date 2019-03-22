@@ -65,11 +65,11 @@ class Synchronizer
     /**
      * Performs sanity tag groups sync and returns a set which are not exists yet in the local storage (diff set)
      *
-     * @param bool $persist Whenever groups which are not exists in the local storage should be saved
+     * @param bool $isPersistAndFlush Whenever groups which are not exists in the local storage should be saved
      *
      * @return GroupDto[]
      */
-    public function synchronize(bool $persist = true): array
+    public function synchronize(bool $isPersistAndFlush = true): array
     {
         $groupsDataSynced = $this->groupProvider->getTagGroups();
 
@@ -78,8 +78,8 @@ class Synchronizer
 
         $diffSet = $this->calculateDiff($groupsDataSynced, $existentGroups);
 
-        if ($persist) {
-            $this->persist($diffSet);
+        if ($isPersistAndFlush) {
+            $this->persistAndFlush($diffSet);
         }
 
         return $diffSet;
@@ -124,7 +124,7 @@ class Synchronizer
      *
      * @return void
      */
-    private function persist(array $diffSet): void
+    private function persistAndFlush(array $diffSet): void
     {
         foreach ($diffSet as $groupData) {
             $this->groupCreator->createByDto($groupData);

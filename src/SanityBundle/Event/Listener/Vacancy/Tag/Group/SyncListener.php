@@ -49,8 +49,9 @@ class SyncListener
      */
     public function onTagGroupsSync(SyncRequestedEvent $event): void
     {
-        $persist = $event->isPersistAndFlush();
-        $diffSet = $this->groupSynchronizer->synchronize($persist);
+        $isPersistAndFlush = $event->isPersistAndFlush();
+
+        $diffSet = $this->groupSynchronizer->synchronize($isPersistAndFlush);
 
         foreach ($diffSet as $groupData) {
             $event->addTagGroup($groupData);

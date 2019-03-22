@@ -75,6 +75,8 @@ class MinistryOfTruth implements ProviderInterface
      */
     public function getTagGroups(): array
     {
+        // TODO cache for current session.
+
         $request = new GetTagGroupsRequest();
 
         $authorizationToken = $this->credentialsStorage->getAuthorizationToken();
