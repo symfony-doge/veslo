@@ -38,7 +38,7 @@ class SyncRequestedEvent extends Event
     private $persistAndFlush;
 
     /**
-     * List of sanity tag groups data filled up by synchronizers
+     * List of sanity tag groups data filled up by synchronizers (new / modified groups)
      *
      * @var GroupDto[]
      */
@@ -66,7 +66,7 @@ class SyncRequestedEvent extends Event
     }
 
     /**
-     * Returns synchronized sanity tag groups data
+     * Returns sanity tag groups data which are marked as new / modified by synchronizer(s)
      *
      * @return GroupDto[]
      */
@@ -76,7 +76,7 @@ class SyncRequestedEvent extends Event
     }
 
     /**
-     * Adds a sanity tags group data
+     * Adds a sanity tags group data, marked as new / modified
      *
      * @param GroupDto $group Sanity tags group data
      *
