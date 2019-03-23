@@ -15,12 +15,14 @@ declare(strict_types=1);
 
 namespace Veslo\SanityBundle\Vacancy\Tag\Group\Provider;
 
-use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
-use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use SymfonyDoge\MinistryOfTruthClient\Bridge\Symfony\Credentials\StorageInterface as CredentialsStorageInterface;
 use SymfonyDoge\MinistryOfTruthClient\ClientInterface;
 use SymfonyDoge\MinistryOfTruthClient\Dto\Request\Tag\Group\Get\All\RequestDto as GetTagGroupsRequest;
+use SymfonyDoge\MinistryOfTruthClient\Dto\Response\Tag\Group\ContentDto;
+use Veslo\AppBundle\Integration\MinistryOfTruth\LocaleOptionsTrait;
+use Veslo\SanityBundle\Vacancy\Tag\Group\Provider\DataConverter\MinistryOfTruth as DataConverter;
 use Veslo\SanityBundle\Vacancy\Tag\Group\ProviderInterface;
 
 /**
@@ -28,6 +30,10 @@ use Veslo\SanityBundle\Vacancy\Tag\Group\ProviderInterface;
  */
 class MinistryOfTruth implements ProviderInterface
 {
+    use LocaleOptionsTrait {
+        configureLocaleOptions as protected;
+    }
+
     /**
      * The Ministry of Truth API client
      *
@@ -43,7 +49,32 @@ class MinistryOfTruth implements ProviderInterface
     private $credentialsStorage;
 
     /**
+     * Converts sanity tag groups data from external format to local data transfer objects
+     *
+     * @var DataConverter
+     */
+    private $dataConverter;
+
+    /**
+     * Holds result of last API call for current process
+     *
+     * @var AdapterInterface
+     */
+    private $cache;
+
+    /**
      * Options for the sanity tags group provider
+     *
+     * Example:
+     * ```
+     * [
+     *     'cache' => [
+     *         'namespace' => 'veslo.sanity.vacancy.tag.group.provider.ministry_of_truth'
+     *     ],
+     *     'default_locale' => 'ru',
+     *     'locale' => ['ru', 'ua', 'en']
+     * ]
+     * ```
      *
      * @var array
      */
@@ -54,15 +85,21 @@ class MinistryOfTruth implements ProviderInterface
      *
      * @param ClientInterface             $motClient          The Ministry of Truth API client
      * @param CredentialsStorageInterface $credentialsStorage Holds context of security parameters for building requests
+     * @param DataConverter               $dataConverter      Converts group data from external format to local DTOs
+     * @param AdapterInterface            $cache              Holds result of last API call for current process
      * @param array                       $options            Options for the sanity tags group provider
      */
     public function __construct(
         ClientInterface $motClient,
         CredentialsStorageInterface $credentialsStorage,
+        DataConverter $dataConverter,
+        AdapterInterface $cache,
         array $options
     ) {
         $this->motClient          = $motClient;
         $this->credentialsStorage = $credentialsStorage;
+        $this->dataConverter      = $dataConverter;
+        $this->cache              = $cache;
 
         $optionsResolver = new OptionsResolver();
         $this->configureOptions($optionsResolver);
@@ -75,49 +112,58 @@ class MinistryOfTruth implements ProviderInterface
      */
     public function getTagGroups(): array
     {
-        // TODO cache for current session.
+        $cacheKey            = $this->options['cache']['namespace'] . __FUNCTION__;
+        $groupDtoArrayCached = $this->cache->getItem($cacheKey);
 
+        if ($groupDtoArrayCached->isHit()) {
+            return $groupDtoArrayCached->get();
+        }
+
+        $tagGroups = $this->requestTagGroups();
+
+        $groupDtoArray = $this->dataConverter->convertTagGroups($tagGroups);
+        $groupDtoArrayCached->set($groupDtoArray);
+        $this->cache->save($groupDtoArrayCached);
+
+        return $groupDtoArray;
+    }
+
+    /**
+     * Returns sanity tag groups in integration layer format
+     *
+     * @return ContentDto[]
+     */
+    protected function requestTagGroups(): array
+    {
         $request = new GetTagGroupsRequest();
+        $request->setLocale($this->options['default_locale']);
 
         $authorizationToken = $this->credentialsStorage->getAuthorizationToken();
         $request->setAuthorizationToken($authorizationToken);
 
         // TODO: try-catch client layer exception
         $tagGroupsResponse = $this->motClient->getTagGroups($request);
-        $tagGroups         = $tagGroupsResponse->getTagGroups();
 
-        // TODO: data converter
-
-        return [];
+        return $tagGroupsResponse->getTagGroups();
     }
 
     /**
-     * Performs options configuration for the vacancy analyser
+     * Performs options configuration for sanity tag groups provider
      *
      * @param OptionsResolver $optionsResolver Validates options and merges them with default values
      *
      * @return void
-     *
-     * TODO: extract to separate unit for DRY contract (see Veslo\SanityBundle\Vacancy\Analyser\MinistryOfTruth)
-     * TODO: probably should be moved to motc bridge domain
      */
     protected function configureOptions(OptionsResolver $optionsResolver): void
     {
-        $optionsResolver->setDefault('locales', null);
-
         $optionsResolver->setDefault(
-            'default_locale',
-            function (Options $options, $previousValue) {
-                if (!is_array($options['locales']) || !in_array($previousValue, $options['locales'])) {
-                    throw new InvalidOptionsException(
-                        'Value of the "default_locale" option is not present in locales array'
-                    );
-                }
-
-                return $previousValue;
+            'cache',
+            function (OptionsResolver $cacheOptionsResolver) {
+                $cacheOptionsResolver->setDefault('namespace', __CLASS__);
             }
         );
 
-        $optionsResolver->setRequired(['default_locale', 'locales']);
+        // 'default_locale', 'locales'
+        $this->configureLocaleOptions($optionsResolver);
     }
 }

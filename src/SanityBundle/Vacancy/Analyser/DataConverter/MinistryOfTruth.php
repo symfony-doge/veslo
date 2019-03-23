@@ -13,7 +13,7 @@
 
 declare(strict_types=1);
 
-namespace Veslo\SanityBundle\Vacancy\Analyser\MinistryOfTruth;
+namespace Veslo\SanityBundle\Vacancy\Analyser\DataConverter;
 
 use SymfonyDoge\MinistryOfTruthClient\Dto\Response\Index\ContentDto as IndexData;
 use Veslo\SanityBundle\Dto\Vacancy\IndexDto;
@@ -22,9 +22,9 @@ use SymfonyDoge\MinistryOfTruthClient\Dto\Response\Index\TagDto as TagData;
 use Veslo\SanityBundle\Dto\Vacancy\TagDto;
 
 /**
- * Converts data from format of external microservice to local data transfer objects
+ * Converts sanity index data from format of external microservice to local data transfer objects
  */
-class DataConverter
+class MinistryOfTruth
 {
     /**
      * Returns index dto created by external data source

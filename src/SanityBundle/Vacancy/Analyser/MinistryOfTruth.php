@@ -15,16 +15,15 @@ declare(strict_types=1);
 
 namespace Veslo\SanityBundle\Vacancy\Analyser;
 
-use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use SymfonyDoge\MinistryOfTruthClient\Bridge\Symfony\Credentials\StorageInterface as CredentialsStorageInterface;
 use SymfonyDoge\MinistryOfTruthClient\ClientInterface;
 use SymfonyDoge\MinistryOfTruthClient\Dto\Request\Index\RequestDto as IndexRequest;
 use SymfonyDoge\MinistryOfTruthClient\Enum\Request\Index\Context;
 use Veslo\AnthillBundle\Entity\Vacancy;
+use Veslo\AppBundle\Integration\MinistryOfTruth\LocaleOptionsTrait;
 use Veslo\SanityBundle\Dto\Vacancy\IndexDto;
-use Veslo\SanityBundle\Vacancy\Analyser\MinistryOfTruth\DataConverter;
+use Veslo\SanityBundle\Vacancy\Analyser\DataConverter\MinistryOfTruth as DataConverter;
 use Veslo\SanityBundle\Vacancy\AnalyserInterface;
 
 /**
@@ -32,6 +31,10 @@ use Veslo\SanityBundle\Vacancy\AnalyserInterface;
  */
 class MinistryOfTruth implements AnalyserInterface
 {
+    use LocaleOptionsTrait {
+        configureLocaleOptions as protected;
+    }
+
     /**
      * The Ministry of Truth API client
      *
@@ -55,6 +58,14 @@ class MinistryOfTruth implements AnalyserInterface
 
     /**
      * Options for the vacancy analyser
+     *
+     * Example:
+     * ```
+     * [
+     *     'default_locale' => 'ru',
+     *     'locales' => ['ru', 'ua', 'en']
+     * ]
+     * ```
      *
      * @var array
      */
@@ -134,21 +145,7 @@ class MinistryOfTruth implements AnalyserInterface
      */
     protected function configureOptions(OptionsResolver $optionsResolver): void
     {
-        $optionsResolver->setDefault('locales', null);
-
-        $optionsResolver->setDefault(
-            'default_locale',
-            function (Options $options, $previousValue) {
-                if (!is_array($options['locales']) || !in_array($previousValue, $options['locales'])) {
-                    throw new InvalidOptionsException(
-                        'Value of the "default_locale" option is not present in locales array'
-                    );
-                }
-
-                return $previousValue;
-            }
-        );
-
-        $optionsResolver->setRequired(['default_locale', 'locales']);
+        // 'default_locale', 'locales'
+        $this->configureLocaleOptions($optionsResolver);
     }
 }
