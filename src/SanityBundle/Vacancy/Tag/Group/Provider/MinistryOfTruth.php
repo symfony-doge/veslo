@@ -129,7 +129,7 @@ class MinistryOfTruth implements ProviderInterface
     }
 
     /**
-     * Returns sanity tag groups in integration layer format
+     * Returns sanity tag groups in format of integration layer
      *
      * @return ContentDto[]
      */

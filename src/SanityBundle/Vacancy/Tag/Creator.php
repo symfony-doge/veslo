@@ -98,7 +98,7 @@ class Creator
 
         $tag->setGroup($group);
 
-        $this->tagRepository->save($tag);
+        $this->tagRepository->save($tag, !$isCascadeChild);
 
         return $tag;
     }

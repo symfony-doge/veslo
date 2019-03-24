@@ -30,7 +30,7 @@ use SymfonyDoge\MinistryOfTruthClient\Dto\RequestDto;
 trait LocaleOptionsTrait
 {
     /**
-     * Configures options of service for building requests to the Ministry of Truth API
+     * Configures locale options of service for building requests to the Ministry of Truth API
      *
      * @param OptionsResolver $optionsResolver Validates options and merges them with default values
      *

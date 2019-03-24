@@ -20,6 +20,7 @@ use Veslo\SanityBundle\Dto\Vacancy\Tag\GroupDto;
 use Veslo\SanityBundle\Entity\Vacancy\Tag\Group;
 use Veslo\SanityBundle\Event\Listener\Vacancy\Tag\Group\SyncListener;
 use Veslo\SanityBundle\Event\Vacancy\Tag\Group\SyncRequestedEvent;
+use Veslo\SanityBundle\Exception\Vacancy\Tag\Group\Creator\SyncedCreator\GroupForMergeNotFound;
 use Veslo\SanityBundle\Vacancy\Tag\Group\CreatorInterface;
 
 /**
@@ -56,6 +57,8 @@ class SyncedCreator implements CreatorInterface
     /**
      * {@inheritdoc}
      *
+     * @throws GroupForMergeNotFound
+     *
      * @see SyncListener
      */
     public function createByDto(GroupDto $groupData, bool $isCascadeChild = false): Group
@@ -73,10 +76,10 @@ class SyncedCreator implements CreatorInterface
                 continue 1;
             }
 
-            return $this->merge($groupData, $groupDataSynced);
+            return $this->merge($groupData, $groupDataSynced, $isCascadeChild);
         }
 
-        // TODO throw SyncedDataNotFoundException
+        throw GroupForMergeNotFound::withName($groupNameExpected);
     }
 
     /**
@@ -85,10 +88,12 @@ class SyncedCreator implements CreatorInterface
      *
      * @param GroupDto $groupData       Tags group data provided for entity creation
      * @param GroupDto $groupDataSynced Related data from group providers
+     * @param bool     $isCascadeChild  Whenever entity creation is a part of the entity-owner creation, e.g. we can
+     *                                  hint an entity manager to not perform instant flush after persist operation
      *
      * @return Group
      */
-    private function merge(GroupDto $groupData, GroupDto $groupDataSynced): Group
+    private function merge(GroupDto $groupData, GroupDto $groupDataSynced, bool $isCascadeChild): Group
     {
         $groupDescription = $groupDataSynced->getDescription();
         $groupData->setDescription($groupDescription);
@@ -96,6 +101,6 @@ class SyncedCreator implements CreatorInterface
         $groupColor = $groupDataSynced->getColor();
         $groupData->setColor($groupColor);
 
-        return $this->groupCreator->createByDto($groupData);
+        return $this->groupCreator->createByDto($groupData, $isCascadeChild);
     }
 }
