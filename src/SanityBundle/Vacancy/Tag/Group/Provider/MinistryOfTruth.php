@@ -141,7 +141,6 @@ class MinistryOfTruth implements ProviderInterface
         $authorizationToken = $this->credentialsStorage->getAuthorizationToken();
         $request->setAuthorizationToken($authorizationToken);
 
-        // TODO: try-catch client layer exception
         $tagGroupsResponse = $this->motClient->getTagGroups($request);
 
         return $tagGroupsResponse->getTagGroups();

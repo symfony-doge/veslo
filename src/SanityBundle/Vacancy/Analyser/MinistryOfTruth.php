@@ -124,7 +124,6 @@ class MinistryOfTruth implements AnalyserInterface
         $vacancyDescription = $vacancy->getText();
         $indexRequest->addContext(Context\Vacancy::DESCRIPTION, $vacancyDescription);
 
-        // TODO: try-catch client layer exception
         $indexResponse = $this->motClient->index($indexRequest);
         $vacancyIndex  = $indexResponse->getIndex();
 

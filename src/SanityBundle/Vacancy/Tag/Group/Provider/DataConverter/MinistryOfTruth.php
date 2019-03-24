@@ -52,7 +52,14 @@ class MinistryOfTruth
     {
         $groupDto = new GroupDto();
 
-        // TODO
+        $groupName = $group->getName();
+        $groupDto->setName($groupName);
+
+        $groupDescription = $group->getDescription();
+        $groupDto->setDescription($groupDescription);
+
+        $groupColor = $group->getColor();
+        $groupDto->setColor($groupColor);
 
         return $groupDto;
     }
