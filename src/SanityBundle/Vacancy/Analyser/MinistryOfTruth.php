@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Veslo\SanityBundle\Vacancy\Analyser;
 
+use DateTime;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use SymfonyDoge\MinistryOfTruthClient\Bridge\Symfony\Credentials\StorageInterface as CredentialsStorageInterface;
 use SymfonyDoge\MinistryOfTruthClient\ClientInterface;
@@ -131,6 +132,9 @@ class MinistryOfTruth implements AnalyserInterface
 
         $vacancyId = $vacancy->getId();
         $indexDto->setVacancyId($vacancyId);
+
+        $indexationDate = new DateTime();
+        $indexDto->setIndexationDate($indexationDate);
 
         return $indexDto;
     }

@@ -15,6 +15,8 @@ declare(strict_types=1);
 
 namespace Veslo\SanityBundle\Dto\Vacancy;
 
+use DateTimeInterface;
+
 /**
  * Context of vacancy index data
  */
@@ -40,6 +42,13 @@ class IndexDto
      * @var TagDto[]
      */
     private $tags;
+
+    /**
+     * Date and time when sanity index was created
+     *
+     * @var DateTimeInterface
+     */
+    private $indexationDate;
 
     /**
      * Returns vacancy index value
@@ -105,5 +114,27 @@ class IndexDto
     public function addTag(TagDto $tag): void
     {
         $this->tags[] = $tag;
+    }
+
+    /**
+     * Returns date and time when sanity index was created
+     *
+     * @return DateTimeInterface
+     */
+    public function getIndexationDate(): DateTimeInterface
+    {
+        return $this->indexationDate;
+    }
+
+    /**
+     * Sets date and time when sanity index was created
+     *
+     * @param DateTimeInterface $indexationDate Date and time when sanity index was created
+     *
+     * @return void
+     */
+    public function setIndexationDate(DateTimeInterface $indexationDate): void
+    {
+        $this->indexationDate = $indexationDate;
     }
 }

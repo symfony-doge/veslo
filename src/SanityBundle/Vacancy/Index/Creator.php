@@ -85,7 +85,7 @@ class Creator
         $vacancyId = $indexData->getVacancyId();
         $index->setVacancyId($vacancyId);
 
-        $indexationDate = new DateTime();
+        $indexationDate = $indexData->getIndexationDate();
         $index->setIndexationDate($indexationDate);
 
         $tagDataArray = $indexData->getTags();
