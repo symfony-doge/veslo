@@ -43,6 +43,15 @@ class SyncedCreator implements CreatorInterface
     private $groupCreator;
 
     /**
+     * Entities created by current process
+     *
+     * @var array
+     *
+     * @internal
+     */
+    private $_pendingForCreation;
+
+    /**
      * SyncCreator constructor.
      *
      * @param EventDispatcherInterface $eventDispatcher Dispatches an event to registered listeners
@@ -52,6 +61,8 @@ class SyncedCreator implements CreatorInterface
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->groupCreator    = $groupCreator;
+
+        $this->_pendingForCreation = [];
     }
 
     /**
@@ -95,12 +106,18 @@ class SyncedCreator implements CreatorInterface
      */
     private function merge(GroupDto $groupData, GroupDto $groupDataSynced, bool $isCascadeChild): Group
     {
+        $groupName = $groupDataSynced->getName();
+
+        if (array_key_exists($groupName, $this->_pendingForCreation)) {
+            return $this->_pendingForCreation[$groupName];
+        }
+
         $groupDescription = $groupDataSynced->getDescription();
         $groupData->setDescription($groupDescription);
 
         $groupColor = $groupDataSynced->getColor();
         $groupData->setColor($groupColor);
 
-        return $this->groupCreator->createByDto($groupData, $isCascadeChild);
+        return $this->_pendingForCreation[$groupName] = $this->groupCreator->createByDto($groupData, $isCascadeChild);
     }
 }

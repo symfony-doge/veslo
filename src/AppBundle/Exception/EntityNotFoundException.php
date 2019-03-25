@@ -23,7 +23,7 @@ use Veslo\AppBundle\Entity\Repository\BaseEntityRepository;
 /**
  * Will be thrown if entity is not found
  *
- * @see BaseEntityRepository
+ * @see BaseEntityRepository::require()
  */
 class EntityNotFoundException extends RuntimeException implements AppBundleExceptionInterface
 {

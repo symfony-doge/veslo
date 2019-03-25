@@ -2,7 +2,7 @@ services:
     veslo.sanity.vacancy.tag.group.provider.ministry_of_truth:
         class: Veslo\SanityBundle\Vacancy\Tag\Group\Provider\MinistryOfTruth
         arguments:
-            - '@symfony_doge.motc.client'
+            - '@symfony_doge.motc.dummy_client'
             - '@symfony_doge.motc.credentials.storage'
             - '@veslo.sanity.vacancy.tag.group.provider.data_converter.ministry_of_truth'
             - '@veslo.app.cache.array.no_serialization'

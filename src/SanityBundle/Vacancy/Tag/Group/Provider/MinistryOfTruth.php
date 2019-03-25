@@ -155,12 +155,17 @@ class MinistryOfTruth implements ProviderInterface
      */
     protected function configureOptions(OptionsResolver $optionsResolver): void
     {
-        $optionsResolver->setDefault(
-            'cache',
-            function (OptionsResolver $cacheOptionsResolver) {
-                $cacheOptionsResolver->setDefault('namespace', __CLASS__);
-            }
-        );
+        if (method_exists(OptionsResolver::class, 'isNested')) {
+            $optionsResolver->setDefault(
+                'cache',
+                function (OptionsResolver $cacheOptionsResolver) {
+                    $cacheOptionsResolver->setDefault('namespace', md5(__CLASS__));
+                }
+            );
+        // TODO: [upgrade] remove after migration to ~4.2 (options resolver prior to 4.2 doesn't support nested options)
+        } else {
+            $optionsResolver->setDefault('cache', ['namespace' => md5(__CLASS__)]);
+        }
 
         // 'default_locale', 'locales'
         $this->configureLocaleOptions($optionsResolver);

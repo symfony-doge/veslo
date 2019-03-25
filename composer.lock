@@ -3679,7 +3679,7 @@
                 "psr/log": "^1.0"
             },
             "suggest": {
-                "psr/log": "^1.0 is required for using a logging"
+                "symfony/symfony": "~3.4 || ~4.0 is required for using a Symfony bridge"
             },
             "type": "library",
             "extra": {
