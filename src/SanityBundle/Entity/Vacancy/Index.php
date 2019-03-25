@@ -61,7 +61,7 @@ class Index
      *
      * @ORM\Column(
      *     name="value",
-     *     type="decimal",
+     *     type="float",
      *     precision=5,
      *     scale=2,
      *     options={"unsigned": true, "comment": "Sanity index value, from 0.00 to 100.00"}

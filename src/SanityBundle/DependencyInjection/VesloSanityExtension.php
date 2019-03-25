@@ -39,6 +39,7 @@ class VesloSanityExtension extends Extension
         $loader->load('config' . DIRECTORY_SEPARATOR . 'entity_creators.yml');
         $loader->load('config' . DIRECTORY_SEPARATOR . 'workers.yml');
         $loader->load('config' . DIRECTORY_SEPARATOR . 'providers.yml');
+        $loader->load('config' . DIRECTORY_SEPARATOR . 'normalizers.yml');
         $loader->load('config' . DIRECTORY_SEPARATOR . 'synchronizers.yml');
         $loader->load('config' . DIRECTORY_SEPARATOR . 'vacancy_analysers.yml');
 

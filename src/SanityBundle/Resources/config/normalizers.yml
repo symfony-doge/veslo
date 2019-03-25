@@ -1,0 +1,3 @@
+services:
+    veslo.sanity.vacancy.index.normalizer.preview_normalizer:
+        class: Veslo\SanityBundle\Vacancy\Index\Normalizer\PreviewNormalizer

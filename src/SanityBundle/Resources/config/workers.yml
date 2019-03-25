@@ -6,4 +6,4 @@ services:
             - '@veslo.anthill.vacancy_repository'
             - '@veslo.sanity.vacancy.analyser.ministry_of_truth'
             - '@veslo.sanity.vacancy.index.creator'
-            - '@serializer'
+            - '@veslo.sanity.vacancy.index.normalizer.preview_normalizer'

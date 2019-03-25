@@ -61,6 +61,6 @@ class AcceptanceNormalizer implements NormalizerInterface
      */
     public function supportsNormalization($data, $format = null)
     {
-        return $this->normalizer->supportsNormalization($data, $format);
+        return $data instanceof AcceptanceDto;
     }
 }
