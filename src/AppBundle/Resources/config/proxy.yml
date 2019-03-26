@@ -1,0 +1,12 @@
+services:
+    veslo.app.http.proxy.manager.alfred:
+        class: Veslo\AppBundle\Http\Proxy\Manager\Alfred
+        lazy: true
+        arguments:
+            - '@veslo.app.http.proxy.locator.static_array_locator'
+
+    veslo.app.http.proxy.locator.static_array_locator:
+        class: Veslo\AppBundle\Http\Proxy\Locator\StaticArrayLocator
+        lazy: true
+        arguments:
+            - '%veslo.app.http.client.proxy.static_list%'

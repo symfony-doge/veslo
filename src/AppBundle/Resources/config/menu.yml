@@ -1,0 +1,10 @@
+services:
+    veslo.app.menu.builder:
+        class: Veslo\AppBundle\Menu\Builder
+        arguments:
+            - '@knp_menu.factory'
+            - '@event_dispatcher'
+        tags:
+            -   name: knp_menu.menu_builder
+                method: createMainMenu
+                alias: main

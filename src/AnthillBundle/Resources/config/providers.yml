@@ -1,0 +1,6 @@
+services:
+    veslo.anthill.vacancy.provider.journal:
+        class: Veslo\AnthillBundle\Vacancy\Provider\Journal
+        arguments:
+            - '@veslo.anthill.vacancy_repository'
+            - '%veslo.anthill.vacancy.provider.options%'

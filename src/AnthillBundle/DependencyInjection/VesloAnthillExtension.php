@@ -33,15 +33,26 @@ class VesloAnthillExtension extends Extension
         $locator = new FileLocator(__DIR__ . implode(DIRECTORY_SEPARATOR, ['', '..', 'Resources']));
         $loader  = new YamlFileLoader($container, $locator);
 
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'commands.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'controllers.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'event_listeners.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'entity_repositories.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'normalizers.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'fixtures.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'roadmaps.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'workers.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'services.yml');
+        $configFiles = [
+            'commands.yml',
+            'controllers.yml',
+            'event_listeners.yml',
+            'entity_repositories.yml',
+            'entity_creators.yml',
+            'providers.yml',
+            'normalizers.yml',
+            'fixtures.yml',
+            'roadmaps.yml',
+            'scanner_pools.yml',
+            'workers.yml',
+            'queues.yml',
+            'menu.yml',
+            'services.yml',
+        ];
+
+        foreach ($configFiles as $configFile) {
+            $loader->load('config' . DIRECTORY_SEPARATOR . $configFile);
+        }
 
         $configuration = new Configuration();
         $config        = $this->processConfiguration($configuration, $configs);

@@ -66,16 +66,16 @@ class FileFixture extends Fixture
     /**
      * {@inheritdoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $objectManager)
     {
         $fixtureRealPath = $this->fileLocator->locate($this->fixturePath);
         $objectSet       = $this->fixtureLoader->loadFile($fixtureRealPath);
         $entities        = $objectSet->getObjects();
 
         foreach ($entities as $entity) {
-            $manager->persist($entity);
+            $objectManager->persist($entity);
         }
 
-        $manager->flush();
+        $objectManager->flush();
     }
 }

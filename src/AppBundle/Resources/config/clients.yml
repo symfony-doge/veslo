@@ -1,0 +1,29 @@
+services:
+    # Global http client for application level, silent/verbose, based on debug option
+    # Alias: veslo.app.http.client.base
+
+    veslo.app.http.client.silent:
+        class: GuzzleHttp\Client
+        arguments:
+            - '%veslo.app.http.client.config%'
+
+    veslo.app.http.client.verbose:
+        class: Veslo\AppBundle\Http\Client\VerboseClient
+        lazy: true
+        arguments:
+            - '@monolog.logger.app.http'
+            - '@serializer'
+            - '@veslo.app.http.client.silent'
+
+    veslo.app.http.client.batman:
+        class: Veslo\AppBundle\Http\Client\Batman
+        lazy: true
+        arguments:
+            - '@veslo.app.http.client.base'
+            - '@veslo.app.http.proxy.manager.alfred'
+            - '%veslo.app.http.client.stability_options%'
+
+    veslo.app.amqp_client:
+        class: Bunny\Client
+        arguments:
+            - '%veslo.app.amqp_client.options%'

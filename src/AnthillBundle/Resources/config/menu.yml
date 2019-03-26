@@ -1,0 +1,3 @@
+services:
+    veslo.anthill.menu.builder:
+        class: Veslo\AnthillBundle\Menu\Builder

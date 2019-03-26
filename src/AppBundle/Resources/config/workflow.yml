@@ -1,0 +1,12 @@
+services:
+    veslo.app.workflow.vacancy.research.marking_store:
+        class: Veslo\AppBundle\Workflow\Vacancy\Research\MarkingStore
+
+    veslo.app.workflow.vacancy.research.conveyor:
+        class: Veslo\AppBundle\Workflow\Vacancy\Research\Conveyor
+        arguments:
+            - '@monolog.logger.app.workflow'
+            - '@workflow.vacancy_research'
+            - '@serializer'
+            - '@veslo.app.amqp_client'
+            - '%veslo.app.workflow.vacancy_research.transitions.queue_prefix%'

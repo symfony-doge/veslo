@@ -60,7 +60,8 @@ class Builder
     {
         $root = $this->menuFactory->createItem('root');
 
-        $this->eventDispatcher->dispatch(ConfigureEvent::NAME, new ConfigureEvent($root));
+        $menuConfigureEvent = new ConfigureEvent($root);
+        $this->eventDispatcher->dispatch(ConfigureEvent::NAME, $menuConfigureEvent);
 
         return $root;
     }

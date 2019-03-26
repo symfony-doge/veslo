@@ -31,14 +31,12 @@ class VesloAppExtension extends Extension
      * @const string
      */
     private const SERVICE_ALIAS_HTTP_CLIENT = 'veslo.app.http.client.base';
-
     /**
      * Service id for silent http client
      *
      * @const string
      */
     private const SERVICE_ID_HTTP_CLIENT_SILENT = 'veslo.app.http.client.silent';
-
     /**
      * Service id for verbose http client
      *
@@ -54,8 +52,18 @@ class VesloAppExtension extends Extension
         $locator = new FileLocator(__DIR__ . implode(DIRECTORY_SEPARATOR, ['', '..', 'Resources']));
         $loader  = new YamlFileLoader($container, $locator);
 
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'twig_extensions.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'services.yml');
+        $configFiles = [
+            'twig_extensions.yml',
+            'workflow.yml',
+            'menu.yml',
+            'proxy.yml',
+            'clients.yml',
+            'services.yml',
+        ];
+
+        foreach ($configFiles as $configFile) {
+            $loader->load('config' . DIRECTORY_SEPARATOR . $configFile);
+        }
 
         $configuration = new Configuration();
         $config        = $this->processConfiguration($configuration, $configs);

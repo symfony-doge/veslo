@@ -1,33 +1,4 @@
 services:
-    veslo.anthill.vacancy.ant_queen:
-        class: Veslo\AnthillBundle\Vacancy\AntQueen
-
-    veslo.anthill.vacancy.dung_pit:
-        class: Veslo\AnthillBundle\Vacancy\DungPit
-        arguments:
-            - '@veslo.app.workflow.vacancy.research.conveyor'
-            - 'Veslo\AnthillBundle\Dto\Vacancy\LocationDto'
-
-    veslo.anthill.vacancy.chewed_dung_pit:
-        class: Veslo\AnthillBundle\Vacancy\DungPit
-        arguments:
-            - '@veslo.app.workflow.vacancy.research.conveyor'
-            - 'Veslo\AnthillBundle\Dto\Vacancy\Parser\ParsedDto'
-
-    veslo.anthill.vacancy.sinful_dung_pit:
-        class: Veslo\AnthillBundle\Vacancy\DungPit
-        arguments:
-            - '@veslo.app.workflow.vacancy.research.conveyor'
-            - 'Veslo\AnthillBundle\Dto\Vacancy\Collector\AcceptanceDto'
-
-    veslo.anthill.vacancy.scanner_pool.conveyor_aware_scanner_pool:
-        class: Veslo\AnthillBundle\Vacancy\ScannerPool\ConveyorAwareScannerPool
-        arguments:
-            - '@veslo.anthill.vacancy.scanner_pool.unique_scanner_pool'
-
-    veslo.anthill.vacancy.scanner_pool.unique_scanner_pool:
-        class: Veslo\AnthillBundle\Vacancy\ScannerPool\UniqueScannerPool
-
     veslo.anthill.vacancy.decision.is_collectable:
         class: Veslo\AnthillBundle\Vacancy\Decision\ChainDecision
         arguments:
@@ -38,31 +9,3 @@ services:
         arguments:
             - '@logger'
             - '@veslo.anthill.vacancy_repository'
-
-    veslo.anthill.vacancy.provider.journal:
-        class: Veslo\AnthillBundle\Vacancy\Provider\Journal
-        arguments:
-            - '@veslo.anthill.vacancy_repository'
-            - '%veslo.anthill.vacancy.provider.options%'
-
-    veslo.anthill.vacancy.creator:
-        class: Veslo\AnthillBundle\Vacancy\Creator
-        arguments:
-            - '@veslo.anthill.company.creator'
-            - '@veslo.anthill.vacancy.category.creator'
-            - '@veslo.anthill.vacancy_repository'
-            - '@veslo.anthill.company_repository'
-            - '@veslo.anthill.vacancy.category_repository'
-
-    veslo.anthill.company.creator:
-        class: Veslo\AnthillBundle\Company\Creator
-        arguments:
-            - '@veslo.anthill.company_repository'
-
-    veslo.anthill.vacancy.category.creator:
-        class: Veslo\AnthillBundle\Vacancy\Category\Creator
-        arguments:
-            - '@veslo.anthill.vacancy.category_repository'
-
-    veslo.anthill.menu.builder:
-        class: Veslo\AnthillBundle\Menu\Builder

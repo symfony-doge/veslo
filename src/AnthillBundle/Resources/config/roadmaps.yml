@@ -1,2 +1,6 @@
 imports:
     - { resource: roadmaps/headhunter.yml }
+
+services:
+    veslo.anthill.vacancy.ant_queen:
+        class: Veslo\AnthillBundle\Vacancy\AntQueen

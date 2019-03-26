@@ -33,15 +33,21 @@ class VesloSanityExtension extends Extension
         $locator = new FileLocator(__DIR__ . implode(DIRECTORY_SEPARATOR, ['', '..', 'Resources']));
         $loader  = new YamlFileLoader($container, $locator);
 
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'commands.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'event_listeners.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'entity_repositories.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'entity_creators.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'workers.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'providers.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'normalizers.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'synchronizers.yml');
-        $loader->load('config' . DIRECTORY_SEPARATOR . 'vacancy_analysers.yml');
+        $configFiles = [
+            'commands.yml',
+            'event_listeners.yml',
+            'entity_repositories.yml',
+            'entity_creators.yml',
+            'workers.yml',
+            'providers.yml',
+            'normalizers.yml',
+            'synchronizers.yml',
+            'vacancy_analysers.yml',
+        ];
+
+        foreach ($configFiles as $configFile) {
+            $loader->load('config' . DIRECTORY_SEPARATOR . $configFile);
+        }
 
         $configuration = new Configuration();
         $config        = $this->processConfiguration($configuration, $configs);

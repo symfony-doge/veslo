@@ -1,0 +1,8 @@
+services:
+    veslo.anthill.vacancy.scanner_pool.conveyor_aware_scanner_pool:
+        class: Veslo\AnthillBundle\Vacancy\ScannerPool\ConveyorAwareScannerPool
+        arguments:
+            - '@veslo.anthill.vacancy.scanner_pool.unique_scanner_pool'
+
+    veslo.anthill.vacancy.scanner_pool.unique_scanner_pool:
+        class: Veslo\AnthillBundle\Vacancy\ScannerPool\UniqueScannerPool

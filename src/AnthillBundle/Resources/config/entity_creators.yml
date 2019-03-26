@@ -1,0 +1,19 @@
+services:
+    veslo.anthill.vacancy.creator:
+        class: Veslo\AnthillBundle\Vacancy\Creator
+        arguments:
+            - '@veslo.anthill.company.creator'
+            - '@veslo.anthill.vacancy.category.creator'
+            - '@veslo.anthill.vacancy_repository'
+            - '@veslo.anthill.company_repository'
+            - '@veslo.anthill.vacancy.category_repository'
+
+    veslo.anthill.company.creator:
+        class: Veslo\AnthillBundle\Company\Creator
+        arguments:
+            - '@veslo.anthill.company_repository'
+
+    veslo.anthill.vacancy.category.creator:
+        class: Veslo\AnthillBundle\Vacancy\Category\Creator
+        arguments:
+            - '@veslo.anthill.vacancy.category_repository'
