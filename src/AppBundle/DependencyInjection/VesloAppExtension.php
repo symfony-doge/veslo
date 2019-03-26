@@ -54,6 +54,7 @@ class VesloAppExtension extends Extension
 
         $configFiles = [
             'twig_extensions.yml',
+            'html.yml',
             'workflow.yml',
             'menu.yml',
             'proxy.yml',

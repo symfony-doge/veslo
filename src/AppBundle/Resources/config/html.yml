@@ -1,0 +1,3 @@
+services:
+    veslo.app.html.tag.attribute_remover:
+        class: Veslo\AppBundle\Html\Tag\AttributeRemover

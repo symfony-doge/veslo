@@ -11,5 +11,7 @@ services:
 
     app.twig.extension.strip_attributes:
         class: Veslo\AppBundle\Twig\Extension\StripAttributesExtension
+        arguments:
+            - '@veslo.app.html.tag.attribute_remover'
         tags:
             - 'twig.extension'
