@@ -15,10 +15,11 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Templating\EngineInterface;
 use Veslo\AnthillBundle\Entity\Vacancy;
+use Veslo\AnthillBundle\Enum\Route;
 use Veslo\AnthillBundle\Vacancy\Provider\Journal;
 
 /**
@@ -59,16 +60,15 @@ class VacancyController
      *
      * @return Response
      */
-    public function listAction(int $page): Response
+    public function list(int $page): Response
     {
         $pagination = $this->vacancyJournal->read($page);
-        $pagination->setUsedRoute('anthill_vacancy_list');
 
         $content = $this->templateEngine->render(
             '@VesloAnthill/Vacancy/list.html.twig',
             [
                 'pagination'         => $pagination,
-                'route_vacancy_show' => 'anthill_vacancy_show',
+                'route_vacancy_show' => Route::VACANCY_SHOW,
             ]
         );
 
@@ -80,18 +80,14 @@ class VacancyController
     /**
      * Renders a vacancy show page
      *
-     * @param string $slug SEO-friendly vacancy identifier
+     * @param Vacancy $vacancy Vacancy entity
      *
      * @return Response
+     *
+     * @ParamConverter(name="vacancy", converter="doctrine.orm", options={"mapping"={"vacancySlug": "slug"}})
      */
-    public function showAction(string $slug): Response
+    public function show(Vacancy $vacancy): Response
     {
-        $vacancy = $this->vacancyJournal->find($slug);
-
-        if (!$vacancy instanceof Vacancy) {
-            throw new NotFoundHttpException();
-        }
-
         $content  = $this->templateEngine->render('@VesloAnthill/Vacancy/show.html.twig', ['vacancy' => $vacancy]);
         $response = new Response($content);
 

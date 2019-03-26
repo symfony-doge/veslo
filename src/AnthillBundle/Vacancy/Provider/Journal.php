@@ -19,6 +19,7 @@ use Knp\Component\Pager\Pagination\AbstractPagination;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Veslo\AnthillBundle\Entity\Repository\VacancyRepository;
 use Veslo\AnthillBundle\Entity\Vacancy;
+use Veslo\AnthillBundle\Enum\Route;
 use Veslo\AppBundle\Dto\Paginator\CriteriaDto;
 
 /**
@@ -73,19 +74,8 @@ class Journal
         $paginationCriteria->setLimit($this->options['per_page']);
 
         $pagination = $this->vacancyRepository->getPagination($paginationCriteria);
+        $pagination->setUsedRoute(Route::VACANCY_LIST);
 
         return $pagination;
-    }
-
-    /**
-     * Returns vacancy by specified SEO-friendly identifier
-     *
-     * @param string $slug SEO-friendly vacancy identifier
-     *
-     * @return Vacancy|null
-     */
-    public function find(string $slug): ?Vacancy
-    {
-        return $this->vacancyRepository->findBySlug($slug);
     }
 }
