@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Changes pending
+### Changed
 
 - Upgrade to stable MoT client version
 - Inject a real MoT client instead of "Dummy"
@@ -27,7 +27,7 @@ between website and external microservice that performs vacancy contextual analy
 - Fixtures for vacancy, company and category entities via [nelmio/alice](https://github.com/nelmio/alice).
 - A basic acceptance test for vacancy view history.
 
-### Changes
+### Changed
 
 - Backdating update for sanity entities migration due to missed
 `SanityBundle\Entity\Vacancy\Tag::$title` column.
