@@ -39,27 +39,27 @@ echo 'Building docker-compose services...'
 docker-compose build --force-rm
 
 echo 'Updating composer dependencies...'
-# app -d memory_limit=-1
-docker-compose run app composer install --no-interaction
+# app -d memory_limit=-1 /usr/local/bin/composer
+docker-compose run --rm app composer install --no-interaction
 
 echo 'Updating yarn dependencies...'
-docker-compose run --no-deps app yarn install --non-interactive
-docker-compose run --no-deps app yarn run build:dev
+docker-compose run --rm --no-deps app yarn install --non-interactive
+docker-compose run --rm --no-deps app yarn run build:dev
 
 echo 'Clearing up cache...'
-docker-compose run app ./bin/console doctrine:cache:clear-metadata --env=dev
-docker-compose run app ./bin/console doctrine:cache:clear-result --env=dev
-docker-compose run app ./bin/console doctrine:cache:clear-query --env=dev
-docker-compose run app ./bin/console cache:clear --env=dev --no-warmup
+docker-compose run --rm app ./bin/console doctrine:cache:clear-metadata --env=dev
+docker-compose run --rm app ./bin/console doctrine:cache:clear-result --env=dev
+docker-compose run --rm app ./bin/console doctrine:cache:clear-query --env=dev
+docker-compose run --rm app ./bin/console cache:clear --env=dev --no-warmup
 
 echo 'Warming up cache...'
-docker-compose run app ./bin/console cache:warmup --env=dev
+docker-compose run --rm app ./bin/console cache:warmup --env=dev
 
 echo 'Applying migrations...'
-docker-compose run app ./bin/console doctrine:migrations:migrate --env=dev --no-interaction --allow-no-migration
+docker-compose run --rm app ./bin/console doctrine:migrations:migrate --env=dev --no-interaction --allow-no-migration
 
 echo 'Updating build version...'
-rm -f VERSION && docker-compose run --no-deps app bin/console app:version:bump --build=`date +"%Y%m%d%H%M%S"`
+rm -f VERSION && docker-compose run --rm --no-deps app bin/console app:version:bump --build=`date +"%Y%m%d%H%M%S"`
 
 echo 'Starting docker-compose services...'
 docker-compose up -d
@@ -69,5 +69,5 @@ docker rm `docker ps -qa --no-trunc --filter "status=exited"`
 docker rmi `docker images -f "dangling=true" -q`
 
 docker-compose exec php-fpm php $DEPLOYMENT_PATH/bin/symfony_requirements
-docker-compose run --no-deps app ./bin/console security:check
+docker-compose run --rm --no-deps app ./bin/console security:check
 docker-compose exec php-fpm php $DEPLOYMENT_PATH/bin/console about
