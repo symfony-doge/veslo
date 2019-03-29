@@ -62,8 +62,6 @@ class NotADuplicate implements DecisionInterface
      * {@inheritdoc}
      *
      * @var ParsedDto $context Context of vacancy data at 'parsed' place in workflow
-     *
-     * @throws InvalidArgumentException
      */
     public function isApplied(object $context): bool
     {

@@ -23,7 +23,7 @@ use Veslo\AppBundle\Http\Proxy\LocatorInterface;
 /**
  * Uses URI string to fetch a proxy list from external source
  *
- * Note: you should manage to use a client that doesn't depend on this locator
+ * Note: you should manage to use an algorithm that doesn't depend on this locator itself
  * to avoid a cycling references while resolving a proxy list.
  */
 class UriLocator implements LocatorInterface
