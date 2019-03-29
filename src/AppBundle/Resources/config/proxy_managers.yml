@@ -1,0 +1,6 @@
+services:
+    veslo.app.http.proxy.manager.alfred:
+        class: Veslo\AppBundle\Http\Proxy\Manager\Alfred
+        lazy: true
+        arguments:
+            - '@veslo.app.http.proxy.locator'

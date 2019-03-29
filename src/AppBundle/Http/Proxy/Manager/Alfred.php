@@ -16,26 +16,26 @@ declare(strict_types=1);
 namespace Veslo\AppBundle\Http\Proxy\Manager;
 
 use Veslo\AppBundle\Exception\Http\ProxyNotFoundException;
-use Veslo\AppBundle\Http\Proxy\Locator\StaticArrayLocator;
+use Veslo\AppBundle\Http\Proxy\LocatorInterface;
 
 /**
- * Provides proxy for http requests
+ * Provides a proxy for http requests
  */
 class Alfred
 {
     /**
-     * Uses a simple array node from configuration file to provide proxy list
+     * Provides a list with available proxies for http requests
      *
-     * @var StaticArrayLocator
+     * @var LocatorInterface
      */
     private $proxyLocator;
 
     /**
      * Alfred constructor.
      *
-     * @param StaticArrayLocator $proxyLocator Uses a simple array node from configuration file to provide proxy list
+     * @param LocatorInterface $proxyLocator Uses a simple array node from configuration file to provide proxy list
      */
-    public function __construct(StaticArrayLocator $proxyLocator)
+    public function __construct(LocatorInterface $proxyLocator)
     {
         $this->proxyLocator = $proxyLocator;
     }
@@ -44,6 +44,8 @@ class Alfred
      * Returns proxy for http requests
      *
      * @return string
+     *
+     * @throws ProxyNotFoundException
      */
     public function getProxy(): string
     {

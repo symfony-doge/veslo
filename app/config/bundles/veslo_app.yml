@@ -6,6 +6,13 @@ veslo_app:
                 user_agent: '%app.http_client.headers.user_agent%'
             proxy:
                 enabled: '%app.http_client.proxy.enabled%'
+                # Configuration for locating a proxy list at runtime
+                dynamic:
+                    # URI of proxy list from external source for dynamic rotation
+                    fetch_uri: '%app.http_client.proxy.dynamic.fetch_uri%'
+                    # Format in which proxy list are stored
+                    format: '%app.http_client.proxy.dynamic.format%'
+                # Is used by a default proxy locator (fallback) if no others is present
                 static_list: '%app.http_client.proxy.static_list%'
     amqp_client:
         host: '%app.amqp_client.host%'

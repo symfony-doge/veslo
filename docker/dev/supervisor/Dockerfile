@@ -54,6 +54,8 @@ COPY supervisord.conf /etc/supervisor/supervisord.conf
 COPY anthill /etc/supervisor/conf.d/anthill
 COPY sanity /etc/supervisor/conf.d/sanity
 
+COPY php.ini /usr/local/etc/php/conf.d/php.ini
+
 RUN usermod -u ${HOST_UID} www-data
 
 USER www-data

@@ -21,7 +21,7 @@ use Throwable;
 use Veslo\AnthillBundle\Exception\AnthillBundleExceptionInterface;
 
 /**
- * Will be thrown if strategy for scanner is not found
+ * Will be thrown if data for scanning is not found or empty
  */
 class InputDataEmptyException extends RuntimeException implements AnthillBundleExceptionInterface
 {

@@ -22,6 +22,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * AppBundle dependency injection extension.
+ *
+ * TODO: "blueprint" directory and custom loading instead of constants.
  */
 class VesloAppExtension extends Extension
 {
@@ -31,18 +33,27 @@ class VesloAppExtension extends Extension
      * @const string
      */
     private const SERVICE_ALIAS_HTTP_CLIENT = 'veslo.app.http.client.base';
+
     /**
-     * Service id for silent http client
+     * Service alias for a proxy locator
      *
      * @const string
      */
-    private const SERVICE_ID_HTTP_CLIENT_SILENT = 'veslo.app.http.client.silent';
+    private const SERVICE_ALIAS_PROXY_LOCATOR = 'veslo.app.http.proxy.locator';
+
     /**
      * Service id for verbose http client
      *
      * @const string
      */
     private const SERVICE_ID_HTTP_CLIENT_VERBOSE = 'veslo.app.http.client.verbose';
+
+    /**
+     * Service id for proxy locator responsible for URI fetching
+     *
+     * @const string
+     */
+    private const SERVICE_ID_PROXY_URI_LOCATOR = 'veslo.app.http.proxy.locator.uri_locator';
 
     /**
      * {@inheritdoc}
@@ -57,7 +68,8 @@ class VesloAppExtension extends Extension
             'html.yml',
             'workflow.yml',
             'menu.yml',
-            'proxy.yml',
+            'proxy_locators.yml',
+            'proxy_managers.yml',
             'clients.yml',
             'services.yml',
         ];
@@ -98,11 +110,9 @@ class VesloAppExtension extends Extension
     {
         $isVerboseHttpClient = filter_var($config['logging'], FILTER_VALIDATE_BOOLEAN);
 
-        $httpClientServiceId = $isVerboseHttpClient
-            ? self::SERVICE_ID_HTTP_CLIENT_VERBOSE
-            : self::SERVICE_ID_HTTP_CLIENT_SILENT;
-
-        $container->setAlias(self::SERVICE_ALIAS_HTTP_CLIENT, $httpClientServiceId);
+        if ($isVerboseHttpClient) {
+            $container->setAlias(self::SERVICE_ALIAS_HTTP_CLIENT, self::SERVICE_ID_HTTP_CLIENT_VERBOSE);
+        }
 
         $httpClientConfig = [
             'headers' => [
@@ -118,8 +128,19 @@ class VesloAppExtension extends Extension
                 'enabled' => $config['proxy']['enabled'],
             ],
         ];
-
         $container->setParameter('veslo.app.http.client.stability_options', $httpClientStabilityOptions);
+
+        $proxyLocatorUriOptions = [
+            'uri'    => $config['proxy']['dynamic']['fetch_uri'],
+            'format' => $config['proxy']['dynamic']['format'],
+        ];
+        $container->setParameter('veslo.app.http.client.proxy.locator.uri_locator.options', $proxyLocatorUriOptions);
+
+        if (!empty($proxyLocatorUriOptions['uri'])) {
+            // TODO: Make a chain locator with static array as fallback.
+            $container->setAlias(self::SERVICE_ALIAS_PROXY_LOCATOR, self::SERVICE_ID_PROXY_URI_LOCATOR);
+        }
+
         $container->setParameter('veslo.app.http.client.proxy.static_list', $config['proxy']['static_list']);
     }
 }

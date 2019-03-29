@@ -31,6 +31,8 @@ parameters:
     # Http client
     app.http_client.logging: '%kernel.debug%'
     app.http_client.proxy.enabled: false
+    app.http_client.proxy.dynamic.fetch_uri: false
+    app.http_client.proxy.dynamic.format: ~
     app.http_client.proxy.static_list: []
     app.http_client.headers.user_agent: 'Veslo/0.x-dev (https://github.com/symfony-doge/veslo)'
 

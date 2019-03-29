@@ -67,7 +67,6 @@ class MultistrategicScanner implements ScannerInterface
      * {@inheritdoc}
      *
      * @throws StrategyNotChosenException
-     * @throws InputDataEmptyException
      */
     public function scan(string $vacancyUrl): RawDto
     {

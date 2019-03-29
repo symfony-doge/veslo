@@ -15,10 +15,12 @@ declare(strict_types=1);
 
 namespace Veslo\AppBundle\Http\Proxy\Locator;
 
+use Veslo\AppBundle\Http\Proxy\LocatorInterface;
+
 /**
  * Uses a simple array node from parameters file to provide proxy list
  */
-class StaticArrayLocator
+class StaticArrayLocator implements LocatorInterface
 {
     /**
      * Array of available proxies for requests, IP:PORT
@@ -38,9 +40,7 @@ class StaticArrayLocator
     }
 
     /**
-     * Returns array of available proxies for requests, IP:PORT
-     *
-     * @return string[]
+     * {@inheritdoc}
      */
     public function locate(): array
     {

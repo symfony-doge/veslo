@@ -59,7 +59,7 @@ class DistributionFailedException extends RuntimeException implements AppBundleE
      */
     public static function withQueueName(string $queueName): DistributionFailedException
     {
-        $message = str_replace(['{queueName}'], $queueName, self::MESSAGE_WITH_QUEUE);
+        $message = str_replace('{queueName}', $queueName, self::MESSAGE_WITH_QUEUE);
 
         return new static($message);
     }

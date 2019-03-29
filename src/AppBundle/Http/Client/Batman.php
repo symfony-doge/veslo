@@ -73,6 +73,8 @@ class Batman implements ClientInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws HttpRuntimeException
      */
     public function send(RequestInterface $request, array $options = [])
     {
@@ -81,6 +83,8 @@ class Batman implements ClientInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws HttpRuntimeException
      */
     public function sendAsync(RequestInterface $request, array $options = [])
     {
@@ -104,6 +108,8 @@ class Batman implements ClientInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws HttpRuntimeException
      */
     public function requestAsync($method, $uri, array $options = [])
     {

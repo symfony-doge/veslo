@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Veslo\AnthillBundle\Vacancy;
 
 use Veslo\AnthillBundle\Dto\Vacancy\RawDto;
+use Veslo\AnthillBundle\Exception\Vacancy\Scanner\InputDataEmptyException;
 
 /**
  * Should be implemented by service that holds context and parsing plan for specific website
@@ -35,6 +36,8 @@ interface ScannerInterface
      * @param string $vacancyUrl Source URL for fetching and lexical analysis
      *
      * @return RawDto
+     *
+     * @throws InputDataEmptyException
      */
     public function scan(string $vacancyUrl): RawDto;
 }

@@ -85,24 +85,59 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                ->arrayNode('proxy')
-                    ->canBeEnabled()
+                ->append($this->getHttpClientProxyNode())
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    /**
+     * Returns a proxy node for http client configuration tree
+     *
+     * @return ArrayNodeDefinition
+     */
+    private function getHttpClientProxyNode(): ArrayNodeDefinition
+    {
+        $treeBuilder = new TreeBuilder();
+        $node        = $treeBuilder->root('proxy');
+
+        $node
+            ->canBeEnabled()
+            ->children()
+                ->arrayNode('dynamic')
                     ->children()
-                        ->arrayNode('static_list')
-                            ->scalarPrototype()->end()
+                        ->scalarNode('fetch_uri')
+                            ->info('URI of proxy list from an external source for rotation')
+                            ->example('https://proxy-provider.ltd/my_proxy_list')
+                            ->treatFalseLike('')
+                        ->end()
+                        ->scalarNode('format')
+                            ->info('Format in which proxy list are stored')
+                            ->example('json')
                         ->end()
                     ->end()
-                    ->beforeNormalization()
+                    ->validate()
                         ->ifTrue(function ($v) {
-                            if (!$v['enabled']) {
-                                return false;
-                            }
-
-                            return !is_array($v['static_list']) || empty($v['static_list']);
+                            return !empty($v['fetch_uri']) && empty($v['format']);
                         })
-                        ->thenInvalid('Proxy list must have at least one entry if proxy is enabled %s')
+                        ->thenInvalid('Resource format must also be configured if \'fetch_uri\' is present %s')
                     ->end()
                 ->end()
+                ->arrayNode('static_list')
+                    ->info('Is used by a default proxy locator (or fallback) if no others is present')
+                    ->scalarPrototype()->end()
+                ->end()
+            ->end()
+            ->beforeNormalization()
+                ->ifTrue(function ($v) {
+                    if (!$v['enabled']) {
+                        return false;
+                    }
+
+                    return !is_array($v['static_list']) || !count($v['static_list']);
+                })
+                ->thenInvalid('Static proxy list must have at least one entry if proxy is enabled %s')
             ->end()
         ;
 

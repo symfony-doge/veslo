@@ -1,6 +1,7 @@
 services:
-    # Global http client for application level, silent/verbose, based on debug option
-    # Alias: veslo.app.http.client.base
+    # Global http client for application level, can be silent/verbose, based on logging option (see DI extension)
+    veslo.app.http.client.base:
+        alias: 'veslo.app.http.client.silent'
 
     veslo.app.http.client.silent:
         class: GuzzleHttp\Client
