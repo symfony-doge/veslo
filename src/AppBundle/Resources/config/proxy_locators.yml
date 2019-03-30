@@ -4,6 +4,9 @@ services:
     veslo.app.http.proxy.locator:
         alias: 'veslo.app.http.proxy.locator.static_array_locator'
 
+    veslo.app.http.proxy.locator_chain:
+        class: Veslo\AppBundle\Http\Proxy\LocatorChain
+
     # 50
     # cache_locator
 
@@ -18,6 +21,5 @@ services:
     # -100
     veslo.app.http.proxy.locator.static_array_locator:
         class: Veslo\AppBundle\Http\Proxy\Locator\StaticArrayLocator
-        lazy: true
         arguments:
             - '%veslo.app.http.client.proxy.static_list%'

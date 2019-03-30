@@ -144,7 +144,7 @@ class AntWorker implements WorkerInterface
 
     /**
      * Returns positive if vacancy is successfully collected
-     * Builds and sends a payload to conveyor for further processing according configured workflow
+     * Builds and sends a payload to conveyor for further processing according to configured workflow
      *
      * @param PitInterface $pit Parsed vacancy data storage
      *

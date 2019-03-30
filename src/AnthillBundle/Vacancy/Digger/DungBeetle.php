@@ -139,7 +139,7 @@ class DungBeetle implements WorkerInterface, DiggerInterface
 
     /**
      * Returns positive if vacancy is successfully found by specified roadmap
-     * Builds and sends a payload to conveyor for further processing according configured workflow
+     * Builds and sends a payload to conveyor for further processing according to configured workflow
      *
      * @param ConveyorAwareRoadmap $roadmap Provides URL of vacancies
      *

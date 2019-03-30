@@ -154,6 +154,8 @@ class CrankyDungBeetle implements WorkerInterface, DiggerInterface
      *
      * @param ConveyorAwareRoadmap $roadmap Provides URL of vacancies
      *
+     * @return void
+     *
      * @throws InvalidArgumentException
      */
     private function pause(ConveyorAwareRoadmap $roadmap): void

@@ -20,7 +20,7 @@ use Veslo\AppBundle\Http\Proxy\LocatorInterface;
 /**
  * Uses a simple array node from parameters file to provide proxy list
  */
-class StaticArrayLocator implements LocatorInterface
+final class StaticArrayLocator implements LocatorInterface
 {
     /**
      * Array of available proxies for requests, IP:PORT

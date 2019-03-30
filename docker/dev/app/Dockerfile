@@ -64,6 +64,11 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer --version
 
+# ds
+# https://github.com/php-ds/ext-ds
+RUN pecl install ds && docker-php-ext-enable ds
+COPY docker-php-ext-ds.ini /usr/local/etc/php/conf.d/docker-php-ext-ds.ini
+
 # db
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
     docker-php-ext-install pdo_pgsql pgsql

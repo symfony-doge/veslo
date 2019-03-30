@@ -42,6 +42,7 @@
         "knplabs/knp-menu-bundle": "^2.2",
         "knplabs/knp-paginator-bundle": "^2.8",
         "nelmio/alice": "^3.5",
+        "php-ds/php-ds": "^1.2",
         "predis/predis": "^1.1",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.0",

@@ -46,6 +46,11 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
     printf '[PHP]\ndate.timezone = "%s"\n', ${TIMEZONE} > /usr/local/etc/php/conf.d/tzone.ini && \
     date
 
+# ds
+# https://github.com/php-ds/ext-ds
+RUN pecl install ds && docker-php-ext-enable ds
+COPY docker-php-ext-ds.ini /usr/local/etc/php/conf.d/docker-php-ext-ds.ini
+
 # db
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
     docker-php-ext-install pdo_pgsql pgsql
