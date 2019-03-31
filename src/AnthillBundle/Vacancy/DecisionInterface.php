@@ -38,7 +38,7 @@ interface DecisionInterface
      * Returns a human-friendly description of that actions were performed for ensuring decision application
      * Can contain one or multiple sentences, each one describes a single checked condition
      *
-     * @return string[]
+     * @return iterable|string[]
      */
-    public function getConditions(): array;
+    public function getConditions(): iterable;
 }

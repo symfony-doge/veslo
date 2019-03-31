@@ -67,11 +67,11 @@ class Synchronizer
      *
      * @param bool $isPersistAndFlush Whenever groups which are not exists in the local storage should be saved
      *
-     * @return GroupDto[]
+     * @return iterable|GroupDto[]
      */
-    public function synchronize(bool $isPersistAndFlush = true): array
+    public function synchronize(bool $isPersistAndFlush = true): iterable
     {
-        $groupsDataSynced = $this->groupProvider->getTagGroups();
+        $groupsDataSynced = $this->groupProvider->getTagGroups(); // iterable
 
         /** @var Group[] $existentGroups */
         $existentGroups = $this->groupRepository->findAll();
@@ -88,12 +88,12 @@ class Synchronizer
     /**
      * Calculates a diff set by specified synced groups data and existing ones
      *
-     * @param GroupDto[] $groupsDataSynced Groups from third-party provider
-     * @param Group[]    $existentGroups   Existing group entities in the local storage
+     * @param iterable|GroupDto[] $groupsDataSynced Groups from third-party provider
+     * @param Group[]             $existentGroups   Existing group entities in the local storage
      *
      * @return array
      */
-    private function calculateDiff(array $groupsDataSynced, array $existentGroups): array
+    private function calculateDiff(iterable $groupsDataSynced, array $existentGroups): array
     {
         $syncedMap = [];
         foreach ($groupsDataSynced as $groupDataSynced) {

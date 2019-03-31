@@ -12,6 +12,8 @@ veslo_app:
                     fetch_uri: '%app.http_client.proxy.dynamic.fetch_uri%'
                     # Format in which proxy list are stored
                     format: '%app.http_client.proxy.dynamic.format%'
+                    # Options that decoder have access to
+                    decoder_context: '%app.http_client.proxy.dynamic.decoder_context%'
                 # Is used by a default proxy locator (fallback) if no others is present
                 static_list: '%app.http_client.proxy.static_list%'
     amqp_client:

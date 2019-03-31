@@ -49,13 +49,11 @@ class Alfred
      */
     public function getProxy(): string
     {
-        $proxies = $this->getProxyList();
+        $numericProxyList = $this->resolveProxyList();
 
-        if (0 >= count($proxies)) {
+        if (0 >= count($numericProxyList)) {
             throw new ProxyNotFoundException();
         }
-
-        $numericProxyList = array_values($proxies);
 
         $randomIndex = mt_rand(0, count($numericProxyList) - 1);
         $proxy       = $numericProxyList[$randomIndex];
@@ -64,12 +62,19 @@ class Alfred
     }
 
     /**
-     * Returns list of all available proxies
+     * Returns numeric array with all available proxies
      *
      * @return string[]
      */
-    private function getProxyList(): array
+    private function resolveProxyList(): array
     {
-        return $this->proxyLocator->locate();
+        $proxyList        = $this->proxyLocator->locate(); // iterable
+        $numericProxyList = [];
+
+        foreach ($proxyList as $proxyUri) {
+            $numericProxyList[] = $proxyUri;
+        }
+
+        return $numericProxyList;
     }
 }

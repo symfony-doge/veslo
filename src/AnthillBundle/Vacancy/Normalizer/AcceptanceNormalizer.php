@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Veslo\AnthillBundle\Dto\Vacancy\Collector\AcceptanceDto;
 
 /**
- * Converts an vacancy acceptance context object into a set of arrays/scalars
+ * Converts vacancy acceptance context object into a set of arrays/scalars
  */
 class AcceptanceNormalizer implements NormalizerInterface
 {
@@ -50,8 +50,14 @@ class AcceptanceNormalizer implements NormalizerInterface
         $scanResult           = $object->getData();
         $scanResultNormalized = $this->normalizer->normalize($scanResult, $format, $context);
 
-        $conditions           = $object->getConditions();
-        $acceptanceNormalized = array_merge(['conditions' => $conditions], $scanResultNormalized);
+        $conditions           = $object->getConditions(); // iterable
+        $conditionsNormalized = [];
+
+        foreach ($conditions as $condition) {
+            $conditionsNormalized[] = $condition /** ->getDescription() */;
+        }
+
+        $acceptanceNormalized = array_merge(['conditions' => $conditionsNormalized], $scanResultNormalized);
 
         return $acceptanceNormalized;
     }

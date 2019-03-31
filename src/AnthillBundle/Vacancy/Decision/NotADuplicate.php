@@ -100,7 +100,7 @@ class NotADuplicate implements DecisionInterface
     /**
      * {@inheritdoc}
      */
-    public function getConditions(): array
+    public function getConditions(): iterable
     {
         return self::CONDITIONS;
     }

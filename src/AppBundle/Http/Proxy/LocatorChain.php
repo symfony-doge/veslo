@@ -16,11 +16,15 @@ declare(strict_types=1);
 namespace Veslo\AppBundle\Http\Proxy;
 
 use Ds\PriorityQueue;
+use Exception;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 /**
  * Aggregates proxy locators and polls each of them one by one until proxy list is returned
+ *
+ * Note: although it is technically possible to use LocatorChain instance as a part of other locator, this class
+ * is not directly designed to be nested one (so it is placed outside of locator's namespace and named unconventionally)
  */
 class LocatorChain implements LocatorInterface
 {
@@ -86,16 +90,13 @@ class LocatorChain implements LocatorInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @see PriorityQueue::getIterator()
      */
-    public function locate(): array
+    public function locate(): iterable
     {
         if (null !== $this->_proxyList) {
             return $this->_proxyList;
         }
 
-        /** @var LocatorInterface $proxyLocator */
         foreach ($this->proxyLocators as list($proxyLocator, $isImportant)) {
             $proxyList = $this->poll($proxyLocator, $isImportant);
 
@@ -114,21 +115,41 @@ class LocatorChain implements LocatorInterface
      * @param bool             $isImportant  Whenever a critical message should be raised if locator fails to locate a
      *                                       proxy list
      *
-     * @return array
+     * @return string[]
+     *
+     * @see PriorityQueue::getIterator()
      */
     private function poll(LocatorInterface $proxyLocator, bool $isImportant): array
     {
         $locatorClass = get_class($proxyLocator);
         $pollContext  = ['locatorClass' => $locatorClass, 'isImportant' => $isImportant];
 
-        $this->logger->debug("Polling locator for a proxy list.", $pollContext);
+        $this->logger->debug('Polling locator for a proxy list.', $pollContext);
 
-        $proxyList = $proxyLocator->locate();
+        $proxyList = [];
+
+        try {
+            $proxyList = $proxyLocator->locate();
+        } catch (Exception $e) {
+            $message          = $e->getMessage();
+            $pollContextError = array_merge(['message' => $message], $pollContext);
+
+            $this->logger->error(
+                'An error has been occurred while polling locator for a proxy list.',
+                $pollContextError
+            );
+        }
 
         $isProxyListEmpty = (0 >= count($proxyList));
+
         if ($isProxyListEmpty && $isImportant) {
-            $this->logger->critical("Proxy locator with 'isImportant' flag returns an empty proxy list.", $pollContext);
+            $this->logger->critical("Proxy locator with 'isImportant' flag didn't provide a proxy list.", $pollContext);
+
+            return [];
         }
+
+        $pollContextFound = array_merge(['proxies' => $proxyList], $pollContext);
+        $this->logger->info('Proxy list has been located.', $pollContextFound);
 
         return $proxyList;
     }

@@ -42,7 +42,7 @@ final class StaticArrayLocator implements LocatorInterface
     /**
      * {@inheritdoc}
      */
-    public function locate(): array
+    public function locate(): iterable
     {
         return $this->proxyList;
     }

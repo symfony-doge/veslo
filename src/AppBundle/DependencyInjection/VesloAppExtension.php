@@ -23,7 +23,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 /**
  * AppBundle dependency injection extension.
  *
- * TODO: "blueprint" directory and custom loading instead of constants.
+ * TODO: "blueprints" directory and custom loading instead of constants.
  */
 class VesloAppExtension extends Extension
 {
@@ -33,27 +33,24 @@ class VesloAppExtension extends Extension
      * @const string
      */
     private const SERVICE_ALIAS_HTTP_CLIENT = 'veslo.app.http.client.base';
-
     /**
      * Service alias for a proxy locator
      *
      * @const string
      */
     private const SERVICE_ALIAS_PROXY_LOCATOR = 'veslo.app.http.proxy.locator';
-
     /**
      * Service id for verbose http client
      *
      * @const string
      */
     private const SERVICE_ID_HTTP_CLIENT_VERBOSE = 'veslo.app.http.client.verbose';
-
     /**
-     * Service id for proxy locator responsible for URI fetching
+     * Service id of locator responsible for fetching proxy list if URI is used
      *
      * @const string
      */
-    private const SERVICE_ID_PROXY_URI_LOCATOR = 'veslo.app.http.proxy.locator.uri_locator';
+    private const SERVICE_ID_PROXY_CHAIN_LOCATOR = 'veslo.app.http.proxy.locator_chain';
 
     /**
      * {@inheritdoc}
@@ -65,6 +62,7 @@ class VesloAppExtension extends Extension
 
         $configFiles = [
             'twig_extensions.yml',
+            'decoders.yml',
             'html.yml',
             'workflow.yml',
             'menu.yml',
@@ -131,14 +129,14 @@ class VesloAppExtension extends Extension
         $container->setParameter('veslo.app.http.client.stability_options', $httpClientStabilityOptions);
 
         $proxyLocatorUriOptions = [
-            'uri'    => $config['proxy']['dynamic']['fetch_uri'],
-            'format' => $config['proxy']['dynamic']['format'],
+            'uri'             => $config['proxy']['dynamic']['fetch_uri'],
+            'format'          => $config['proxy']['dynamic']['format'],
+            'decoder_context' => $config['proxy']['dynamic']['decoder_context'],
         ];
         $container->setParameter('veslo.app.http.client.proxy.locator.uri_locator.options', $proxyLocatorUriOptions);
 
         if (!empty($proxyLocatorUriOptions['uri'])) {
-            // TODO: Make a chain locator with static array as fallback.
-            $container->setAlias(self::SERVICE_ALIAS_PROXY_LOCATOR, self::SERVICE_ID_PROXY_URI_LOCATOR);
+            $container->setAlias(self::SERVICE_ALIAS_PROXY_LOCATOR, self::SERVICE_ID_PROXY_CHAIN_LOCATOR);
         }
 
         $container->setParameter('veslo.app.http.client.proxy.static_list', $config['proxy']['static_list']);

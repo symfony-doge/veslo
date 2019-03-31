@@ -110,7 +110,7 @@ class MinistryOfTruth implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getTagGroups(): array
+    public function getTagGroups(): iterable
     {
         $cacheKey            = $this->options['cache']['namespace'] . __FUNCTION__;
         $groupDtoArrayCached = $this->cache->getItem($cacheKey);
@@ -122,6 +122,7 @@ class MinistryOfTruth implements ProviderInterface
         $tagGroups = $this->requestTagGroups();
 
         $groupDtoArray = $this->dataConverter->convertTagGroups($tagGroups);
+
         $groupDtoArrayCached->set($groupDtoArray);
         $this->cache->save($groupDtoArrayCached);
 

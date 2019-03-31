@@ -51,7 +51,7 @@ class SyncListener
     {
         $isPersistAndFlush = $event->isPersistAndFlush();
 
-        $diffSet = $this->groupSynchronizer->synchronize($isPersistAndFlush);
+        $diffSet = $this->groupSynchronizer->synchronize($isPersistAndFlush); // iterable
 
         foreach ($diffSet as $groupData) {
             $event->addTagGroup($groupData);

@@ -116,6 +116,10 @@ class Configuration implements ConfigurationInterface
                             ->info('Format in which proxy list are stored')
                             ->example('json')
                         ->end()
+                        ->arrayNode('decoder_context')
+                            ->info('Options that decoder have access to')
+                            ->scalarPrototype()->end()
+                        ->end()
                     ->end()
                     ->validate()
                         ->ifTrue(function ($v) {

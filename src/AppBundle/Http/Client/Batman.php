@@ -98,6 +98,7 @@ class Batman implements ClientInterface
     {
         if ($this->options['proxy']['enabled']) {
             $options = array_replace_recursive($options, $this->getProxyOptions());
+
             // TODO: log appended stability options at debug level.
         }
 

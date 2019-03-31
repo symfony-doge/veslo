@@ -21,9 +21,20 @@ namespace Veslo\AppBundle\Http\Proxy;
 interface LocatorInterface
 {
     /**
-     * Returns array of available proxies for requests, IP:PORT
+     * Service tag for aggregation, e.g. in locator chain
      *
-     * @return string[]
+     * Flags:
+     *     priority (int) - locator's priority, e.g. position in queue while polling by a decorator
+     *     isImportant (bool) - whenever a critical message should be raised if locator fails to locate a proxy list
+     *
+     * @const string
      */
-    public function locate(): array;
+    public const TAG = 'veslo.app.http.proxy.locator';
+
+    /**
+     * Returns iterable data structure with all available proxies for requests, IP:PORT
+     *
+     * @return iterable|string[]
+     */
+    public function locate(): iterable;
 }

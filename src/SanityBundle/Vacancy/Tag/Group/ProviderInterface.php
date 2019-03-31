@@ -23,9 +23,9 @@ use Veslo\SanityBundle\Dto\Vacancy\Tag\GroupDto;
 interface ProviderInterface
 {
     /**
-     * Returns sanity tag groups used by vacancy analysers
+     * Returns an iterable set of sanity tag groups for vacancy analysers
      *
-     * @return GroupDto[]
+     * @return iterable|GroupDto[]
      */
-    public function getTagGroups(): array;
+    public function getTagGroups(): iterable;
 }

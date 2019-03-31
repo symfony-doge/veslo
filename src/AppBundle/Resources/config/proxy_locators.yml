@@ -1,25 +1,33 @@
 services:
     # Provides a proxy list from predefined array
-    # TODO: or dynamically by fetching URI, with predefined array as a fallback (see DI extension)
+    # or dynamically by fetching URI, with predefined array as a fallback (see DI extension)
     veslo.app.http.proxy.locator:
         alias: 'veslo.app.http.proxy.locator.static_array_locator'
 
     veslo.app.http.proxy.locator_chain:
         class: Veslo\AppBundle\Http\Proxy\LocatorChain
+        arguments:
+            - '@logger'
 
     # 50
-    # cache_locator
+    # TODO: cache_locator
 
-    # 25
     veslo.app.http.proxy.locator.uri_locator:
         class: Veslo\AppBundle\Http\Proxy\Locator\UriLocator
         lazy: true
         arguments:
+            - '@logger'
             - '@serializer'
             - '%veslo.app.http.client.proxy.locator.uri_locator.options%'
+        tags:
+            -   name: !php/const Veslo\AppBundle\Http\Proxy\LocatorInterface::TAG
+                priority: -25
+                isImportant: true
 
-    # -100
     veslo.app.http.proxy.locator.static_array_locator:
         class: Veslo\AppBundle\Http\Proxy\Locator\StaticArrayLocator
         arguments:
             - '%veslo.app.http.client.proxy.static_list%'
+        tags:
+            -   name: !php/const Veslo\AppBundle\Http\Proxy\LocatorInterface::TAG
+                priority: -100

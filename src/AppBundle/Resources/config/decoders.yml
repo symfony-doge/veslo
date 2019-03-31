@@ -1,0 +1,5 @@
+services:
+    veslo.app.decoder.txt_decoder:
+        class: Veslo\AppBundle\Decoder\TxtDecoder
+        tags:
+            - 'serializer.encoder'

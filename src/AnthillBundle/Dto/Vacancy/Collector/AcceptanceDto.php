@@ -30,9 +30,9 @@ class AcceptanceDto
     private $vacancyId;
 
     /**
-     * Conditions which has been checked to ensure vacancy data should be collected and analysed
+     * Iterable set of conditions which has been checked to ensure vacancy data should be collected and analysed
      *
-     * @var string[]
+     * @var iterable|string[]
      */
     private $conditions;
 
@@ -74,23 +74,23 @@ class AcceptanceDto
     }
 
     /**
-     * Returns conditions which has been checked to ensure vacancy data should be collected
+     * Returns iterable set of conditions which has been checked to ensure vacancy data should be collected
      *
-     * @return string[]
+     * @return iterable|string[]
      */
-    public function getConditions(): array
+    public function getConditions(): iterable
     {
         return $this->conditions;
     }
 
     /**
-     * Sets conditions which has been checked to ensure vacancy data should be collected
+     * Sets iterable set of conditions which has been checked to ensure vacancy data should be collected
      *
-     * @param string[] $conditions Conditions which has been checked to ensure vacancy data should be collected
+     * @param iterable|string[] $conditions Conditions which has been checked to ensure vacancy data should be collected
      *
      * @return void
      */
-    public function setConditions(array $conditions): void
+    public function setConditions(iterable $conditions): void
     {
         $this->conditions = $conditions;
     }

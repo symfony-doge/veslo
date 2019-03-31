@@ -15,6 +15,8 @@ declare(strict_types=1);
 
 namespace Veslo\AppBundle\Http\Proxy\Locator;
 
+use Exception;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Veslo\AppBundle\Exception\Http\Proxy\Locator\BadProxyListUriException;
@@ -29,6 +31,13 @@ use Veslo\AppBundle\Http\Proxy\LocatorInterface;
 class UriLocator implements LocatorInterface
 {
     /**
+     * Logger as it is
+     *
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * Decodes a string into PHP data
      *
      * @var DecoderInterface
@@ -42,7 +51,8 @@ class UriLocator implements LocatorInterface
      * ```
      * [
      *     'uri' => 'https://proxy-provider.ltd/my_proxy_list',
-     *     'format' => 'json'
+     *     'format' => 'json',
+     *     'decoder_context' => []
      * ]
      * ```
      *
@@ -53,11 +63,13 @@ class UriLocator implements LocatorInterface
     /**
      * UriLocator constructor.
      *
+     * @param LoggerInterface  $logger          Logger as it is
      * @param DecoderInterface $contentsDecoder Decodes a string into PHP data
      * @param array            $options         Options for URI proxy locator
      */
-    public function __construct(DecoderInterface $contentsDecoder, array $options)
+    public function __construct(LoggerInterface $logger, DecoderInterface $contentsDecoder, array $options)
     {
+        $this->logger          = $logger;
         $this->contentsDecoder = $contentsDecoder;
 
         $optionsResolver = new OptionsResolver();
@@ -71,17 +83,35 @@ class UriLocator implements LocatorInterface
      *
      * @throws BadProxyListUriException
      */
-    public function locate(): array
+    public function locate(): iterable
     {
         $proxyListUri = $this->options['uri'];
-        $uriContents  = file_get_contents($proxyListUri);
+        $uriContents  = false;
+
+        try {
+            $uriContents = file_get_contents($proxyListUri);
+        } catch (Exception $e) {
+            $message = $e->getMessage();
+
+            $this->logger->error(
+                'An error has been occurred while getting contents by URI.',
+                [
+                    'message' => $message,
+                    'uri'     => $proxyListUri,
+                ]
+            );
+        }
 
         if (false === $uriContents) {
-            // TODO: move @throws to a interface signature, make this extended.
             throw BadProxyListUriException::withProxyListUri($proxyListUri);
         }
 
-        $proxyList = $this->contentsDecoder->decode($uriContents, $this->options['format']);
+        $uriContentsFormat = $this->options['format'];
+        $decoderContext    = $this->options['decoder_context'];
+        $proxyList         = $this->contentsDecoder->decode($uriContents, $uriContentsFormat, $decoderContext);
+
+        // TODO: would be safer to use a converter here which will explicitly convert decoded data to an array.
+        // Such thing will depend on data provider and their APIs, for now this logic is pretty enough.
 
         return $proxyList;
     }
@@ -95,9 +125,16 @@ class UriLocator implements LocatorInterface
      */
     protected function configureOptions(OptionsResolver $optionsResolver): void
     {
-        $optionsResolver->setDefaults(['uri' => null, 'format' => null]);
+        $optionsResolver->setDefaults(
+            [
+                'uri'             => null,
+                'format'          => null,
+                'decoder_context' => [],
+            ]
+        );
 
         $optionsResolver->setAllowedTypes('uri', ['string']);
+        $optionsResolver->setAllowedTypes('decoder_context', ['array']);
         $optionsResolver->setRequired(['uri', 'format']);
     }
 }

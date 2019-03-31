@@ -15,11 +15,22 @@ declare(strict_types=1);
 
 namespace Veslo\AppBundle;
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Veslo\AppBundle\DependencyInjection\Compiler\ProxyLocatorPass;
 
 /**
  * App bundle.
  */
 class VesloAppBundle extends Bundle
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $container->addCompilerPass(new ProxyLocatorPass());
+    }
 }

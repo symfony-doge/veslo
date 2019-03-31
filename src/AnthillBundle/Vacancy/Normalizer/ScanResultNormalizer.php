@@ -18,7 +18,7 @@ namespace Veslo\AnthillBundle\Vacancy\Normalizer;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
- * Converts an vacancy scan result object into a set of arrays/scalars with long text truncation
+ * Converts vacancy scan result object into a set of arrays/scalars with long text truncation
  */
 class ScanResultNormalizer implements NormalizerInterface
 {
