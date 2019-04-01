@@ -1,0 +1,7 @@
+# For sharing a single cache instance between different services at application level.
+services:
+    veslo.app.http.proxy.cacher:
+        class: Veslo\AppBundle\Cache\Cacher
+        arguments:
+            - '@cache.app'
+            - '%veslo.app.http.client.proxy.cacher.options%'

@@ -33,18 +33,21 @@ class VesloAppExtension extends Extension
      * @const string
      */
     private const SERVICE_ALIAS_HTTP_CLIENT = 'veslo.app.http.client.base';
+
     /**
      * Service alias for a proxy locator
      *
      * @const string
      */
     private const SERVICE_ALIAS_PROXY_LOCATOR = 'veslo.app.http.proxy.locator';
+
     /**
      * Service id for verbose http client
      *
      * @const string
      */
     private const SERVICE_ID_HTTP_CLIENT_VERBOSE = 'veslo.app.http.client.verbose';
+
     /**
      * Service id of locator responsible for fetching proxy list if URI is used
      *
@@ -62,6 +65,7 @@ class VesloAppExtension extends Extension
 
         $configFiles = [
             'twig_extensions.yml',
+            'shared_cache.yml',
             'decoders.yml',
             'html.yml',
             'workflow.yml',
@@ -117,7 +121,6 @@ class VesloAppExtension extends Extension
                 'User-Agent' => $config['headers']['user_agent'],
             ],
         ];
-
         $container->setParameter('veslo.app.http.client.config', $httpClientConfig);
 
         // Http client stability options: proxy, fingerprint faking, etc.
@@ -128,10 +131,23 @@ class VesloAppExtension extends Extension
         ];
         $container->setParameter('veslo.app.http.client.stability_options', $httpClientStabilityOptions);
 
+        $this->configureHttpClientProxy($config['proxy'], $container);
+    }
+
+    /**
+     * Configures proxy settings for http clients
+     *
+     * @param array            $config    Http client proxy node configuration
+     * @param ContainerBuilder $container Container
+     *
+     * @return void
+     */
+    private function configureHttpClientProxy(array $config, ContainerBuilder $container): void
+    {
         $proxyLocatorUriOptions = [
-            'uri'             => $config['proxy']['dynamic']['fetch_uri'],
-            'format'          => $config['proxy']['dynamic']['format'],
-            'decoder_context' => $config['proxy']['dynamic']['decoder_context'],
+            'uri'             => $config['dynamic']['fetch_uri'],
+            'format'          => $config['dynamic']['format'],
+            'decoder_context' => $config['dynamic']['decoder_context'],
         ];
         $container->setParameter('veslo.app.http.client.proxy.locator.uri_locator.options', $proxyLocatorUriOptions);
 
@@ -139,6 +155,12 @@ class VesloAppExtension extends Extension
             $container->setAlias(self::SERVICE_ALIAS_PROXY_LOCATOR, self::SERVICE_ID_PROXY_CHAIN_LOCATOR);
         }
 
-        $container->setParameter('veslo.app.http.client.proxy.static_list', $config['proxy']['static_list']);
+        $container->setParameter('veslo.app.http.client.proxy.static_list', $config['static_list']);
+
+        $proxyCacherOptions = [
+            'key'      => $config['dynamic']['cache']['key'],
+            'lifetime' => $config['dynamic']['cache']['lifetime'],
+        ];
+        $container->setParameter('veslo.app.http.client.proxy.cacher.options', $proxyCacherOptions);
     }
 }

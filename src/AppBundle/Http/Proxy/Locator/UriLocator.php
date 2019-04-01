@@ -19,6 +19,7 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
+use Veslo\AppBundle\Cache\Cacher;
 use Veslo\AppBundle\Exception\Http\Proxy\Locator\BadProxyListUriException;
 use Veslo\AppBundle\Http\Proxy\LocatorInterface;
 
@@ -45,6 +46,13 @@ class UriLocator implements LocatorInterface
     private $contentsDecoder;
 
     /**
+     * Saves a proxy list in the cache and invalidates it by demand
+     *
+     * @var Cacher
+     */
+    private $proxyCacher;
+
+    /**
      * Options for URI proxy locator
      *
      * Example:
@@ -67,10 +75,14 @@ class UriLocator implements LocatorInterface
      * @param DecoderInterface $contentsDecoder Decodes a string into PHP data
      * @param array            $options         Options for URI proxy locator
      */
-    public function __construct(LoggerInterface $logger, DecoderInterface $contentsDecoder, array $options)
-    {
+    public function __construct(
+        LoggerInterface $logger,
+        DecoderInterface $contentsDecoder,
+        array $options
+    ) {
         $this->logger          = $logger;
         $this->contentsDecoder = $contentsDecoder;
+        $this->proxyCacher     = null;
 
         $optionsResolver = new OptionsResolver();
         $this->configureOptions($optionsResolver);
@@ -113,7 +125,23 @@ class UriLocator implements LocatorInterface
         // TODO: would be safer to use a converter here which will explicitly convert decoded data to an array.
         // Such thing will depend on data provider and their APIs, for now this logic is pretty enough.
 
+        if ($this->proxyCacher instanceof Cacher) {
+            $this->proxyCacher->save($proxyList);
+        }
+
         return $proxyList;
+    }
+
+    /**
+     * Sets a proxy list cacher
+     *
+     * @param Cacher $proxyCacher Saves a proxy list in the cache and invalidates it by demand
+     *
+     * @return void
+     */
+    public function setCacher(Cacher $proxyCacher): void
+    {
+        $this->proxyCacher = $proxyCacher;
     }
 
     /**

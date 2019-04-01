@@ -85,11 +85,13 @@ class LocatorChain implements LocatorInterface
             throw new RuntimeException('Unable to add a new locator after locate() execution.');
         }
 
-        $this->proxyLocators->push([$proxyLocator, $isImportant], $priority);
+        $this->proxyLocators->push([$proxyLocator, ['isImportant' => $isImportant]], $priority);
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @see PriorityQueue::getIterator()
      */
     public function locate(): iterable
     {
@@ -97,8 +99,8 @@ class LocatorChain implements LocatorInterface
             return $this->_proxyList;
         }
 
-        foreach ($this->proxyLocators as list($proxyLocator, $isImportant)) {
-            $proxyList = $this->poll($proxyLocator, $isImportant);
+        foreach ($this->proxyLocators as list($proxyLocator, $poolParameters)) {
+            $proxyList = $this->poll($proxyLocator, $poolParameters);
 
             if (0 < count($proxyList)) {
                 return $this->_proxyList = $proxyList;
@@ -112,16 +114,14 @@ class LocatorChain implements LocatorInterface
      * Polls locator for a proxy list
      *
      * @param LocatorInterface $proxyLocator Provides a list with proxies available for http requests
-     * @param bool             $isImportant  Whenever a critical message should be raised if locator fails to locate a
-     *                                       proxy list
+     * @param array            $parameters   Parameters for locator polling
      *
      * @return string[]
-     *
-     * @see PriorityQueue::getIterator()
      */
-    private function poll(LocatorInterface $proxyLocator, bool $isImportant): array
+    private function poll(LocatorInterface $proxyLocator, array $parameters): array
     {
         $locatorClass = get_class($proxyLocator);
+        $isImportant  = $parameters['isImportant'];
         $pollContext  = ['locatorClass' => $locatorClass, 'isImportant' => $isImportant];
 
         $this->logger->debug('Polling locator for a proxy list.', $pollContext);
@@ -140,17 +140,19 @@ class LocatorChain implements LocatorInterface
             );
         }
 
-        $isProxyListEmpty = (0 >= count($proxyList));
+        $isProxyListFound = (0 < count($proxyList));
 
-        if ($isProxyListEmpty && $isImportant) {
-            $this->logger->critical("Proxy locator with 'isImportant' flag didn't provide a proxy list.", $pollContext);
+        if ($isProxyListFound) {
+            $pollContextFound = array_merge(['proxies' => $proxyList], $pollContext);
+            $this->logger->debug('Proxy list has been located.', $pollContextFound);
 
-            return [];
+            return $proxyList;
         }
 
-        $pollContextFound = array_merge(['proxies' => $proxyList], $pollContext);
-        $this->logger->info('Proxy list has been located.', $pollContextFound);
+        if ($isImportant) {
+            $this->logger->critical("Proxy locator with 'isImportant' flag didn't provide a proxy list.", $pollContext);
+        }
 
-        return $proxyList;
+        return [];
     }
 }

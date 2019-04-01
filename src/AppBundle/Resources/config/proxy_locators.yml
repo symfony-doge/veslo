@@ -9,8 +9,13 @@ services:
         arguments:
             - '@logger'
 
-    # 50
-    # TODO: cache_locator
+    veslo.app.http.proxy.locator.cache_locator:
+        class: Veslo\AppBundle\Http\Proxy\Locator\CacheLocator
+        arguments:
+            - '@veslo.app.http.proxy.cacher'
+        tags:
+            -   name: !php/const Veslo\AppBundle\Http\Proxy\LocatorInterface::TAG
+                priority: 100
 
     veslo.app.http.proxy.locator.uri_locator:
         class: Veslo\AppBundle\Http\Proxy\Locator\UriLocator
@@ -19,6 +24,10 @@ services:
             - '@logger'
             - '@serializer'
             - '%veslo.app.http.client.proxy.locator.uri_locator.options%'
+        calls:
+            -   method: setCacher
+                arguments:
+                    - '@?veslo.app.http.proxy.cacher'
         tags:
             -   name: !php/const Veslo\AppBundle\Http\Proxy\LocatorInterface::TAG
                 priority: -25
