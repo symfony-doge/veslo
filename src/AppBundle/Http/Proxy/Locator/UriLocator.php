@@ -75,11 +75,8 @@ class UriLocator implements LocatorInterface
      * @param DecoderInterface $contentsDecoder Decodes a string into PHP data
      * @param array            $options         Options for URI proxy locator
      */
-    public function __construct(
-        LoggerInterface $logger,
-        DecoderInterface $contentsDecoder,
-        array $options
-    ) {
+    public function __construct(LoggerInterface $logger, DecoderInterface $contentsDecoder, array $options)
+    {
         $this->logger          = $logger;
         $this->contentsDecoder = $contentsDecoder;
         $this->proxyCacher     = null;

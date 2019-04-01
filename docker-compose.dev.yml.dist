@@ -178,15 +178,15 @@ services:
         privileged: true
 
 networks:
-    # Entrypoints: nginx
+    # Endpoints: nginx
     frontend:
         driver: bridge
         ipam:
             driver: default
             config:
-                - subnet: 172.100.0.0/16
-                  gateway: 172.100.0.1
-    # Entrypoints: app, supervisor (background tasks)
+                -    subnet: 172.100.0.0/16
+                     gateway: 172.100.0.1
+    # Endpoints: app, supervisor (background tasks)
     # docker-compose run --rm --no-deps app -d xdebug.remote_autostart=1 -d xdebug.remote_host=172.101.0.1 bin/console
     # Alias 'host-machine' can be used for xdebug.remote_host parameter instead of IP (see 'services.app.extra_hosts')
     # xdebug.remote_autostart=1 will be enough for starting a debug session (see docker-php-ext-xdebug.ini for app)
@@ -195,8 +195,8 @@ networks:
         ipam:
             driver: default
             config:
-                - subnet: 172.101.0.0/16
-                  gateway: 172.101.0.1
+                -    subnet: 172.101.0.0/16
+                     gateway: 172.101.0.1
 
 volumes:
     db_data:

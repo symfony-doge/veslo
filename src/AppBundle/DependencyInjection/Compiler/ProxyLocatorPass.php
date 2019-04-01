@@ -15,7 +15,9 @@ declare(strict_types=1);
 
 namespace Veslo\AppBundle\DependencyInjection\Compiler;
 
+use Ds\PriorityQueue;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\Compiler\PriorityTaggedServiceTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Veslo\AppBundle\Http\Proxy\LocatorChain;
@@ -24,6 +26,11 @@ use Veslo\AppBundle\Http\Proxy\LocatorInterface;
 /**
  * Aggregates available locators into locator chain for proxy list resolving
  *
+ * There are at least two handy ways of managing a service priority while processing tags:
+ * `PriorityTaggedServiceTrait` and `Ds\PriorityQueue`
+ *
+ * @see PriorityTaggedServiceTrait
+ * @see PriorityQueue
  * @see LocatorChain
  */
 class ProxyLocatorPass implements CompilerPassInterface
