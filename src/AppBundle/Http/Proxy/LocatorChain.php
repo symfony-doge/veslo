@@ -99,8 +99,8 @@ class LocatorChain implements LocatorInterface
             return $this->_proxyList;
         }
 
-        foreach ($this->proxyLocators as list($proxyLocator, $poolParameters)) {
-            $proxyList = $this->poll($proxyLocator, $poolParameters);
+        foreach ($this->proxyLocators as list($proxyLocator, $pollParameters)) {
+            $proxyList = $this->poll($proxyLocator, $pollParameters);
 
             if (0 < count($proxyList)) {
                 return $this->_proxyList = $proxyList;
