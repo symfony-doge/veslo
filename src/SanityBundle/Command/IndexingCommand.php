@@ -95,10 +95,9 @@ class IndexingCommand extends Command
         $successfulIterations = $this->indexer->deliver($this->source, $iterations);
 
         $messageComplete = str_replace(
-            ['{iterations}', '{successful}', '{memory}', '{memoryPeak}'],
-            [$iterations, $successfulIterations, memory_get_usage(), memory_get_peak_usage()],
+            ['{iterations}', '{successful}'],
+            [$iterations, $successfulIterations],
             'Indexing complete ({iterations} iterations, {successful} successful).'
-            . ' Memory usage: {memory}/{memoryPeak}'
         );
         $output->writeln($messageComplete);
     }

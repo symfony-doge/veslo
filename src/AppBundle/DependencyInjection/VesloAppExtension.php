@@ -65,6 +65,7 @@ class VesloAppExtension extends Extension
 
         $configFiles = [
             'twig_extensions.yml',
+            'monolog.yml',
             'shared_cache.yml',
             'decoders.yml',
             'html.yml',
@@ -97,6 +98,11 @@ class VesloAppExtension extends Extension
         $container->setParameter(
             'veslo.app.workflow.vacancy_research.transitions.queue_prefix',
             $config['workflow']['vacancy_research']['transitions']['queue_prefix']
+        );
+
+        $container->setParameter(
+            'veslo.app.monolog.formatter.line_formatter.format',
+            $config['monolog']['formatter']['line']['format']
         );
     }
 

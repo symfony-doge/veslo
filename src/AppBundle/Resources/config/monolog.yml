@@ -1,0 +1,33 @@
+services:
+    veslo.app.monolog.formatter.line_formatter:
+        class: Monolog\Formatter\LineFormatter
+        arguments:
+            - '%veslo.app.monolog.formatter.line_formatter.format%'
+
+    # extra.url, extra.ip, extra.http_method, extra.server, extra.referrer
+    veslo.app.monolog.processor.web_processor:
+        class: Symfony\Bridge\Monolog\Processor\WebProcessor
+        tags:
+            # Filling up the processor with serverData provided by Symfony (in web context only)
+            -   name: 'kernel.event_listener'
+                event: !php/const Symfony\Component\HttpKernel\KernelEvents::REQUEST
+            -   name: 'monolog.processor'
+                handler: 'main'
+
+    # extra.memory_peak_usage
+    veslo.app.monolog.processor.memory_peak_usage_processor:
+        class: Monolog\Processor\MemoryPeakUsageProcessor
+        tags:
+            - 'monolog.processor'
+
+    # extra.memory_usage
+    veslo.app.monolog.processor.memory_usage_processor:
+        class: Monolog\Processor\MemoryUsageProcessor
+        tags:
+            - 'monolog.processor'
+
+    # extra.uid, the unique log record identifier
+    veslo.app.monolog.processor.uid_processor:
+        class: Monolog\Processor\UidProcessor
+        tags:
+            - 'monolog.processor'

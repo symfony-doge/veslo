@@ -106,11 +106,11 @@ class DiggingCommand extends Command
 
         $successfulIterations = $this->digger->dig($roadmap, $iterations);
 
+        $roadmapName     = $roadmap->getName();
         $messageComplete = str_replace(
-            ['{roadmapName}', '{iterations}', '{successful}', '{memory}', '{memoryPeak}'],
-            [$roadmap->getName(), $iterations, $successfulIterations, memory_get_usage(), memory_get_peak_usage()],
+            ['{roadmapName}', '{iterations}', '{successful}'],
+            [$roadmapName, $iterations, $successfulIterations],
             'Digging complete for roadmap: {roadmapName} ({iterations} iterations, {successful} successful).'
-            . ' Memory usage: {memory}/{memoryPeak}'
         );
         $output->writeln($messageComplete);
     }

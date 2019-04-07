@@ -26,6 +26,7 @@ monolog:
                 - '!anthill.parsing'
                 - '!anthill.collecting'
                 - '!sanity.indexing'
+            formatter: 'veslo.app.monolog.formatter.line_formatter'
         app.http:
             type: rotating_file
             path: '%kernel.logs_dir%/%kernel.environment%.app.http.log'
@@ -33,6 +34,7 @@ monolog:
             level: debug
             channels:
                 - 'app.http'
+            formatter: 'veslo.app.monolog.formatter.line_formatter'
         app.workflow:
             type: rotating_file
             path: '%kernel.logs_dir%/%kernel.environment%.app.workflow.log'
@@ -40,6 +42,7 @@ monolog:
             level: debug
             channels:
                 - 'app.workflow'
+            formatter: 'veslo.app.monolog.formatter.line_formatter'
         anthill.digging:
             type: rotating_file
             path: '%kernel.logs_dir%/%kernel.environment%.anthill.digging.log'
@@ -47,6 +50,7 @@ monolog:
             level: debug
             channels:
                 - 'anthill.digging'
+            formatter: 'veslo.app.monolog.formatter.line_formatter'
         anthill.parsing:
             type: rotating_file
             path: '%kernel.logs_dir%/%kernel.environment%.anthill.parsing.log'
@@ -54,6 +58,7 @@ monolog:
             level: debug
             channels:
                 - 'anthill.parsing'
+            formatter: 'veslo.app.monolog.formatter.line_formatter'
         anthill.collecting:
             type: rotating_file
             path: '%kernel.logs_dir%/%kernel.environment%.anthill.collecting.log'
@@ -61,6 +66,7 @@ monolog:
             level: debug
             channels:
                 - 'anthill.collecting'
+            formatter: 'veslo.app.monolog.formatter.line_formatter'
         sanity.indexing:
             type: rotating_file
             path: '%kernel.logs_dir%/%kernel.environment%.sanity.indexing.log'
@@ -68,6 +74,7 @@ monolog:
             level: debug
             channels:
                 - 'sanity.indexing'
+            formatter: 'veslo.app.monolog.formatter.line_formatter'
         console:
             type: console
             process_psr_3_messages: false
