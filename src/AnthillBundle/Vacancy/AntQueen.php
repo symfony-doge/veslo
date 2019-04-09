@@ -57,7 +57,7 @@ class AntQueen
     }
 
     /**
-     * Returns all available roadmaps for vacancy searching
+     * Returns all available roadmaps for vacancy search
      *
      * @return RoadmapInterface[]
      */

@@ -21,7 +21,7 @@ use Veslo\AnthillBundle\Vacancy\Roadmap\Configuration\ParametersInterface;
 use Veslo\AnthillBundle\Vacancy\Roadmap\Strategy\HeadHunter\Api\Version20190213 as HeadHunterApiStrategy;
 
 /**
- * Parameters for vacancy searching on HeadHunter website
+ * Parameters for vacancy search on HeadHunter website
  *
  * @ORM\Table(name="anthill_vacancy_roadmap_headhunter")
  * @ORM\Entity(repositoryClass="Veslo\AnthillBundle\Entity\Repository\Vacancy\Roadmap\Configuration\Parameters\HeadHunterRepository")

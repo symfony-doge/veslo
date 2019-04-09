@@ -4,4 +4,4 @@ services:
         class: Veslo\AppBundle\Cache\Cacher
         arguments:
             - '@cache.app'
-            - '%veslo.app.http.client.proxy.cacher.options%'
+            - '%veslo.app.http.proxy.cacher.options%'

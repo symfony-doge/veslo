@@ -126,7 +126,7 @@ class Conveyor
      */
     public function receive(string $dtoClass): ?object
     {
-        // TODO: if (!in_array($dtoName, $this->dtoNames))
+        // TODO: if (!in_array($dtoName, $this->dtoNames, true))
 
         $dto = new $dtoClass;
 

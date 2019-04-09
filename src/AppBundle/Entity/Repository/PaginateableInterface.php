@@ -20,7 +20,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Veslo\AppBundle\Dto\Paginator\CriteriaDto;
 
 /**
- * Should be implemented by repository that supports pagination
+ * Should be implemented by repository that supports data reading by small bunches
  */
 interface PaginateableInterface
 {
@@ -35,6 +35,7 @@ interface PaginateableInterface
 
     /**
      * Returns pagination meta-object with entity array selected by modified query
+     * This method encapsulates all database-specific operations needed for setting up a pagination context
      *
      * @param CriteriaDto $criteria Pagination criteria
      *

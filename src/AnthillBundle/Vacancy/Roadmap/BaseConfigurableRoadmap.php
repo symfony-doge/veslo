@@ -22,20 +22,20 @@ use Veslo\AnthillBundle\Vacancy\ConfigurableRoadmapInterface;
  *
  * Note: this is just a recommendation how roadmap can be organized, RoadmapInterface can be implemented directly.
  * In most cases for new job website you need to configure a similar service with customized strategy and configuration.
- * Searching algorithm with website-specific code is encapsulated by StrategyInterface
- * Configuration storage, format and parameters for searching algorithm is encapsulated by ConfigurationInterface
+ * Search algorithm with website-specific code is encapsulated by StrategyInterface
+ * Configuration storage, format and parameters for search algorithm is encapsulated by ConfigurationInterface
  */
 class BaseConfigurableRoadmap implements ConfigurableRoadmapInterface
 {
     /**
-     * Vacancy searching algorithm with website-specific code
+     * Vacancy search algorithm with website-specific code
      *
      * @var StrategyInterface
      */
     private $_strategy;
 
     /**
-     * Configuration storage, format and parameters for searching algorithm
+     * Configuration storage, format and parameters for search algorithm
      *
      * @var ConfigurationInterface
      */
@@ -44,8 +44,8 @@ class BaseConfigurableRoadmap implements ConfigurableRoadmapInterface
     /**
      * BaseConfigurableRoadmap constructor.
      *
-     * @param StrategyInterface      $strategy      Vacancy searching algorithm with website-specific code
-     * @param ConfigurationInterface $configuration Configuration storage, format and parameters for searching algorithm
+     * @param StrategyInterface      $strategy      Vacancy search algorithm with website-specific code
+     * @param ConfigurationInterface $configuration Configuration storage, format and parameters for search algorithm
      */
     public function __construct(StrategyInterface $strategy, ConfigurationInterface $configuration)
     {

@@ -18,7 +18,7 @@ namespace Veslo\AnthillBundle\Dto\Vacancy\Roadmap;
 use Veslo\AnthillBundle\Vacancy\Normalizer\Roadmap\ConfigurationDtoDenormalizer;
 
 /**
- * Context of configuration for searching algorithm used by roadmap
+ * Context of configuration for search algorithm used by roadmap
  *
  * @see ConfigurationDtoDenormalizer
  */

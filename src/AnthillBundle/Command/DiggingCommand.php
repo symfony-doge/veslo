@@ -81,7 +81,7 @@ class DiggingCommand extends Command
             ->addArgument(
                 'configuration',
                 InputArgument::OPTIONAL,
-                'Key of configuration record for roadmap, determines vacancy searching criteria'
+                'Key of configuration record for roadmap, determines vacancy search criteria'
             )
             ->addOption(
                 'iterations',

@@ -22,7 +22,7 @@ use Veslo\AnthillBundle\Vacancy\Roadmap\Configuration\ParametersInterface;
  * Encapsulates HOW roadmap parameters are stored
  * PROVIDES that parameters to strategy service for analysis and editing
  *
- * Parameters represent CONTEXT of website and criteria for vacancy searching
+ * Parameters represent CONTEXT of website and criteria for vacancy search
  * ex. URL of website, vacancy identifier or category, publication date, etc.
  */
 interface ConfigurationInterface

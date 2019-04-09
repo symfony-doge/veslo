@@ -37,6 +37,17 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('http')
                     ->children()
                         ->append($this->getHttpClientNode())
+                        ->append($this->getHttpProxyNode())
+                    ->end()
+                    ->validate()
+                        ->ifTrue(function ($v) {
+                            if (empty($v['client']['proxy']['enabled'])) {
+                                return false;
+                            }
+
+                            return !is_array($v['proxy']['static_list']) || !count($v['proxy']['static_list']);
+                        })
+                        ->thenInvalid('\'http.proxy.static_list\' must have at least one entry if proxy is enabled for the client')
                     ->end()
                 ->end()
                 ->append($this->getAmqpClientNode())
@@ -79,7 +90,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Returns a global http client node
+     * Returns a global HTTP client node
      *
      * @return ArrayNodeDefinition
      */
@@ -101,7 +112,10 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                ->append($this->getHttpClientProxyNode())
+                ->arrayNode('proxy')
+                    ->info('Proxy options for the HTTP client')
+                    ->canBeEnabled()
+                ->end()
             ->end()
         ;
 
@@ -109,17 +123,16 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Returns a proxy node for http client configuration tree
+     * Returns a proxy node for HTTP configuration tree
      *
      * @return ArrayNodeDefinition
      */
-    private function getHttpClientProxyNode(): ArrayNodeDefinition
+    private function getHttpProxyNode(): ArrayNodeDefinition
     {
         $treeBuilder = new TreeBuilder();
         $node        = $treeBuilder->root('proxy');
 
         $node
-            ->canBeEnabled()
             ->children()
                 ->arrayNode('dynamic')
                     ->children()
@@ -157,16 +170,6 @@ class Configuration implements ConfigurationInterface
                     ->info('Is used by a default proxy locator (or fallback) if no others is present')
                     ->scalarPrototype()->end()
                 ->end()
-            ->end()
-            ->beforeNormalization()
-                ->ifTrue(function ($v) {
-                    if (!$v['enabled']) {
-                        return false;
-                    }
-
-                    return !is_array($v['static_list']) || !count($v['static_list']);
-                })
-                ->thenInvalid('Static proxy list must have at least one entry if proxy is enabled %s')
             ->end()
         ;
 

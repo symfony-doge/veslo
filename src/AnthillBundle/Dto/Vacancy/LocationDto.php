@@ -22,7 +22,7 @@ class LocationDto
 {
     /**
      * Vacancy URL for parsing
-     * Response format depends on searching strategy
+     * Response format depends on search strategy
      *
      * @var string
      */

@@ -42,21 +42,21 @@ class ConfigurableRoadmapDto extends RoadmapDto
     public const PROPERTY_CONFIGURATION = 'configuration';
 
     /**
-     * Context of searching algorithm
+     * Context of search algorithm
      *
      * @var StrategyDto
      */
     private $strategy;
 
     /**
-     * Context of configuration for searching algorithm used by roadmap
+     * Context of configuration for a search algorithm used by roadmap
      *
      * @var ConfigurationDto
      */
     private $configuration;
 
     /**
-     * Sets context of searching algorithm
+     * Sets context of search algorithm
      *
      * @param StrategyDto $strategy
      *
@@ -68,7 +68,7 @@ class ConfigurableRoadmapDto extends RoadmapDto
     }
 
     /**
-     * Returns context of searching algorithm
+     * Returns context of search algorithm
      *
      * @return StrategyDto|null
      */
@@ -78,7 +78,7 @@ class ConfigurableRoadmapDto extends RoadmapDto
     }
 
     /**
-     * Sets context of configuration for searching algorithm
+     * Sets context of configuration for search algorithm
      *
      * @param ConfigurationDto $configuration
      *
@@ -90,7 +90,7 @@ class ConfigurableRoadmapDto extends RoadmapDto
     }
 
     /**
-     * Returns context of configuration for searching algorithm
+     * Returns context of configuration for search algorithm
      *
      * @return ConfigurationDto|null
      */

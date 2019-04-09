@@ -18,7 +18,7 @@ namespace Veslo\AnthillBundle\Dto\Vacancy\Roadmap;
 use Veslo\AnthillBundle\Vacancy\Normalizer\Roadmap\StrategyDtoDenormalizer;
 
 /**
- * Context of searching algorithm used by roadmap
+ * Context of search algorithm used by roadmap
  *
  * @see StrategyDtoDenormalizer
  */
@@ -32,16 +32,16 @@ class StrategyDto
     public const PROPERTY_NAME = 'name';
 
     /**
-     * Searching algorithm name
+     * Search algorithm name
      *
      * @var string
      */
     private $name;
 
     /**
-     * Sets name for searching algorithm used by roadmap
+     * Sets name for search algorithm used by roadmap
      *
-     * @param string $name Searching algorithm name
+     * @param string $name Search algorithm name
      *
      * @return void
      */
@@ -51,7 +51,7 @@ class StrategyDto
     }
 
     /**
-     * Returns name of searching algorithm used by roadmap
+     * Returns name of search algorithm used by roadmap
      *
      * @return string|null
      */

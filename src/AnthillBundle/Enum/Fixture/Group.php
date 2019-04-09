@@ -21,7 +21,7 @@ namespace Veslo\AnthillBundle\Enum\Fixture;
 final class Group
 {
     /**
-     * Group name for roadmap configuration parameters used by vacancy searching algorithms
+     * Group name for roadmap configuration parameters used by vacancy search algorithms
      *
      * @const string
      */

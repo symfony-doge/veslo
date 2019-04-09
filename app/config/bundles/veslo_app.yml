@@ -4,24 +4,24 @@ veslo_app:
             logging: '%app.http_client.logging%'
             headers:
                 user_agent: '%app.http_client.headers.user_agent%'
-            proxy:
-                enabled: '%app.http_client.proxy.enabled%'
-                # Configuration for locating a proxy list at runtime
-                dynamic:
-                    # URI of proxy list from external source for dynamic rotation
-                    fetch_uri: '%app.http_client.proxy.dynamic.fetch_uri%'
-                    # Format in which proxy list are stored
-                    format: '%app.http_client.proxy.dynamic.format%'
-                    # Options that decoder have access to
-                    decoder_context: '%app.http_client.proxy.dynamic.decoder_context%'
-                    # Cache options for proxy list received by URI
-                    cache:
-                        key: 'veslo.app.http.proxy.cacher.proxy_list'
-                        # Time for which proxy list from an external source is considered to be valid
-                        # Note that it can be forcibly invalidated in some cases (e.g. after connection error event)
-                        lifetime: 14400
-                # Is used by a default proxy locator (fallback) if no others is present
-                static_list: '%app.http_client.proxy.static_list%'
+            proxy: '%app.http_client.proxy.enabled%'
+        proxy:
+            # Configuration for locating a proxy list at runtime
+            dynamic:
+                # URI of proxy list from external source for dynamic rotation
+                fetch_uri: '%app.http_client.proxy.dynamic.fetch_uri%'
+                # Format in which proxy list are stored
+                format: '%app.http_client.proxy.dynamic.format%'
+                # Options that decoder have access to
+                decoder_context: '%app.http_client.proxy.dynamic.decoder_context%'
+                # Cache options for proxy list received by URI
+                cache:
+                    key: 'veslo.app.http.proxy.cacher.proxy_list'
+                    # Time for which proxy list from an external source is considered to be valid
+                    # Note that it can be forcibly invalidated in some cases (e.g. after connection error event)
+                    lifetime: 14400
+            # Is used by a default proxy locator (fallback) if no others is present
+            static_list: '%app.http_client.proxy.static_list%'
     amqp_client:
         host: '%app.amqp_client.host%'
         vhost: '%app.amqp_client.vhost%'

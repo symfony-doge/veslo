@@ -23,12 +23,12 @@ use Veslo\AnthillBundle\Exception\Vacancy\Roadmap\ConfigurationNotFoundException
 use Veslo\AppBundle\Entity\Repository\BaseEntityRepository;
 
 /**
- * Repository for HeadHunter vacancy searching parameters
+ * Repository for HeadHunter vacancy search parameters
  */
 class HeadHunterRepository extends BaseEntityRepository
 {
     /**
-     * Returns vacancy searching parameters for HeadHunter website by roadmap configuration key
+     * Returns vacancy search parameters for HeadHunter website by roadmap configuration key
      *
      * @param string $configurationKey Roadmap configuration key
      *

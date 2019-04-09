@@ -23,7 +23,7 @@ use Veslo\AnthillBundle\Exception\Vacancy\Roadmap\ConfigurationNotFoundException
 use Veslo\AnthillBundle\Vacancy\Roadmap\ConfigurationInterface;
 
 /**
- * Represents configuration of vacancy searching algorithms for HeadHunter
+ * Represents configuration of vacancy search algorithms for HeadHunter
  */
 class HeadHunter implements ConfigurationInterface
 {
@@ -42,14 +42,14 @@ class HeadHunter implements ConfigurationInterface
     private $logger;
 
     /**
-     * Repository for HeadHunter searching parameters
+     * Repository for HeadHunter search parameters
      *
      * @var HeadHunterParametersRepository
      */
     private $parametersRepository;
 
     /**
-     * Parameters for vacancy searching on HeadHunter website
+     * Parameters for vacancy search on HeadHunter website
      *
      * @var HeadHunterParameters
      */
@@ -60,7 +60,7 @@ class HeadHunter implements ConfigurationInterface
      *
      * @param NormalizerInterface            $normalizer           Converts an object into a set of arrays/scalars
      * @param LoggerInterface                $logger               Logger as it is
-     * @param HeadHunterParametersRepository $parametersRepository Repository for HeadHunter searching parameters
+     * @param HeadHunterParametersRepository $parametersRepository Repository for HeadHunter search parameters
      */
     public function __construct(
         NormalizerInterface $normalizer,

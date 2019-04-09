@@ -26,7 +26,7 @@ use Veslo\AppBundle\Http\Proxy\LocatorInterface;
 /**
  * Aggregates available locators into locator chain for proxy list resolving
  *
- * There are at least two handy ways of managing a service priority while processing tags:
+ * There are at least two handy ways of managing service priority while processing tags:
  * `PriorityTaggedServiceTrait` and `Ds\PriorityQueue`
  *
  * @see PriorityTaggedServiceTrait

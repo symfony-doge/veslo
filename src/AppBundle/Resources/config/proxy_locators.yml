@@ -23,7 +23,7 @@ services:
         arguments:
             - '@logger'
             - '@serializer'
-            - '%veslo.app.http.client.proxy.locator.uri_locator.options%'
+            - '%veslo.app.http.proxy.locator.uri_locator.options%'
         calls:
             -   method: setCacher
                 arguments:
@@ -36,7 +36,7 @@ services:
     veslo.app.http.proxy.locator.static_array_locator:
         class: Veslo\AppBundle\Http\Proxy\Locator\StaticArrayLocator
         arguments:
-            - '%veslo.app.http.client.proxy.static_list%'
+            - '%veslo.app.http.proxy.static_list%'
         tags:
             -   name: !php/const Veslo\AppBundle\Http\Proxy\LocatorInterface::TAG
                 priority: -100

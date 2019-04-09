@@ -18,7 +18,7 @@ namespace Veslo\AnthillBundle\Vacancy;
 use Veslo\AnthillBundle\Enum\Vacancy\Roadmap;
 
 /**
- * Should be implemented by service that holds context and vacancy searching plan for specific website
+ * Should be implemented by service that holds context and vacancy search plan for specific website
  *
  * @see Roadmap
  */

@@ -111,7 +111,7 @@ class VacancyRepository extends BaseEntityRepository implements PaginateableInte
     /**
      * {@inheritdoc}
      *
-     * Prevents exposition of database layer details to other domains
+     * Prevents exposition of database layer details to other application layers
      * All doctrine-related things (ex. criteria building) remains encapsulated
      */
     public function getPagination(PaginationCriteria $criteria): AbstractPagination
@@ -124,7 +124,7 @@ class VacancyRepository extends BaseEntityRepository implements PaginateableInte
             // inner join for company is required. due to fixtures loading logic there are some cases
             // when a deletion date can be set in company and not present in related vacancies at the same time.
             // it leads to inconsistent state in test environment;
-            // normally (prod), a soft delete logic should be properly applied for all relations.
+            // normally (prod), a soft delete logic should be properly applied for all relations at once.
             ->leftJoin('e.categories', 'ct')
             ->orderBy('e.id', Criteria::DESC)
         ;

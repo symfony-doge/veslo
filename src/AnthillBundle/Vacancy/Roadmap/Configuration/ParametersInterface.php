@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace Veslo\AnthillBundle\Vacancy\Roadmap\Configuration;
 
 /**
- * Represents searching criteria parameters for roadmap configuration
+ * Represents search criteria parameters for roadmap configuration
  */
 interface ParametersInterface
 {

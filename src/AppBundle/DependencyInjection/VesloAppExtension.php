@@ -85,6 +85,7 @@ class VesloAppExtension extends Extension
         $config        = $this->processConfiguration($configuration, $configs);
 
         $this->configureHttpClient($config['http']['client'], $container);
+        $this->configureHttpProxy($config['http']['proxy'], $container);
 
         $amqpClientOptions = [
             'host'      => $config['amqp_client']['host'],
@@ -136,37 +137,35 @@ class VesloAppExtension extends Extension
             ],
         ];
         $container->setParameter('veslo.app.http.client.stability_options', $httpClientStabilityOptions);
-
-        $this->configureHttpClientProxy($config['proxy'], $container);
     }
 
     /**
      * Configures proxy settings for http clients
      *
-     * @param array            $config    Http client proxy node configuration
+     * @param array            $config    Http proxy node configuration
      * @param ContainerBuilder $container Container
      *
      * @return void
      */
-    private function configureHttpClientProxy(array $config, ContainerBuilder $container): void
+    private function configureHttpProxy(array $config, ContainerBuilder $container): void
     {
         $proxyLocatorUriOptions = [
             'uri'             => $config['dynamic']['fetch_uri'],
             'format'          => $config['dynamic']['format'],
             'decoder_context' => $config['dynamic']['decoder_context'],
         ];
-        $container->setParameter('veslo.app.http.client.proxy.locator.uri_locator.options', $proxyLocatorUriOptions);
+        $container->setParameter('veslo.app.http.proxy.locator.uri_locator.options', $proxyLocatorUriOptions);
 
         if (!empty($proxyLocatorUriOptions['uri'])) {
             $container->setAlias(self::SERVICE_ALIAS_PROXY_LOCATOR, self::SERVICE_ID_PROXY_CHAIN_LOCATOR);
         }
 
-        $container->setParameter('veslo.app.http.client.proxy.static_list', $config['static_list']);
+        $container->setParameter('veslo.app.http.proxy.static_list', $config['static_list']);
 
         $proxyCacherOptions = [
             'key'      => $config['dynamic']['cache']['key'],
             'lifetime' => $config['dynamic']['cache']['lifetime'],
         ];
-        $container->setParameter('veslo.app.http.client.proxy.cacher.options', $proxyCacherOptions);
+        $container->setParameter('veslo.app.http.proxy.cacher.options', $proxyCacherOptions);
     }
 }

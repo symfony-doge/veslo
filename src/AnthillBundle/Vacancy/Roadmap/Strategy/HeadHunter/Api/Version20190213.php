@@ -157,9 +157,9 @@ class Version20190213 implements StrategyInterface
     }
 
     /**
-     * Sets searching publication date range to current day if it is not valid
+     * Sets search publication date range to current day if it is not valid
      *
-     * @param ConfigurationInterface $configuration Roadmap configuration with parameters for searching algorithm
+     * @param ConfigurationInterface $configuration Roadmap configuration with parameters for search algorithm
      *
      * @return void
      *
@@ -186,7 +186,7 @@ class Version20190213 implements StrategyInterface
     /**
      * Returns count of vacancies which are available on website at current time and satisfies search criteria
      *
-     * @param HeadHunterParameters $parameters Parameters for vacancy searching on HeadHunter website
+     * @param HeadHunterParameters $parameters Parameters for vacancy search on HeadHunter website
      *
      * @return int
      */
@@ -204,7 +204,7 @@ class Version20190213 implements StrategyInterface
      * If $found changes it means some vacancy has been added or deleted during lookup
      * and we should try again to ensure consistency with real page content
      *
-     * @param ConfigurationInterface $configuration Roadmap configuration with parameters for searching algorithm
+     * @param ConfigurationInterface $configuration Roadmap configuration with parameters for search algorithm
      * @param int                    $page          Page number
      * @param int                    $found         Last fetched value of total vacancies available
      *
@@ -245,10 +245,10 @@ class Version20190213 implements StrategyInterface
     }
 
     /**
-     * Return vacancy data by specified searching criteria
+     * Return vacancy data by specified search criteria
      * Response will be decoded from json to PHP array
      *
-     * @param HeadHunterParameters $parameters Parameters for vacancy searching on HeadHunter website
+     * @param HeadHunterParameters $parameters Parameters for vacancy search on HeadHunter website
      * @param int                  $page       Page number
      *
      * @return array
@@ -339,7 +339,7 @@ class Version20190213 implements StrategyInterface
      * Returns page for next lookup
      * Encapsulates ascending order managing logic
      *
-     * @param ConfigurationInterface $configuration Roadmap configuration with parameters for searching algorithm
+     * @param ConfigurationInterface $configuration Roadmap configuration with parameters for search algorithm
      * @param int                    $found         Freshly total count of vacancies for specified search criteria
      *
      * @return int|null Page number in 0..N range or null if no new vacancies
@@ -361,7 +361,7 @@ class Version20190213 implements StrategyInterface
      * Returns received vacancies count synchronized with actual total count on website by search criteria
      * Also guarantees that page number cannot fall to less than 0 during page determination
      *
-     * @param ConfigurationInterface $configuration Roadmap configuration with parameters for searching algorithm
+     * @param ConfigurationInterface $configuration Roadmap configuration with parameters for search algorithm
      * @param int                    $found         Vacancies total count for specified search criteria
      *
      * @return int

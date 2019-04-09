@@ -44,7 +44,7 @@ class Creator
     /**
      * Creates and returns a new category entity according to specified roadmap configuration
      *
-     * @param ConfigurationDto $configuration  Context of configuration for searching algorithm used by roadmap
+     * @param ConfigurationDto $configuration  Context of configuration for search algorithm used by roadmap
      * @param bool             $isCascadeChild Whenever entity creation is a part of the entity-owner creation and
      *                                         entity manager should not be instantly flushed (for transaction purposes)
      *

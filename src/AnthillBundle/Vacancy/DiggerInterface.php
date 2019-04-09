@@ -18,7 +18,7 @@ namespace Veslo\AnthillBundle\Vacancy;
 use Veslo\AnthillBundle\Vacancy\Roadmap\ConveyorAwareRoadmap;
 
 /**
- * Should be implemented by service that performs vacancy searching by roadmaps
+ * Should be implemented by service that performs vacancy search by roadmaps
  */
 interface DiggerInterface
 {

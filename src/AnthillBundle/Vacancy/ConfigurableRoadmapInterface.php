@@ -20,7 +20,7 @@ use Veslo\AnthillBundle\Vacancy\Roadmap\StrategyInterface;
 
 /**
  * Should be implemented by roadmap service that can be configured with specific strategy and settings
- * Provides opportunity to customize vacancy searching algorithm, adds support for different searching criteria
+ * Provides opportunity to customize vacancy search algorithm, adds support for different search criteria
  *
  * Configurable roadmaps can retrieve data (based on configuration) for traversing job sites with preferable strategy
  * For example:
@@ -30,14 +30,14 @@ use Veslo\AnthillBundle\Vacancy\Roadmap\StrategyInterface;
 interface ConfigurableRoadmapInterface extends RoadmapInterface
 {
     /**
-     * Returns strategy service that holds website-specific vacancy searching algorithm
+     * Returns strategy service that holds website-specific vacancy search algorithm
      *
      * @return StrategyInterface
      */
     public function getStrategy(): StrategyInterface;
 
     /**
-     * Returns configuration which will be used by searching strategy
+     * Returns configuration which will be used by search strategy
      *
      * @return ConfigurationInterface
      */

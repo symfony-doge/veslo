@@ -43,7 +43,7 @@ trait LocaleOptionsTrait
         $optionsResolver->setDefault(
             'default_locale',
             function (Options $options, $previousValue) {
-                if (!is_array($options['locales']) || !in_array($previousValue, $options['locales'])) {
+                if (!is_array($options['locales']) || !in_array($previousValue, $options['locales'], true)) {
                     throw new InvalidOptionsException(
                         'Value of the "default_locale" option is not present in locales array'
                     );
