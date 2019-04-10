@@ -19,7 +19,7 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
-use Veslo\AppBundle\Cache\Cacher;
+use Veslo\AppBundle\Cache\CacherInterface;
 use Veslo\AppBundle\Exception\Http\Proxy\Locator\BadProxyListUriException;
 use Veslo\AppBundle\Http\Proxy\LocatorInterface;
 
@@ -48,7 +48,7 @@ class UriLocator implements LocatorInterface
     /**
      * Saves a proxy list in the cache and invalidates it by demand
      *
-     * @var Cacher
+     * @var CacherInterface
      */
     private $proxyCacher;
 
@@ -122,7 +122,7 @@ class UriLocator implements LocatorInterface
         // TODO: would be safer to use a converter here which will explicitly convert decoded data to an array.
         // Such thing will depend on data provider and their APIs, for now this logic is pretty enough.
 
-        if ($this->proxyCacher instanceof Cacher) {
+        if ($this->proxyCacher instanceof CacherInterface) {
             $this->proxyCacher->save($proxyList);
         }
 
@@ -132,11 +132,11 @@ class UriLocator implements LocatorInterface
     /**
      * Sets a proxy list cacher
      *
-     * @param Cacher $proxyCacher Saves a proxy list in the cache and invalidates it by demand
+     * @param CacherInterface $proxyCacher Saves a proxy list in the cache and invalidates it by demand
      *
      * @return void
      */
-    public function setCacher(Cacher $proxyCacher): void
+    public function setCacher(CacherInterface $proxyCacher): void
     {
         $this->proxyCacher = $proxyCacher;
     }

@@ -13,31 +13,21 @@
 
 declare(strict_types=1);
 
-namespace Veslo\AppBundle\Cache;
+namespace Veslo\AppBundle\Cache\Cacher;
 
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Veslo\AppBundle\Cache\CacherInterface;
 
 /**
- * Saves a value in the cache and invalidates it by demand
+ * Uses the PSR-6 interface to manage cache items
  *
- * Can be used if a group of services desire to share the same cache instance, namespace and keys scope, e.g.
- * service1 saves a cache item while service2 invalidates it by an event.
- *
- * It is not just an alternative to existent ProxyAdapter or something like that, but a bridge between Symfony-related
- * cache namespace and application service layer, because cache API in Symfony is varies due to different PSR
- * implementations (Simple/Advanced) and also moves to the separate Contracts namespace.
- *
- * So we can choose here which interface to use for our needs:
- * PSR-6 (https://github.com/symfony/symfony/tree/4.2/src/Symfony/Component/Cache/Adapter)
- * PSR-16 (https://github.com/symfony/symfony/tree/4.2/src/Symfony/Component/Cache/Simple)
- * or any custom adapter or a new one that implements symfony/contracts
+ * Note: it is designed mostly as DRY shortcut for sharing a single cache instance between multiple services.
+ * You should consider to use the AdapterInterface directly if no sync between multiple services is required
  *
  * @see PSR-6 https://github.com/php-fig/cache/blob/master/src/CacheItemPoolInterface.php
- * @see PSR-16 https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-16-simple-cache.md#21-cacheinterface
- * @see symfony/contracts https://github.com/symfony/contracts/tree/master/Cache
  */
-class Cacher
+class Psr6Cacher implements CacherInterface
 {
     /**
      * Cache instance for shared manipulation
@@ -70,11 +60,7 @@ class Cacher
     }
 
     /**
-     * Returns positive if value was successfully saved in the cache
-     *
-     * @param mixed $value Value to be cached
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function save($value): bool
     {
@@ -90,9 +76,7 @@ class Cacher
     }
 
     /**
-     * Returns cached value or null if it not exists or expired
-     *
-     * @return mixed|null
+     * {@inheritdoc}
      */
     public function get()
     {
@@ -103,9 +87,7 @@ class Cacher
     }
 
     /**
-     * Returns positive if cache was successfully invalidated
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function invalidate(): bool
     {

@@ -15,8 +15,7 @@ declare(strict_types=1);
 
 namespace Veslo\AppBundle\Http\Proxy\Locator;
 
-use Veslo\AppBundle\Cache\Cacher;
-use Veslo\AppBundle\Exception\Http\Proxy\Locator\BadProxyListUriException;
+use Veslo\AppBundle\Cache\CacherInterface;
 use Veslo\AppBundle\Http\Proxy\LocatorInterface;
 
 /**
@@ -27,24 +26,22 @@ class CacheLocator implements LocatorInterface
     /**
      * Saves a proxy list in the cache and invalidates it by demand
      *
-     * @var Cacher
+     * @var CacherInterface
      */
     private $proxyCacher;
 
     /**
      * CacheLocator constructor.
      *
-     * @param Cacher $proxyCacher Saves a proxy list in the cache and invalidates it by demand
+     * @param CacherInterface $proxyCacher Saves a proxy list in the cache and invalidates it by demand
      */
-    public function __construct(Cacher $proxyCacher)
+    public function __construct(CacherInterface $proxyCacher)
     {
         $this->proxyCacher = $proxyCacher;
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @throws BadProxyListUriException
      */
     public function locate(): iterable
     {

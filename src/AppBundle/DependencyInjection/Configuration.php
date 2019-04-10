@@ -151,6 +151,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->arrayNode('cache')
                             ->info('Cache options for proxy list received by URI')
+                            ->canBeEnabled()
                             ->children()
                                 ->scalarNode('key')->end()
                                 ->scalarNode('lifetime')

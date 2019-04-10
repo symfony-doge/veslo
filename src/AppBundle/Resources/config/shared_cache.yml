@@ -1,7 +1,7 @@
 # For sharing a single cache instance between different services at application level.
 services:
     veslo.app.http.proxy.cacher:
-        class: Veslo\AppBundle\Cache\Cacher
-        arguments:
-            - '@cache.app'
-            - '%veslo.app.http.proxy.cacher.options%'
+        alias: 'veslo.app.cache.cacher.null_cacher'
+
+    veslo.app.cache.cacher.null_cacher:
+        class: Veslo\AppBundle\Cache\Cacher\NullCacher

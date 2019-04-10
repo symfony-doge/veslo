@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Veslo\AppBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -27,6 +28,13 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class VesloAppExtension extends Extension
 {
+    /**
+     * Blueprint is a configuration file with services that can be injected optionally (e.g. by specific condition)
+     *
+     * @const string
+     */
+    private const BLUEPRINT_DERECTORY = 'blueprints';
+
     /**
      * Service alias for http client at application level
      *
@@ -85,7 +93,7 @@ class VesloAppExtension extends Extension
         $config        = $this->processConfiguration($configuration, $configs);
 
         $this->configureHttpClient($config['http']['client'], $container);
-        $this->configureHttpProxy($config['http']['proxy'], $container);
+        $this->configureHttpProxy($config['http']['proxy'], $container, $loader);
 
         $amqpClientOptions = [
             'host'      => $config['amqp_client']['host'],
@@ -144,10 +152,11 @@ class VesloAppExtension extends Extension
      *
      * @param array            $config    Http proxy node configuration
      * @param ContainerBuilder $container Container
+     * @param LoaderInterface  $loader    Loads a configuration file with services
      *
      * @return void
      */
-    private function configureHttpProxy(array $config, ContainerBuilder $container): void
+    private function configureHttpProxy(array $config, ContainerBuilder $container, LoaderInterface $loader): void
     {
         $proxyLocatorUriOptions = [
             'uri'             => $config['dynamic']['fetch_uri'],
@@ -162,10 +171,19 @@ class VesloAppExtension extends Extension
 
         $container->setParameter('veslo.app.http.proxy.static_list', $config['static_list']);
 
-        $proxyCacherOptions = [
-            'key'      => $config['dynamic']['cache']['key'],
-            'lifetime' => $config['dynamic']['cache']['lifetime'],
-        ];
-        $container->setParameter('veslo.app.http.proxy.cacher.options', $proxyCacherOptions);
+        // Using an optional proxy cacher.
+        if (!empty($config['dynamic']['cache']['enabled'])) {
+            $proxyCacherOptions = [
+                'key'      => $config['dynamic']['cache']['key'],
+                'lifetime' => $config['dynamic']['cache']['lifetime'],
+            ];
+            $container->setParameter('veslo.app.http.proxy.cacher.options', $proxyCacherOptions);
+
+            $proxyCacherDefinitionFile = implode(
+                DIRECTORY_SEPARATOR,
+                ['config', self::BLUEPRINT_DERECTORY, 'proxy_cacher.yml']
+            );
+            $loader->load($proxyCacherDefinitionFile);
+        }
     }
 }

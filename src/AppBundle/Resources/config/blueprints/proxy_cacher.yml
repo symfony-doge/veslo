@@ -1,0 +1,10 @@
+# Blueprint for a proxy cacher
+services:
+    veslo.app.http.proxy.cacher:
+        alias: 'veslo.app.http.proxy.cacher.base'
+
+    veslo.app.http.proxy.cacher.base:
+        class: Veslo\AppBundle\Cache\Cacher\Psr6Cacher
+        arguments:
+            - '@cache.app'
+            - '%veslo.app.http.proxy.cacher.options%'
