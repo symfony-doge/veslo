@@ -25,7 +25,7 @@ mkdir -p ./var/postgresql/data
 mkdir -p ./var/redis/data
 
 echo 'Fixing permissions...'
-sudo chown 775 -R .
+sudo chown 777 -R .
 
 echo 'Building docker-compose services...'
 docker-compose build --force-rm
