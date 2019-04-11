@@ -7,10 +7,13 @@
 |  |                                           \                           |
 `--'                                            \                          |
                                                  \________________________/ 
-                                                                            
-      Veslo.IT — независимый рейтинг вакансий
-      для IT специалистов в России и странах СНГ
+
 </pre>
+
+[![Packagist Version](https://img.shields.io/packagist/v/symfony-doge/veslo.svg)](https://packagist.org/packages/symfony-doge/veslo)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/symfony-doge/veslo.svg)](https://www.php.net/releases/7_2_0.php)
+[![Quality Score](https://img.shields.io/scrutinizer/g/symfony-doge/veslo.svg)](https://scrutinizer-ci.com/g/symfony-doge/veslo)
+[![Packagist](https://img.shields.io/packagist/l/symfony-doge/veslo.svg?color=9cf)](https://github.com/symfony-doge/veslo/blob/master/LICENSE)
 
 # Workflow
 
@@ -26,6 +29,8 @@ FOUND (initial place)
                               | to_index
                                ------------> INDEXED
 ```
+
+# Installation 
 
 # API
 
@@ -56,6 +61,10 @@ Grabs a parsed vacancy data (instance of `AnthillBundle/Dto/Vacancy/RawDto`)
 and decides whether should it be collected for analysis or not.
 Result will be persisted in local storage and offered to indexing queue
 (default `veslo.app.workflow.vacancy_research.to_index`)
+
+# Websites
+
+[www.veslo.it](https://veslo.it)
 
 # Changelog
 All notable changes to this project will be documented in [CHANGELOG.md](CHANGELOG.md).

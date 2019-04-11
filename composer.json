@@ -1,7 +1,7 @@
 {
     "name": "symfony-doge/veslo",
     "type": "project",
-    "description": "Vacancy aggregator & analyser",
+    "description": "A vacancy aggregation engine",
     "homepage": "https://veslo.it",
     "license": "GPL-3.0-or-later",
     "authors": [
