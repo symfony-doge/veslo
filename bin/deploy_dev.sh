@@ -14,6 +14,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+echo 'Applying environment variables and configs...'
+cp .env.dev.dist .env
+cp docker-compose.dev.yml.dist docker-compose.yml
+cp app/config/parameters.yml.dist app/config/parameters.yml
+cp webpack.env.dev.js.dist ./webpack.env.js
+source .env
+
 echo 'Stopping docker-compose services...'
 docker-compose down
 
@@ -24,13 +31,6 @@ mkdir -p ./var/postgresql/data
 mkdir -p ./var/redis/data
 
 [ ! -d web/tests ] && mkdir -p web/tests && ln -s ../../tests/_output web/tests/_output
-
-echo 'Applying environment variables and configs...'
-cp .env.dev.dist .env
-cp docker-compose.dev.yml.dist docker-compose.yml
-cp app/config/parameters.yml.dist app/config/parameters.yml
-cp webpack.env.dev.js.dist ./webpack.env.js
-source .env
 
 echo 'Fixing permissions...'
 sudo chown `id -nu $HOST_UID`:www-data -R . && sudo chmod g+w -R .
