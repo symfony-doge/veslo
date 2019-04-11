@@ -1,0 +1,44 @@
+checks:
+    php: true
+    javascript: true
+
+filter:
+    excluded_paths:
+        - 'app/*'
+        - 'tests/*'
+        - 'bin/*'
+        - 'var/*'
+    dependency_paths:
+        - "vendor/"
+
+coding_style:
+    php: {  }
+
+build:
+    nodes:
+        analysis:
+            project_setup:
+                override:
+                    - true
+            dependencies:
+                before:
+                    - 'composer install --no-interaction --no-scripts'
+            tests:
+                override:
+                    - php-scrutinizer-run
+                    -
+                        command: phpcs-run
+                        use_website_config: true
+                    - js-scrutinizer-run
+#         codeception:
+#             environment:
+#                 docker: true
+#             dependencies:
+#                 before:
+#                     - 'bin/scrutinizer-ci.sh'
+#             tests:
+#                 override:
+#                     - 'bin/codecept run'
+    dependencies:
+        override:
+            - true
