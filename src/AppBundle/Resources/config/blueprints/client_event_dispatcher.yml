@@ -1,0 +1,3 @@
+services:
+    veslo.app.event.dispatcher.client_event_dispatcher:
+        alias: 'event_dispatcher'

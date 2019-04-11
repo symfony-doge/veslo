@@ -1,0 +1,11 @@
+services:
+    veslo.app.event.listener.http.proxy.cache_invalidation_listener:
+        class: Veslo\AppBundle\Event\Listener\Http\Proxy\CacheInvalidationListener
+        lazy: true
+        arguments:
+            - '@logger'
+            - '@veslo.app.http.proxy.cacher'
+        tags:
+            -   name: 'kernel.event_listener'
+                event: !php/const Veslo\AppBundle\Event\Http\Client\ConnectFailedEvent::NAME
+                method: 'onConnectFailed'

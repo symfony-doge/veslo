@@ -23,6 +23,10 @@ services:
             - '@veslo.app.http.client.base'
             - '@veslo.app.http.proxy.manager.alfred'
             - '%veslo.app.http.client.stability_options%'
+        calls:
+            -   method: setEventDispatcher
+                arguments:
+                    - '@?veslo.app.event.dispatcher.client_event_dispatcher'
 
     veslo.app.amqp_client:
         class: Bunny\Client

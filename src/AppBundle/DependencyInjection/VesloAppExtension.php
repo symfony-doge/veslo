@@ -75,6 +75,7 @@ class VesloAppExtension extends Extension
             'twig_extensions.yml',
             'monolog.yml',
             'shared_cache.yml',
+            'event_listeners.yml',
             'decoders.yml',
             'html.yml',
             'workflow.yml',
@@ -92,7 +93,7 @@ class VesloAppExtension extends Extension
         $configuration = new Configuration();
         $config        = $this->processConfiguration($configuration, $configs);
 
-        $this->configureHttpClient($config['http']['client'], $container);
+        $this->configureHttpClient($config['http']['client'], $container, $loader);
         $this->configureHttpProxy($config['http']['proxy'], $container, $loader);
 
         $amqpClientOptions = [
@@ -120,10 +121,11 @@ class VesloAppExtension extends Extension
      *
      * @param array            $config    Http client node configuration
      * @param ContainerBuilder $container Container
+     * @param LoaderInterface  $loader    Loads a configuration file with services
      *
      * @return void
      */
-    private function configureHttpClient(array $config, ContainerBuilder $container): void
+    private function configureHttpClient(array $config, ContainerBuilder $container, LoaderInterface $loader): void
     {
         $isVerboseHttpClient = filter_var($config['logging'], FILTER_VALIDATE_BOOLEAN);
 
@@ -138,13 +140,22 @@ class VesloAppExtension extends Extension
         ];
         $container->setParameter('veslo.app.http.client.config', $httpClientConfig);
 
+        $isProxyEnabled = $config['proxy']['enabled'];
+
         // Http client stability options: proxy, fingerprint faking, etc.
         $httpClientStabilityOptions = [
             'proxy' => [
-                'enabled' => $config['proxy']['enabled'],
+                'enabled' => $isProxyEnabled,
             ],
         ];
         $container->setParameter('veslo.app.http.client.stability_options', $httpClientStabilityOptions);
+
+        // Activating HTTP client events (making a client event dispatcher referencing a real service).
+        $clientEventDispatcherDefinitionFile = implode(
+            DIRECTORY_SEPARATOR,
+            ['config', self::BLUEPRINT_DERECTORY, 'client_event_dispatcher.yml']
+        );
+        $loader->load($clientEventDispatcherDefinitionFile);
     }
 
     /**

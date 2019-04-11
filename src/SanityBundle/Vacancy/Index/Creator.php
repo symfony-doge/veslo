@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace Veslo\SanityBundle\Vacancy\Index;
 
-use DateTime;
 use Veslo\AppBundle\Entity\Repository\BaseEntityRepository;
 use Veslo\SanityBundle\Dto\Vacancy\IndexDto;
 use Veslo\SanityBundle\Dto\Vacancy\TagDto;

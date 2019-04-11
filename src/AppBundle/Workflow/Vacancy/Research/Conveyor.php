@@ -165,6 +165,7 @@ class Conveyor
             } catch (Exception $e) {
                 $channel->txRollback();
 
+                // closing an amqp channel only if some error has occurred, otherwise we are fine.
                 $channel->close()->then(function () {
                     $this->amqpClient->disconnect();
                 });
@@ -204,7 +205,6 @@ class Conveyor
 
         $channel->publish($message, ['content_type' => 'application/json'], '', $queueName);
     }
-
 
     /**
      * Returns a dto by specified classname filled up with payload data from queue

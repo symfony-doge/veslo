@@ -48,7 +48,7 @@ class UriLocator implements LocatorInterface
     /**
      * Saves a proxy list in the cache and invalidates it by demand
      *
-     * @var CacherInterface
+     * @var CacherInterface|null
      */
     private $proxyCacher;
 
