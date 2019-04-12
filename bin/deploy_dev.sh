@@ -32,11 +32,12 @@ mkdir -p ./var/redis/data
 
 [ ! -d web/tests ] && mkdir -p web/tests && ln -s ../../tests/_output web/tests/_output
 
-echo 'Fixing permissions...'
-sudo chown `id -nu $HOST_UID`:www-data -R . && sudo chmod g+w -R .
-
 echo 'Building docker-compose services...'
 docker-compose build --force-rm
+
+echo 'Fixing permissions...'
+sudo chown `id -nu $HOST_UID`:www-data -R . && sudo chmod g+w -R .
+sudo chown 999:docker -R ./var/redis/data
 
 echo 'Updating composer dependencies...'
 # app -d memory_limit=-1 /usr/local/bin/composer

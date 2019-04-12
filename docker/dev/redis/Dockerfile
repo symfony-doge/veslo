@@ -30,8 +30,6 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
 
 COPY redis.conf /usr/local/etc/redis/redis.conf
 
-RUN usermod -u ${HOST_UID} redis
-
 USER redis
 
 CMD ["redis-server", "/usr/local/etc/redis/redis.conf"]

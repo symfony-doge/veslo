@@ -9,8 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Upgrade to stable MoT client version
 - Inject a real MoT client instead of "Dummy"
+- Integration with Travis CI
 
-Waiting for the Ministry of Truth microservice implementation (Go+gin)
+Waiting for the Ministry of Truth microservice implementation (Go + gin-gonic)
 and Client fixes (auto-deserialization is not tested yet in 
 [symfony-doge/ministry-of-truth-client](https://github.com/symfony-doge/ministry-of-truth-client/tree/0.x)).
 
