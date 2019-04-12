@@ -23,10 +23,17 @@ The preferred way to install is through [docker-compose](https://docs.docker.com
 You need to have a [Docker](https://docs.docker.com/install) daemon at least [17.05.0-ce](https://docs.docker.com/engine/release-notes/#17050-ce)
 (with build-time `ARG` in `FROM`) to successfully cook all containers.
 
-Run an automated deploy script for local development with Docker:
+Run an automated deploy script for local development with Docker.
 
 ```
 $ bin/deploy_dev.sh
+```
+
+Roadmap configurations were not automatically loaded by the script,
+you need to insert them manually with a separate command.
+
+```
+$ docker-compose run --rm app bin/console doctrine:fixtures:load --group roadmap.configuration.parameters --append
 ```
 
 ![installation asciicast](https://github.com/symfony-doge/veslo/blob/master/.github/images/installation.gif)
@@ -68,7 +75,33 @@ $ yarn run build:dev
 Apply database migrations.
 
 ```
-bin/console doctrine:migrations:migrate latest
+$ bin/console doctrine:migrations:migrate latest
+```
+
+Load roadmap configurations.
+
+```
+$ bin/console doctrine:fixtures:load --group roadmap.configuration.parameters --append
+```
+
+# Tests
+
+Loading fixtures.
+
+```
+$ docker-compose run --rm app bin/console doctrine:fixtures:load --group test
+```
+
+Applying [Codeception](https://codeception.com/docs/reference/Commands) parameters.
+
+```
+$ cp parameters.codeception.dev.yml.dist parameters.codeception.yml
+```
+
+Executing tests.
+
+```
+$ docker-compose run --rm --no-deps app bin/codecept run --steps
 ```
 
 # Workflow

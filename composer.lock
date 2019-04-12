@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "157910286b0fed042cbae30a736ba9ad",
+    "content-hash": "cbc92cef8e3ffb556b71680b854ade89",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2262,16 +2262,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.8.1",
+            "version": "1.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "3e01bdad3e18354c3dce54466b7fbe33a9f9f7f8"
+                "reference": "e6828efaba2c9b79f4499dae1d66ef8bfa7b2b72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/3e01bdad3e18354c3dce54466b7fbe33a9f9f7f8",
-                "reference": "3e01bdad3e18354c3dce54466b7fbe33a9f9f7f8",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/e6828efaba2c9b79f4499dae1d66ef8bfa7b2b72",
+                "reference": "e6828efaba2c9b79f4499dae1d66ef8bfa7b2b72",
                 "shasum": ""
             },
             "require": {
@@ -2306,7 +2306,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2018-06-11T23:09:50+00:00"
+            "time": "2019-04-07T13:18:21+00:00"
         },
         {
             "name": "nelmio/alice",
@@ -4681,42 +4681,6 @@
             "time": "2019-01-16T14:22:17+00:00"
         },
         {
-            "name": "codeception/assert-throws",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Codeception/AssertThrows.git",
-                "reference": "98750b1321da1325142b5ecc8c42cb342f429141"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/AssertThrows/zipball/98750b1321da1325142b5ecc8c42cb342f429141",
-                "reference": "98750b1321da1325142b5ecc8c42cb342f429141",
-                "shasum": ""
-            },
-            "require": {
-                "phpunit/phpunit": "^6.4|^7.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Codeception\\": "./"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Davert",
-                    "email": "davert@codeception.com"
-                }
-            ],
-            "description": "Assert exception was thrown without stopping a test",
-            "time": "2018-02-09T17:20:20+00:00"
-        },
-        {
             "name": "codeception/codeception",
             "version": "2.5.5",
             "source": {
@@ -5007,6 +4971,42 @@
                 "webdriver"
             ],
             "time": "2017-01-13T15:48:08+00:00"
+        },
+        {
+            "name": "itnelo/assert-throws-stable",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/itnelo/assert-throws-stable.git",
+                "reference": "d964da5c1c2c5c3ecdc3dc1f5e55ff14dcfaadd1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/itnelo/assert-throws-stable/zipball/d964da5c1c2c5c3ecdc3dc1f5e55ff14dcfaadd1",
+                "reference": "d964da5c1c2c5c3ecdc3dc1f5e55ff14dcfaadd1",
+                "shasum": ""
+            },
+            "require": {
+                "phpunit/phpunit": "^6.4|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Codeception\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "davert",
+                    "email": "davert@codeception.com"
+                }
+            ],
+            "description": "Assert exception was thrown without stopping a test",
+            "time": "2019-04-12T15:49:09+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -6155,16 +6155,16 @@
         },
         {
             "name": "theseer/tokenizer",
-            "version": "1.1.0",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/theseer/tokenizer.git",
-                "reference": "cb2f008f3f05af2893a87208fe6a6c4985483f8b"
+                "reference": "1c42705be2b6c1de5904f8afacef5895cab44bf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/theseer/tokenizer/zipball/cb2f008f3f05af2893a87208fe6a6c4985483f8b",
-                "reference": "cb2f008f3f05af2893a87208fe6a6c4985483f8b",
+                "url": "https://api.github.com/repos/theseer/tokenizer/zipball/1c42705be2b6c1de5904f8afacef5895cab44bf8",
+                "reference": "1c42705be2b6c1de5904f8afacef5895cab44bf8",
                 "shasum": ""
             },
             "require": {
@@ -6191,7 +6191,7 @@
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
-            "time": "2017-04-07T12:08:54+00:00"
+            "time": "2019-04-04T09:56:43+00:00"
         },
         {
             "name": "webmozart/assert",

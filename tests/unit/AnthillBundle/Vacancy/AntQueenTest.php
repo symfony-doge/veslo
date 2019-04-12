@@ -26,7 +26,6 @@ use Veslo\AnthillBundle\Vacancy\Roadmap\ConfigurationInterface;
 use Veslo\AnthillBundle\Vacancy\Roadmap\ConveyorAwareRoadmap;
 use Veslo\AnthillBundle\Vacancy\RoadmapInterface;
 
-// TODO: assertThrows is waiting for a fix or should be forked
 class AntQueenTest extends Unit
 {
     use Specify;

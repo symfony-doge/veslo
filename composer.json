@@ -56,10 +56,10 @@
         "twig/twig": "^1.0||^2.0"
     },
     "require-dev": {
-        "codeception/assert-throws": "^1.0",
         "codeception/codeception": "^2.5",
         "codeception/specify": "^1.1",
         "codeception/verify": "^1.0",
+        "itnelo/assert-throws-stable": "^1.0.2",
         "php-ds/php-ds": "^1.2",
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0"
