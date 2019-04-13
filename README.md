@@ -29,14 +29,14 @@ Run an automated deploy script for local development with Docker.
 $ bin/deploy_dev.sh
 ```
 
+![installation asciicast](https://github.com/symfony-doge/veslo/blob/master/.github/images/installation.gif)
+
 Roadmap configurations were not automatically loaded by the script,
 you need to insert them manually with a separate command.
 
 ```
 $ docker-compose run --rm app bin/console doctrine:fixtures:load --group roadmap.configuration.parameters --append
 ```
-
-![installation asciicast](https://github.com/symfony-doge/veslo/blob/master/.github/images/installation.gif)
 
 #### Manual
 
@@ -84,7 +84,7 @@ Load roadmap configurations.
 $ bin/console doctrine:fixtures:load --group roadmap.configuration.parameters --append
 ```
 
-# Tests
+# Testing
 
 Loading fixtures.
 
@@ -104,7 +104,7 @@ Executing tests.
 $ docker-compose run --rm --no-deps app bin/codecept run --steps
 ```
 
-# Workflow
+#### Workflow
 
 ```
 FOUND (initial place)
@@ -118,6 +118,19 @@ FOUND (initial place)
                               | to_index
                                ------------> INDEXED
 ```
+
+There are a set of log files suited for debugging an each workflow transition.
+`var/logs` contains:
+
+| Log file | Description |
+| :----------------------------------------------------------- | :--- |
+| `dev.anthill.digging-YYYY-mm-dd.log` | Search process (to_parse) |
+| `dev.anthill.parsing-YYYY-mm-dd.log` | Parsing process (to_collect) |
+| `dev.anthill.collecting-YYYY-mm-dd.log` | Saving in local storage (to_index) |  
+| `dev.sanity.indexing-YYYY-mm-dd.log` | Analysis |
+| `dev.app.workflow-YYYY-mm-dd.log` | Queue get/push events<br /> (data distribution between workers) |  
+| `dev.app.http-YYYY-mm-dd.log` | Dumping all HTTP requests/responses<br /> (works if `app.http_client.logging` is `true`) |
+| `dev-YYYY-mm-dd.log` | A common Symfony log file |
 
 # API
 

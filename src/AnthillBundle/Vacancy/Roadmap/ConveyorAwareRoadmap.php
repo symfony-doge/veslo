@@ -24,7 +24,7 @@ use Veslo\AnthillBundle\Vacancy\ConfigurableRoadmapInterface;
 use Veslo\AnthillBundle\Vacancy\RoadmapInterface;
 
 /**
- * Wrapper for roadmap that provides meta information for conveyor process
+ * Wrapper for a roadmap that provides meta information for conveyor process
  */
 class ConveyorAwareRoadmap
 {
