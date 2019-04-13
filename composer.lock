@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cbc92cef8e3ffb556b71680b854ade89",
+    "content-hash": "de887c176f9d04f2fdd4ee4dc7efda16",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -3658,16 +3658,16 @@
         },
         {
             "name": "symfony-doge/ministry-of-truth-client",
-            "version": "0.x-dev",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony-doge/ministry-of-truth-client.git",
-                "reference": "c898e0b35799a71e5d9b2238f51d7fcefb0d95f6"
+                "reference": "e8bed1e6c2a5124b87ef97a7b89798ec97102c7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony-doge/ministry-of-truth-client/zipball/c898e0b35799a71e5d9b2238f51d7fcefb0d95f6",
-                "reference": "c898e0b35799a71e5d9b2238f51d7fcefb0d95f6",
+                "url": "https://api.github.com/repos/symfony-doge/ministry-of-truth-client/zipball/e8bed1e6c2a5124b87ef97a7b89798ec97102c7d",
+                "reference": "e8bed1e6c2a5124b87ef97a7b89798ec97102c7d",
                 "shasum": ""
             },
             "require": {
@@ -3713,7 +3713,7 @@
             ],
             "description": "An interface between vacancy aggregator & sanity index provider",
             "homepage": "https://github.com/symfony-doge/ministry-of-truth-client",
-            "time": "2019-03-27T15:28:21+00:00"
+            "time": "2019-03-27T12:40:44+00:00"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -6247,9 +6247,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "symfony-doge/ministry-of-truth-client": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

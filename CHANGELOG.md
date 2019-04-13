@@ -15,6 +15,13 @@ Waiting for the Ministry of Truth microservice implementation (Go + gin-gonic)
 and Client fixes (auto-deserialization is not tested yet in 
 [symfony-doge/ministry-of-truth-client](https://github.com/symfony-doge/ministry-of-truth-client/tree/0.x)).
 
+## [0.4.0] - 2019-04-13
+### Added
+
+- Dynamic proxy rotation by fetching a list with endpoints by URI
+- Installation and testing guides in README.md
+- Integration with [Scrutinizer CA](https://scrutinizer-ci.com/continuous-analysis)
+
 ## [0.3.0] - 2019-03-27
 ### Added
 
@@ -75,7 +82,8 @@ and conveyor processing w/ [rabbitmq](https://github.com/rabbitmq)
 
 Vacancy data is shown "as is", w/o any ratings or transformations.
 
-[Unreleased]: https://github.com/symfony-doge/veslo/compare/0.3.0...0.x
+[Unreleased]: https://github.com/symfony-doge/veslo/compare/0.4.0...0.x
+[0.4.0]: https://github.com/symfony-doge/veslo/compare/0.3.0..0.4.0
 [0.3.0]: https://github.com/symfony-doge/veslo/compare/0.2.0..0.3.0
 [0.2.0]: https://github.com/symfony-doge/veslo/compare/0.1.0..0.2.0
 [0.1.0]: https://github.com/symfony-doge/veslo/releases/tag/0.1.0
