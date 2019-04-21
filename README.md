@@ -65,7 +65,7 @@ $ composer install
 ```
 
 Install Javascript dependencies and compile assets via [Yarn](https://yarnpkg.com/lang/en/docs/install)
-([Node.js](https://nodejs.org/en/download) 10 is required).
+([Node.js](https://nodejs.org/en/download) 10.x is required).
 
 ```
 $ yarn install
@@ -119,7 +119,7 @@ FOUND (initial place)
                                ------------> INDEXED
 ```
 
-There are a set of log files suited for debugging an each workflow transition.
+There is a set of log files suited for debugging an each workflow transition.
 `var/logs` contains:
 
 | Log file | Description |
