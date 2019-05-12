@@ -198,7 +198,7 @@ class Version20190213 implements StrategyInterface
     }
 
     /**
-     * Returns actual page content with guarantees that it is not changed during algorithm execution
+     * Returns an actual page content with guarantees that it is not changed during algorithm execution
      *
      * To prevent invalid page read between search query and actual fetching query, $found should not be changed.
      * If $found changes it means some vacancy has been added or deleted during lookup

@@ -45,7 +45,7 @@ by providing `.env` file using `.env.dev.dist` as a template.
 Below are steps to prepare your application before accessing through a web server.
 
 ```
-$ git clone git@github.com:symfony-doge/veslo.git veslo && cd veslo
+$ git clone git@github.com:symfony-doge/veslo.git veslo && cd "$_"
 
 // setup your own connection parameters
 $ cp .env.dev.dist .env
