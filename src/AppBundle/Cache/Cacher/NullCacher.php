@@ -19,7 +19,7 @@ use Veslo\AppBundle\Cache\CacherInterface;
 
 /**
  * Null cacher is a dummy object for cases when a real cacher is not needed
- * Eliminates an extra boilerplate checks in client code
+ * Eliminates extra boilerplate checks in client code
  *
  * @see Nice pattern description here: https://github.com/domnikl/DesignPatternsPHP/tree/master/Behavioral/NullObject
  */
