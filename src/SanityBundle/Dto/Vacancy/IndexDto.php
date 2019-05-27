@@ -51,6 +51,14 @@ class IndexDto
     private $indexationDate;
 
     /**
+     * IndexDto constructor.
+     */
+    public function __construct()
+    {
+        $this->tags = [];
+    }
+
+    /**
      * Returns vacancy index value
      *
      * @return float

@@ -15,9 +15,9 @@
 [![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/symfony-doge/veslo.svg)](https://codeclimate.com/github/symfony-doge/veslo)
 [![Packagist](https://img.shields.io/packagist/l/symfony-doge/veslo.svg?color=blue)](https://github.com/symfony-doge/veslo/blob/master/LICENSE)
 
-# Installation
+## Installation
 
-#### Docker
+### Docker
 
 The preferred way to install is through [docker-compose](https://docs.docker.com/compose).
 You need to have a [Docker](https://docs.docker.com/install) daemon at least [17.05.0-ce](https://docs.docker.com/engine/release-notes/#17050-ce)
@@ -38,7 +38,7 @@ you need to insert them manually with a separate command.
 $ docker-compose run --rm app bin/console doctrine:fixtures:load --group roadmap.configuration.parameters --append
 ```
 
-#### Manual
+### Manual
 
 You can clone and deploy the application with your own environment
 by providing `.env` file using `.env.dev.dist` as a template.
@@ -84,7 +84,7 @@ Load roadmap configurations.
 $ bin/console doctrine:fixtures:load --group roadmap.configuration.parameters --append
 ```
 
-# Testing
+## Testing
 
 Loading fixtures.
 
@@ -104,7 +104,7 @@ Executing tests.
 $ docker-compose run --rm --no-deps app bin/codecept run --steps
 ```
 
-#### Workflow
+### Workflow
 
 ```
 FOUND (initial place)
@@ -123,7 +123,7 @@ There is a set of log files suited for debugging an each workflow transition.
 `var/logs` contains:
 
 | Log file | Description |
-| :----------------------------------------------------------- | :--- |
+| :--- | :--- |
 | `dev.anthill.digging-YYYY-mm-dd.log` | Search process (to_parse) |
 | `dev.anthill.parsing-YYYY-mm-dd.log` | Parsing process (to_collect) |
 | `dev.anthill.collecting-YYYY-mm-dd.log` | Saving in local storage (to_index) |  
@@ -132,7 +132,7 @@ There is a set of log files suited for debugging an each workflow transition.
 | `dev.app.http-YYYY-mm-dd.log` | Dumping all HTTP requests/responses<br /> (works if `app.http_client.logging` is `true`) |
 | `dev-YYYY-mm-dd.log` | A common Symfony log file |
 
-# API
+## API
 
 ```
 $ docker-compose run --rm app bin/console veslo:anthill:digging hh php --iterations=1
@@ -162,13 +162,13 @@ and decides whether should it be collected for analysis or not.
 Result will be persisted in local storage and offered to indexing queue
 (default `veslo.app.workflow.vacancy_research.to_index`)
 
-#### Currently supported roadmaps:
+### Currently supported roadmaps:
 
 * [hh](https://hh.ru) (configurations: `php`)
 
-# Usage example
+## Usage example
 
 [www.veslo.it](https://veslo.it)
 
-# Changelog
+## Changelog
 All notable changes to this project will be documented in [CHANGELOG.md](CHANGELOG.md).

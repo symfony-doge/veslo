@@ -48,5 +48,5 @@ parameters:
     anthill.vacancies.cache_lifetime: 60   # sec
 
     # Ministry of Truth API
-    symfony_doge_motc.api.base_uri: 'http://127.0.0.1:9595'
+    symfony_doge_motc.api.base_uri: 'http://%env(string:ANALYSER_HOST)%:%env(int:ANALYSER_PORT)%'
     symfony_doge_motc.credentials.authorization_token: 'ThisTokenIsNotARealTokenChangeIt'

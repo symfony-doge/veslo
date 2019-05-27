@@ -123,6 +123,11 @@ class MinistryOfTruth implements AnalyserInterface
         $indexRequest->setAuthorizationToken($authorizationToken);
 
         $vacancyDescription = $vacancy->getText();
+
+        // TODO: extract into the purifier service.
+        $vacancyDescription = strip_tags($vacancyDescription);
+        $vacancyDescription = str_replace([':', ';', '.', ',', '-', '/', '?', '!'], ' ', $vacancyDescription);
+
         $indexRequest->addContext(Context\Vacancy::DESCRIPTION, $vacancyDescription);
 
         $indexResponse = $this->motClient->index($indexRequest);

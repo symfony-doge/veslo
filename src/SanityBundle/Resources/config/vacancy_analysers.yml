@@ -2,7 +2,7 @@ services:
     veslo.sanity.vacancy.analyser.ministry_of_truth:
         class: Veslo\SanityBundle\Vacancy\Analyser\MinistryOfTruth
         arguments:
-            - '@symfony_doge.motc.dummy_client'
+            - '@symfony_doge.motc.client'
             - '@symfony_doge.motc.credentials.storage'
             - '@veslo.sanity.vacancy.analyser.data_converter.ministry_of_truth'
             - '%veslo.sanity.vacancy.analyser.ministry_of_truth.options%'
