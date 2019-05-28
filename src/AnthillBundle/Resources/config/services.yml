@@ -1,4 +1,15 @@
 services:
+    veslo.anthill.vacancy.resolver:
+        class: Veslo\AnthillBundle\Vacancy\Resolver
+        arguments:
+            - '@veslo.anthill.vacancy_repository'
+
+    veslo.anthill.vacancy.category.resolver:
+        class: Veslo\AnthillBundle\Vacancy\Category\Resolver
+        arguments:
+            - '@veslo.anthill.vacancy.category.creator'
+            - '@veslo.anthill.vacancy.category_repository'
+
     veslo.anthill.vacancy.decision.is_collectable:
         class: Veslo\AnthillBundle\Vacancy\Decision\ChainDecision
         arguments:
@@ -8,4 +19,12 @@ services:
         class: Veslo\AnthillBundle\Vacancy\Decision\NotADuplicate
         arguments:
             - '@logger'
+            - '@veslo.anthill.vacancy.resolver'
+            - '@event_dispatcher'
+
+    veslo.anthill.vacancy.category_assigner:
+        class: Veslo\AnthillBundle\Vacancy\CategoryAssigner
+        arguments:
+            - '@veslo.anthill.vacancy.resolver'
+            - '@veslo.anthill.vacancy.category.resolver'
             - '@veslo.anthill.vacancy_repository'

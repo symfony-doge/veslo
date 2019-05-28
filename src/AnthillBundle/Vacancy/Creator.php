@@ -17,15 +17,13 @@ namespace Veslo\AnthillBundle\Vacancy;
 
 use DateTime;
 use Veslo\AnthillBundle\Company\Creator as CompanyCreator;
-use Veslo\AnthillBundle\Dto\Vacancy\ConfigurableRoadmapDto;
 use Veslo\AnthillBundle\Dto\Vacancy\Parser\ParsedDto;
 use Veslo\AnthillBundle\Dto\Vacancy\RawDto;
-use Veslo\AnthillBundle\Dto\Vacancy\RoadmapDto;
 use Veslo\AnthillBundle\Entity\Company;
 use Veslo\AnthillBundle\Entity\Repository\VacancyRepository;
 use Veslo\AnthillBundle\Entity\Vacancy;
 use Veslo\AnthillBundle\Entity\Vacancy\Category;
-use Veslo\AnthillBundle\Vacancy\Category\Creator as CategoryCreator;
+use Veslo\AnthillBundle\Vacancy\Category\Resolver as CategoryResolver;
 use Veslo\AppBundle\Entity\Repository\BaseEntityRepository;
 
 /**
@@ -41,11 +39,11 @@ class Creator
     private $companyCreator;
 
     /**
-     * Creates and persists a new category for vacancies in local storage
+     * Extracts a category instance from the specified context
      *
-     * @var CategoryCreator
+     * @var CategoryResolver
      */
-    private $categoryCreator;
+    private $categoryResolver;
 
     /**
      * Vacancy repository
@@ -62,33 +60,23 @@ class Creator
     private $companyRepository;
 
     /**
-     * Vacancy category repository
-     *
-     * @var BaseEntityRepository
-     */
-    private $categoryRepository;
-
-    /**
      * Creator constructor.
      *
-     * @param CompanyCreator       $companyCreator     Creates and persists a new company in local storage
-     * @param CategoryCreator      $categoryCreator    Creates and persists a new category for vacancies
-     * @param VacancyRepository    $vacancyRepository  Vacancy repository
-     * @param BaseEntityRepository $companyRepository  Company repository
-     * @param BaseEntityRepository $categoryRepository Vacancy category repository
+     * @param CompanyCreator       $companyCreator    Creates and persists a new company in local storage
+     * @param CategoryResolver     $categoryResolver  Extracts a category instance from the specified context
+     * @param VacancyRepository    $vacancyRepository Vacancy repository
+     * @param BaseEntityRepository $companyRepository Company repository
      */
     public function __construct(
         CompanyCreator $companyCreator,
-        CategoryCreator $categoryCreator,
+        CategoryResolver $categoryResolver,
         VacancyRepository $vacancyRepository,
-        BaseEntityRepository $companyRepository,
-        BaseEntityRepository $categoryRepository
+        BaseEntityRepository $companyRepository
     ) {
-        $this->vacancyRepository  = $vacancyRepository;
-        $this->companyCreator     = $companyCreator;
-        $this->categoryCreator    = $categoryCreator;
-        $this->companyRepository  = $companyRepository;
-        $this->categoryRepository = $categoryRepository;
+        $this->companyCreator    = $companyCreator;
+        $this->categoryResolver  = $categoryResolver;
+        $this->vacancyRepository = $vacancyRepository;
+        $this->companyRepository = $companyRepository;
     }
 
     /**
@@ -119,7 +107,7 @@ class Creator
         $vacancy->setPublicationDate($data->getPublicationDate());
 
         $company  = $this->resolveCompany($data);
-        $category = $this->resolveCategory($roadmap);
+        $category = $this->categoryResolver->resolveByRoadmap($roadmap);
 
         $vacancy->setCompany($company);
 
@@ -149,29 +137,5 @@ class Creator
         }
 
         return $company;
-    }
-
-    /**
-     * Returns related category entity if exists or calls the category creator to build a new one by roadmap
-     *
-     * @param RoadmapDto $roadmap Context of roadmap by which the vacancy was found
-     *
-     * @return Category|null
-     */
-    private function resolveCategory(RoadmapDto $roadmap): ?Category
-    {
-        if (!$roadmap instanceof ConfigurableRoadmapDto) {
-            return null;
-        }
-
-        $configuration = $roadmap->getConfiguration();
-        $categoryName  = $configuration->getKey();
-        $category      = $this->categoryRepository->findOneByName($categoryName);
-
-        if (!$category instanceof Category) {
-            $category = $this->categoryCreator->createByRoadmapConfigurationDto($configuration, true);
-        }
-
-        return $category;
     }
 }

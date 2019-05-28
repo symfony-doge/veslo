@@ -17,10 +17,12 @@ namespace Veslo\AnthillBundle\Vacancy\Decision;
 
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Veslo\AnthillBundle\Dto\Vacancy\Parser\ParsedDto;
-use Veslo\AnthillBundle\Entity\Repository\VacancyRepository;
 use Veslo\AnthillBundle\Entity\Vacancy;
+use Veslo\AnthillBundle\Event\Vacancy\Decision\AppliedEvent;
 use Veslo\AnthillBundle\Vacancy\DecisionInterface;
+use Veslo\AnthillBundle\Vacancy\Resolver as VacancyResolver;
 
 /**
  * Will be applied whenever a specified vacancy data is not already collected and managed before
@@ -42,20 +44,34 @@ class NotADuplicate implements DecisionInterface
     private $logger;
 
     /**
-     * @var VacancyRepository
+     * Extracts a vacancy instance from the specified context
+     *
+     * @var VacancyResolver
      */
-    private $vacancyRepository;
+    private $vacancyResolver;
+
+    /**
+     * Dispatches a decision event to listeners
+     *
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
     /**
      * NotADuplicate constructor.
      *
-     * @param LoggerInterface   $logger            Logger as it is
-     * @param VacancyRepository $vacancyRepository Vacancy repository
+     * @param LoggerInterface          $logger          Logger as it is
+     * @param VacancyResolver          $vacancyResolver Extracts a vacancy instance from the specified context
+     * @param EventDispatcherInterface $eventDispatcher Dispatches a decision event to listeners
      */
-    public function __construct(LoggerInterface $logger, VacancyRepository $vacancyRepository)
-    {
-        $this->logger            = $logger;
-        $this->vacancyRepository = $vacancyRepository;
+    public function __construct(
+        LoggerInterface $logger,
+        VacancyResolver $vacancyResolver,
+        EventDispatcherInterface $eventDispatcher
+    ) {
+        $this->logger          = $logger;
+        $this->vacancyResolver = $vacancyResolver;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -85,16 +101,15 @@ class NotADuplicate implements DecisionInterface
             return false;
         }
 
-        $roadmapName = $roadmap->getName();
-
-        $vacancy            = $context->getVacancy();
-        $externalIdentifier = $vacancy->getExternalIdentifier();
-
-        $entity = $this->vacancyRepository->findByRoadmapNameAndExternalIdentifier($roadmapName, $externalIdentifier);
+        $entity = $this->vacancyResolver->resolveByParsedDto($context);
 
         $isDuplicateFound = $entity instanceof Vacancy;
+        $isApplied        = !$isDuplicateFound;
 
-        return !$isDuplicateFound;
+        $appliedEvent = new AppliedEvent($this, $context, $isApplied);
+        $this->eventDispatcher->dispatch(AppliedEvent::NAME, $appliedEvent);
+
+        return $isApplied;
     }
 
     /**

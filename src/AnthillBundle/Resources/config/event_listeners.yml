@@ -7,3 +7,12 @@ services:
             -   name: 'kernel.event_listener'
                 event: !php/const Veslo\AppBundle\Event\Menu\ConfigureEvent::NAME
                 method: 'onMenuConfigure'
+
+    veslo.anthill.event.listener.vacancy.category_expand_listener:
+        class: Veslo\AnthillBundle\Event\Listener\Vacancy\CategoryExpandListener
+        arguments:
+            - '@veslo.anthill.vacancy.category_assigner'
+        tags:
+            -   name: 'kernel.event_listener'
+                event: !php/const Veslo\AnthillBundle\Event\Vacancy\Decision\AppliedEvent::NAME
+                method: 'onDecisionAppliedEvent'
