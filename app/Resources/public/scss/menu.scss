@@ -1,0 +1,14 @@
+
+.nav-horizontal {
+    @extend .nav;
+
+    .nav-item:not(.first) {
+        padding-left: $nav-link-padding-y * 4;
+    }
+}
+
+.nav-categories {
+    .nav-item a {
+        color: $cyan;
+    }
+}

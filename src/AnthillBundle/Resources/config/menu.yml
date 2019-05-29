@@ -1,3 +1,16 @@
 services:
     veslo.anthill.menu.builder:
         class: Veslo\AnthillBundle\Menu\Builder
+
+    veslo.app.menu.vacancy.category_builder:
+        class: Veslo\AnthillBundle\Menu\Vacancy\CategoriesBuilder
+        arguments:
+            - '@knp_menu.factory'
+            - '@veslo.anthill.vacancy.category_repository'
+            -
+                - !php/const Veslo\AnthillBundle\Enum\Route::VACANCY_LIST_BY_CATEGORY
+                - !php/const Veslo\AnthillBundle\Enum\Route::VACANCY_LIST_BY_CATEGORY_PAGE
+        tags:
+            -   name: knp_menu.menu_builder
+                method: createVacancyCategoriesMenu
+                alias: vacancy_categories

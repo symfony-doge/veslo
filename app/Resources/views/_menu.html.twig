@@ -11,17 +11,34 @@
 #}
 
 <div class="row">
-    <div class="col-md-9 offset-md-3">
+    <div class="col-md-6 offset-md-3">
         {% set root = knp_menu_get('main') %}
 
-        {% do root.setChildrenAttribute('class', 'navbar-nav') %}
+        {% do root.setChildrenAttribute('class', 'nav-horizontal') %}
 
         {{ knp_menu_render(
             root,
             {
+                currentAsLink: false,
                 currentClass: 'active',
                 leaf_class: 'nav-item underline',
+            }
+        ) }}
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-6 offset-md-3">
+        {% set root = knp_menu_get('vacancy_categories') %}
+
+        {% do root.setChildrenAttribute('class', 'nav-horizontal nav-fill nav-categories') %}
+
+        {{ knp_menu_render(
+            root,
+            {
                 currentAsLink: false,
+                currentClass: 'active',
+                leaf_class: 'nav-item underline',
             }
         ) }}
     </div>
