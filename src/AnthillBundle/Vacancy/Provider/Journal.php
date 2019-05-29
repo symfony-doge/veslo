@@ -19,6 +19,7 @@ use Knp\Component\Pager\Pagination\AbstractPagination;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Veslo\AnthillBundle\Entity\Repository\VacancyRepository;
 use Veslo\AnthillBundle\Entity\Vacancy;
+use Veslo\AnthillBundle\Entity\Vacancy\Category;
 use Veslo\AnthillBundle\Enum\Route;
 use Veslo\AppBundle\Dto\Paginator\CriteriaDto;
 
@@ -59,7 +60,7 @@ class Journal
     }
 
     /**
-     * Returns all vacancies on specified page from newest(1) to oldest(N)
+     * Returns all vacancies on the specified page from newest(1) to oldest(N)
      *
      * @param int $page Page for pagination
      *
@@ -67,15 +68,48 @@ class Journal
      */
     public function read(int $page = 1): AbstractPagination
     {
+        $paginationCriteria = $this->buildCommonPaginationCriteria($page);
+
+        $pagination = $this->vacancyRepository->getPagination($paginationCriteria);
+        $pagination->setUsedRoute(Route::VACANCY_LIST);
+
+        return $pagination;
+    }
+
+    /**
+     * Returns all vacancies on the specified page from newest(1) to oldest(N) within the target category
+     *
+     * @param Category $category A vacancy category instance
+     * @param int      $page     Page for pagination
+     *
+     * @return AbstractPagination<Vacancy>
+     */
+    public function readCategory(Category $category, int $page = 1): AbstractPagination
+    {
+        $paginationCriteria = $this->buildCommonPaginationCriteria($page);
+        $paginationCriteria->addHint(VacancyRepository::PAGINATION_HINT_CATEGORY, $category);
+
+        $pagination = $this->vacancyRepository->getPagination($paginationCriteria);
+        $pagination->setUsedRoute(Route::VACANCY_LIST_BY_CATEGORY);
+
+        return $pagination;
+    }
+
+    /**
+     * Returns a criteria instance with common parameters for pagination building
+     *
+     * @param int $page Page for pagination
+     *
+     * @return CriteriaDto
+     */
+    private function buildCommonPaginationCriteria(int $page = 1): CriteriaDto
+    {
         $pageNormalized = max(1, $page);
 
         $paginationCriteria = new CriteriaDto();
         $paginationCriteria->setPage($pageNormalized);
         $paginationCriteria->setLimit($this->options['per_page']);
 
-        $pagination = $this->vacancyRepository->getPagination($paginationCriteria);
-        $pagination->setUsedRoute(Route::VACANCY_LIST);
-
-        return $pagination;
+        return $paginationCriteria;
     }
 }

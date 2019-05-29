@@ -46,11 +46,20 @@ class CriteriaDto
     private $options;
 
     /**
+     * A set of additional hints for query building
+     * Usage of this parameter depends on a concrete PaginatorInterface implementer
+     *
+     * @var array
+     */
+    private $hints;
+
+    /**
      * CriteriaDto constructor.
      */
     public function __construct()
     {
         $this->options = [];
+        $this->hints   = [];
     }
 
     /**
@@ -117,5 +126,28 @@ class CriteriaDto
     public function setOptions(array $options): void
     {
         $this->options = $options;
+    }
+
+    /**
+     * Returns a set of additional hints for query building
+     *
+     * @return array
+     */
+    public function getHints(): array
+    {
+        return $this->hints;
+    }
+
+    /**
+     * Adds an additional hint for query building
+     *
+     * @param string $name Hint name
+     * @param mixed  $data Hint data
+     *
+     * @return void
+     */
+    public function addHint(string $name, $data): void
+    {
+        $this->hints[$name] = $data;
     }
 }

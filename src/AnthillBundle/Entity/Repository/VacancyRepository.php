@@ -17,10 +17,12 @@ namespace Veslo\AnthillBundle\Entity\Repository;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Cache;
+use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\Pagination\AbstractPagination;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Veslo\AnthillBundle\Entity\Vacancy;
+use Veslo\AnthillBundle\Entity\Vacancy\Category;
 use Veslo\AppBundle\Dto\Paginator\CriteriaDto as PaginationCriteria;
 use Veslo\AppBundle\Entity\Repository\BaseEntityRepository;
 use Veslo\AppBundle\Entity\Repository\PaginateableInterface;
@@ -30,6 +32,18 @@ use Veslo\AppBundle\Entity\Repository\PaginateableInterface;
  */
 class VacancyRepository extends BaseEntityRepository implements PaginateableInterface
 {
+    /**
+     * A hint for the pagination building process to include a specific category match statement
+     *
+     * Usage example:
+     * ```
+     * $paginationCriteria->addHint(VacancyRepository::PAGINATION_HINT_CATEGORY, $category);
+     * ```
+     *
+     * @const string
+     */
+    public const PAGINATION_HINT_CATEGORY = 'category';
+
     /**
      * Modifies vacancy search query to provide data in small bunches
      *
@@ -118,16 +132,19 @@ class VacancyRepository extends BaseEntityRepository implements PaginateableInte
     {
         $queryBuilder = $this->createQueryBuilder('e');
         $queryBuilder
-            ->select('e', 'c', 'ct')
-            // fetch join for caching.
+            // fetch joins for caching.
             ->innerJoin('e.company', 'c')
-            // inner join for company is required. due to fixtures loading logic there are some cases
+            ->addSelect('c')
+            // inner join for company is required; due to fixtures loading logic there are some cases
             // when a deletion date can be set in company and not present in related vacancies at the same time.
-            // it leads to inconsistent state in test environment;
-            // normally (prod), a soft delete logic should be properly applied for all relations at once.
+            // it leads to inconsistent state in test environment; normally, a soft delete logic should be
+            // properly applied for all relations at once.
             ->leftJoin('e.categories', 'ct')
+            ->addSelect('ct')
             ->orderBy('e.id', Criteria::DESC)
         ;
+
+        $queryBuilder = $this->applyPaginationHints($queryBuilder, $criteria);
 
         list($page, $limit, $options) = [$criteria->getPage(), $criteria->getLimit(), $criteria->getOptions()];
 
@@ -141,5 +158,31 @@ class VacancyRepository extends BaseEntityRepository implements PaginateableInte
         $pagination = $this->paginator->paginate($query, $page, $limit, $options);
 
         return $pagination;
+    }
+
+    /**
+     * Returns a query builder instance modified according to the pagination hints, provided by criteria
+     *
+     * @param QueryBuilder       $queryBuilder A query builder instance
+     * @param PaginationCriteria $criteria     Pagination criteria
+     *
+     * @return QueryBuilder
+     */
+    private function applyPaginationHints(QueryBuilder $queryBuilder, PaginationCriteria $criteria): QueryBuilder
+    {
+        $paginationHints = $criteria->getHints();
+
+        // Hint: category.
+        if (array_key_exists(self::PAGINATION_HINT_CATEGORY, $paginationHints)) {
+            /** @var Category $category */
+            $category = $paginationHints[self::PAGINATION_HINT_CATEGORY];
+
+            $queryBuilder
+                ->andWhere($queryBuilder->expr()->isMemberOf(':category', 'e.categories'))
+                ->setParameter(':category', $category)
+            ;
+        }
+
+        return $queryBuilder;
     }
 }

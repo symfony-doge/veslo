@@ -25,7 +25,14 @@ final class Route
      *
      * @const string
      */
-    public const VACANCY_LIST = 'anthill_vacancy_list';
+    public const VACANCY_LIST = 'anthill_vacancy_list_page';
+
+    /**
+     * Vacancy list by category action
+     *
+     * @const string
+     */
+    public const VACANCY_LIST_BY_CATEGORY = 'anthill_vacancy_list_by_category_page';
 
     /**
      * Vacancy show action

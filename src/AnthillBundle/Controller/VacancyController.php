@@ -19,6 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
 use Veslo\AnthillBundle\Entity\Vacancy;
+use Veslo\AnthillBundle\Entity\Vacancy\Category;
 use Veslo\AnthillBundle\Enum\Route;
 use Veslo\AnthillBundle\Vacancy\Provider\Journal;
 
@@ -63,6 +64,33 @@ class VacancyController
     public function list(int $page): Response
     {
         $pagination = $this->vacancyJournal->read($page);
+
+        $content = $this->templateEngine->render(
+            '@VesloAnthill/Vacancy/list.html.twig',
+            [
+                'pagination'         => $pagination,
+                'route_vacancy_show' => Route::VACANCY_SHOW,
+            ]
+        );
+
+        $response = new Response($content);
+
+        return $response;
+    }
+
+    /**
+     * Renders a list of vacancies for a target category
+     *
+     * @param Category $category Vacancy category
+     * @param int      $page     Page in vacancy journal
+     *
+     * @return Response
+     *
+     * @ParamConverter(name="category", converter="doctrine.orm", options={"mapping"={"categoryName": "name"}})
+     */
+    public function listByCategory(Category $category, int $page): Response
+    {
+        $pagination = $this->vacancyJournal->readCategory($category, $page);
 
         $content = $this->templateEngine->render(
             '@VesloAnthill/Vacancy/list.html.twig',

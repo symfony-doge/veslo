@@ -6,10 +6,27 @@ anthill_vacancy_index:
     methods:
         - GET
 
-anthill_vacancy_list:
+anthill_vacancy_list_page:
     path: /vacancies/page/{page}
     defaults:
         _controller: veslo.anthill.vacancy_controller:list
+    methods:
+        - GET
+    requirements:
+        page: \d+
+
+anthill_vacancy_list_by_category:
+    path: /category/{categoryName}
+    defaults:
+        _controller: veslo.anthill.vacancy_controller:listByCategory
+        page: 1
+    methods:
+        - GET
+
+anthill_vacancy_list_by_category_page:
+    path: /category/{categoryName}/page/{page}
+    defaults:
+        _controller: veslo.anthill.vacancy_controller:listByCategory
     methods:
         - GET
     requirements:
