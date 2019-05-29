@@ -164,7 +164,7 @@ Result will be persisted in local storage and offered to indexing queue
 
 ### Currently supported roadmaps:
 
-* [hh](https://hh.ru) (configurations: `php`)
+* [hh](https://hh.ru) (configurations: `php`, `javascript`, `golang`, `python`, `java`, `c++`)
 
 ## Usage example
 

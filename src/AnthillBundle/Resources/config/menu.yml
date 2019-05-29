@@ -2,7 +2,7 @@ services:
     veslo.anthill.menu.builder:
         class: Veslo\AnthillBundle\Menu\Builder
 
-    veslo.app.menu.vacancy.category_builder:
+    veslo.app.menu.vacancy.categories_builder:
         class: Veslo\AnthillBundle\Menu\Vacancy\CategoriesBuilder
         arguments:
             - '@knp_menu.factory'

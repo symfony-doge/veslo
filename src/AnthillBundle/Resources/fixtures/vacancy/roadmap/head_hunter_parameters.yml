@@ -9,3 +9,58 @@ Veslo\AnthillBundle\Entity\Vacancy\Roadmap\Configuration\Parameters\HeadHunter:
         orderBy: 'publication_time'
         perPage: 1
         received: 0
+
+    javascript:
+        configurationKey: 'javascript'
+        url: 'https://api.hh.ru/vacancies'
+        text: 'javascript'
+        area: 0
+        dateFrom: <(new DateTime('today'))>
+        dateTo: <(new DateTime('tomorrow'))>
+        orderBy: 'publication_time'
+        perPage: 1
+        received: 0
+
+    golang:
+        configurationKey: 'golang'
+        url: 'https://api.hh.ru/vacancies'
+        text: 'golang'
+        area: 0
+        dateFrom: <(new DateTime('today'))>
+        dateTo: <(new DateTime('tomorrow'))>
+        orderBy: 'publication_time'
+        perPage: 1
+        received: 0
+
+    python:
+        configurationKey: 'python'
+        url: 'https://api.hh.ru/vacancies'
+        text: 'python'
+        area: 0
+        dateFrom: <(new DateTime('today'))>
+        dateTo: <(new DateTime('tomorrow'))>
+        orderBy: 'publication_time'
+        perPage: 1
+        received: 0
+
+    java:
+        configurationKey: 'java'
+        url: 'https://api.hh.ru/vacancies'
+        text: 'java'
+        area: 0
+        dateFrom: <(new DateTime('today'))>
+        dateTo: <(new DateTime('tomorrow'))>
+        orderBy: 'publication_time'
+        perPage: 1
+        received: 0
+
+    cpp:
+        configurationKey: 'c++'
+        url: 'https://api.hh.ru/vacancies'
+        text: 'c++'
+        area: 0
+        dateFrom: <(new DateTime('today'))>
+        dateTo: <(new DateTime('tomorrow'))>
+        orderBy: 'publication_time'
+        perPage: 1
+        received: 0
