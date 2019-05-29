@@ -17,6 +17,7 @@
         vacancy                 // vacancy entity
         snippet_length_max      // max length for snippet to show
         route_show              // route to vacancy show action
+        route_list_by_category  // route to vacancy list by category action
     }
 #}
 
@@ -91,7 +92,7 @@
                     {{- vacancy.roadmapName -}}
                 </div>
 
-                {{ categories.categories(vacancy) }}
+                {{ categories.categories(vacancy, route_list_by_category) }}
             </div>
         </div>
 

@@ -31,7 +31,10 @@
 
             <div class="row mb-5">
                 <div class="col-md-12">
-                    {% include '@VesloAnthill/Vacancy/show/_item.html.twig' with {'vacancy': vacancy} only %}
+                    {% include '@VesloAnthill/Vacancy/show/_item.html.twig' with {
+                        'vacancy': vacancy,
+                        'route_list_by_category': route_vacancy_list_by_category
+                    } only %}
                 </div>
             </div>
         </div>

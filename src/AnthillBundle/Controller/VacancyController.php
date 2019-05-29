@@ -68,8 +68,9 @@ class VacancyController
         $content = $this->templateEngine->render(
             '@VesloAnthill/Vacancy/list.html.twig',
             [
-                'pagination'         => $pagination,
-                'route_vacancy_show' => Route::VACANCY_SHOW,
+                'pagination'                     => $pagination,
+                'route_vacancy_show'             => Route::VACANCY_SHOW,
+                'route_vacancy_list_by_category' => Route::VACANCY_LIST_BY_CATEGORY,
             ]
         );
 
@@ -95,8 +96,9 @@ class VacancyController
         $content = $this->templateEngine->render(
             '@VesloAnthill/Vacancy/list.html.twig',
             [
-                'pagination'         => $pagination,
-                'route_vacancy_show' => Route::VACANCY_SHOW,
+                'pagination'                     => $pagination,
+                'route_vacancy_show'             => Route::VACANCY_SHOW,
+                'route_vacancy_list_by_category' => Route::VACANCY_LIST_BY_CATEGORY,
             ]
         );
 
@@ -116,7 +118,14 @@ class VacancyController
      */
     public function show(Vacancy $vacancy): Response
     {
-        $content  = $this->templateEngine->render('@VesloAnthill/Vacancy/show.html.twig', ['vacancy' => $vacancy]);
+        $content = $this->templateEngine->render(
+            '@VesloAnthill/Vacancy/show.html.twig',
+            [
+                'vacancy'                        => $vacancy,
+                'route_vacancy_list_by_category' => Route::VACANCY_LIST_BY_CATEGORY,
+            ]
+        );
+
         $response = new Response($content);
 
         return $response;

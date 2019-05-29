@@ -90,7 +90,7 @@ class Journal
         $paginationCriteria->addHint(VacancyRepository::PAGINATION_HINT_CATEGORY, $category);
 
         $pagination = $this->vacancyRepository->getPagination($paginationCriteria);
-        $pagination->setUsedRoute(Route::VACANCY_LIST_BY_CATEGORY);
+        $pagination->setUsedRoute(Route::VACANCY_LIST_BY_CATEGORY_PAGE);
 
         return $pagination;
     }
