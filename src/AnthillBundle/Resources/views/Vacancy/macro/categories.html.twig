@@ -22,7 +22,7 @@
 {% macro categories(vacancy, routeListByCategories) %}
     {% for category in vacancy.categories %}
         {% spaceless %}
-        <a href="{{ path(routeListByCategories, {'categoryName': category.name}) }}">
+        <a href="{{ path(routeListByCategories, {'categoryName': category.name}) }}" class="link-vacancy-category">
             <div class="badge badge-info">
                 {{ category.name }}
             </div>

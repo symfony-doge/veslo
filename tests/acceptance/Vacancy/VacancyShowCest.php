@@ -42,7 +42,7 @@ class VacancyShowCest
         $I->seeElement($vacancyListSelector);
 
         $I->amGoingTo('click a vacancy link');
-        $vacancyLinkSelector = '.vacancy-list-item:nth-child(3) a';
+        $vacancyLinkSelector = '.vacancy-list-item:nth-child(3) .link-vacancy';
         $I->scrollTo($vacancyListSelector . ' ' . $vacancyLinkSelector);
         $I->click($vacancyLinkSelector, $vacancyListSelector);
 
