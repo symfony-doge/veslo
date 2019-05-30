@@ -24,7 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Sanity index
  *
  * @ORM\Table(name="sanity_vacancy_index")
- * @ORM\Entity(readOnly=true)
+ * @ORM\Entity(repositoryClass="Veslo\SanityBundle\Entity\Repository\Vacancy\IndexRepository", readOnly=true)
  * @ORM\Cache(usage="READ_ONLY", region="index")
  */
 class Index

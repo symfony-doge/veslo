@@ -1,0 +1,43 @@
+
+{#
+    This file is part of the Veslo project <https://github.com/symfony-doge/veslo>.
+
+    (C) 2019 Pavel Petrov <itnelo@gmail.com>.
+
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+
+    @license https://opensource.org/licenses/GPL-3.0 GPL-3.0
+#}
+
+{#
+    Sanity tag list item.
+
+    {
+        tag            // sanity tag entity
+    }
+#}
+
+<div class="row mt-5 p-3 rounded sanity-tag" style="background: {{ tag.color }};">
+    <div class="col-sm-auto">
+        <div class="row mb-2 mb-sm-0">
+            <div class="col-md-12 text-center text-sm-left">
+                <img src="{{ tag.imageUrl }}" class="img-fluid rounded" alt="{{ tag.title }}" />
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm">
+        <div class="row">
+            <div class="col-md-12 font-weight-bold">
+                {{ tag.title }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                {{ tag.description|raw }}
+            </div>
+        </div>
+    </div>
+</div>

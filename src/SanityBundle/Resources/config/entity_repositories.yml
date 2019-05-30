@@ -1,6 +1,6 @@
 services:
     veslo.sanity.vacancy.index_repository:
-        class: Veslo\AppBundle\Entity\Repository\BaseEntityRepository
+        class: Veslo\SanityBundle\Entity\Repository\Vacancy\IndexRepository
         factory: ['@doctrine.orm.sanity_entity_manager', getRepository]
         arguments:
             - 'Veslo\SanityBundle\Entity\Vacancy\Index'

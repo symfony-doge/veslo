@@ -22,6 +22,7 @@ use Veslo\AnthillBundle\Entity\Vacancy;
 use Veslo\AnthillBundle\Entity\Vacancy\Category;
 use Veslo\AnthillBundle\Enum\Route;
 use Veslo\AnthillBundle\Vacancy\Provider\Journal;
+use Veslo\SanityBundle\Entity\Repository\Vacancy\IndexRepository;
 
 /**
  * Vacancy controller.
@@ -43,15 +44,27 @@ class VacancyController
     private $vacancyJournal;
 
     /**
+     * Sanity index repository
+     *
+     * @var IndexRepository
+     */
+    private $indexRepository;
+
+    /**
      * VacancyController constructor.
      *
-     * @param EngineInterface $templateEngine Template engine
-     * @param Journal         $vacancyJournal Provides vacancies by a simple abstract concept of journal with pages
+     * @param EngineInterface $templateEngine  Template engine
+     * @param Journal         $vacancyJournal  Provides vacancies by a simple abstract concept of journal with pages
+     * @param IndexRepository $indexRepository Sanity index repository
      */
-    public function __construct(EngineInterface $templateEngine, Journal $vacancyJournal)
-    {
-        $this->templateEngine = $templateEngine;
-        $this->vacancyJournal = $vacancyJournal;
+    public function __construct(
+        EngineInterface $templateEngine,
+        Journal $vacancyJournal,
+        IndexRepository $indexRepository
+    ) {
+        $this->templateEngine  = $templateEngine;
+        $this->vacancyJournal  = $vacancyJournal;
+        $this->indexRepository = $indexRepository;
     }
 
     /**
@@ -118,10 +131,14 @@ class VacancyController
      */
     public function show(Vacancy $vacancy): Response
     {
+        $vacancyId   = $vacancy->getId();
+        $sanityIndex = $this->indexRepository->findByVacancyId($vacancyId);
+
         $content = $this->templateEngine->render(
             '@VesloAnthill/Vacancy/show.html.twig',
             [
                 'vacancy'                        => $vacancy,
+                'sanity_index'                   => $sanityIndex,
                 'route_vacancy_list_by_category' => Route::VACANCY_LIST_BY_CATEGORY,
             ]
         );

@@ -5,3 +5,4 @@ services:
         arguments:
             - '@templating'
             - '@veslo.anthill.vacancy.provider.journal'
+            - '@veslo.sanity.vacancy.index_repository'

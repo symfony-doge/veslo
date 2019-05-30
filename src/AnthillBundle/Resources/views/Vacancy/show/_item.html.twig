@@ -35,7 +35,7 @@
 
     <div class="col-md-9">
         <div class="row mt-2 mt-md-0">
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <h1>
                     {{- vacancy.title -}}
                 </h1>
@@ -43,7 +43,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <h2>
                     {{ salary.salary(vacancy) }}
                 </h2>
@@ -77,13 +77,13 @@
         </div>
 
         <div class="row mt-4">
-            <div class="col-sm-9">
+            <div class="col-md-8">
                 {{- vacancy.text|striptags('<ul><li><p><br><strong>')|stripattributes|raw -}}
             </div>
         </div>
 
         <div class="row mt-4">
-            <div class="col-sm-9">
+            <div class="col-md-8">
                 {{ 'vacancy_has_found'|trans }}
 
                 <mark>
@@ -99,7 +99,7 @@
         </div>
 
         <div class="row mt-2">
-            <div class="col-sm-9">
+            <div class="col-md-8">
                 {{ 'categories'|trans({}, 'entities') }}:
 
                 <span class="ml-2">

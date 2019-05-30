@@ -61,7 +61,7 @@
 
         <div class="row mt-2">
             <div class="col-md-12">
-                <a href="{{ url(route_show, {'vacancySlug': vacancy.slug}) }}" class="link-vacancy underline">
+                <a href="{{ url(route_show, {'vacancySlug': vacancy.slug}) }}" class="underline link-vacancy">
                     {{- vacancy.title -}}
                 </a>
             </div>
@@ -76,7 +76,7 @@
         </div>
 
         <div class="row mt-2">
-            <div class="col-sm-9">
+            <div class="col-md-8">
                 {% set snippet = (vacancy.snippet is defined and vacancy.snippet is not empty)
                     ? vacancy.snippet
                     : vacancy.text

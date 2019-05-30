@@ -37,6 +37,14 @@
                     } only %}
                 </div>
             </div>
+
+            {% if sanity_index is defined and sanity_index is not empty %}
+            <div class="row mb-5">
+                <div class="col-md-9 offset-md-3">
+                    {% include '@VesloSanity/Vacancy/Index/_block.html.twig' with {'index': sanity_index} only %}
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
