@@ -69,9 +69,17 @@ class VesloAnthillExtension extends Extension
 
         // Provider options.
         $container->setParameter(
-            'veslo.anthill.vacancy.provider.options',
+            'veslo.anthill.vacancy.provider.journal.options',
             [
-                'per_page' => $config['vacancy']['provider']['per_page'],
+                'per_page'                   => $config['vacancy']['provider']['journal']['per_page'],
+                'max_days_after_publication' => $config['vacancy']['provider']['journal']['max_days_after_publication'],
+            ]
+        );
+        $container->setParameter(
+            'veslo.anthill.vacancy.provider.archive.options',
+            [
+                'per_page'                   => $config['vacancy']['provider']['archive']['per_page'],
+                'min_days_after_publication' => $config['vacancy']['provider']['archive']['min_days_after_publication'],
             ]
         );
 

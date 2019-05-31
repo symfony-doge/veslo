@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Veslo\AnthillBundle\Vacancy\Provider;
 
+use DateTime;
 use Knp\Component\Pager\Pagination\AbstractPagination;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Veslo\AnthillBundle\Entity\Repository\VacancyRepository;
@@ -24,7 +25,7 @@ use Veslo\AnthillBundle\Enum\Route;
 use Veslo\AppBundle\Dto\Paginator\CriteriaDto;
 
 /**
- * Provides vacancies by a simple concept of journal with pages, using pagination internally
+ * Provides non-archived vacancies by a simple concept of journal with pages, using pagination internally
  */
 class Journal
 {
@@ -52,9 +53,15 @@ class Journal
     {
         $this->vacancyRepository = $vacancyRepository;
 
-        // For readability purposes.
         $optionsResolver = new OptionsResolver();
-        $optionsResolver->setDefaults(['per_page' => 10]);
+        $optionsResolver->setDefaults(
+            [
+                'per_page'                   => 10,
+                'max_days_after_publication' => 30,
+            ]
+        );
+        $optionsResolver->setAllowedTypes('per_page', ['int']);
+        $optionsResolver->setAllowedTypes('max_days_after_publication', ['int']);
 
         $this->options = $optionsResolver->resolve($options);
     }
@@ -71,7 +78,7 @@ class Journal
         $paginationCriteria = $this->buildCommonPaginationCriteria($page);
 
         $pagination = $this->vacancyRepository->getPagination($paginationCriteria);
-        $pagination->setUsedRoute(Route::VACANCY_LIST);
+        $pagination->setUsedRoute(Route::VACANCY_LIST_PAGE);
 
         return $pagination;
     }
@@ -109,6 +116,10 @@ class Journal
         $paginationCriteria = new CriteriaDto();
         $paginationCriteria->setPage($pageNormalized);
         $paginationCriteria->setLimit($this->options['per_page']);
+
+        $daysFrom = $this->options['max_days_after_publication'];
+        $dateFrom = new DateTime("-$daysFrom days");
+        $paginationCriteria->addHint(VacancyRepository::PAGINATION_HINT_SYNC_DATE_AFTER, $dateFrom);
 
         return $paginationCriteria;
     }

@@ -25,7 +25,7 @@ final class Route
      *
      * @const string
      */
-    public const VACANCY_LIST = 'anthill_vacancy_list_page';
+    public const VACANCY_LIST_PAGE = 'anthill_vacancy_list_page';
 
     /**
      * Vacancy list by category action
@@ -40,6 +40,20 @@ final class Route
      * @const string
      */
     public const VACANCY_LIST_BY_CATEGORY_PAGE = 'anthill_vacancy_list_by_category_page';
+
+    /**
+     * Vacancy archive action
+     *
+     * @const string
+     */
+    public const VACANCY_ARCHIVE = 'anthill_vacancy_archive';
+
+    /**
+     * Vacancy archive action with page
+     *
+     * @const string
+     */
+    public const VACANCY_ARCHIVE_PAGE = 'anthill_vacancy_archive_page';
 
     /**
      * Vacancy show action

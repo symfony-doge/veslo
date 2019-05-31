@@ -8,8 +8,15 @@ veslo_anthill:
                 pause_duration: 120
         # Options for vacancy providers
         provider:
-            # Vacancies count per page for rendering during list action
-            per_page: 10
+            journal:
+                # Count of vacancies per page for rendering during list action
+                per_page: 10
+                # How many days after publication are allowed for a vacancy to be rendered in "fresh" lists
+                max_days_after_publication: 30
+            archive:
+                per_page: 10
+                # Minimum days after publication that is required for a vacancy to be considered as "archived"
+                min_days_after_publication: 30
         # Options for vacancy repository
         repository:
             # Query result cache namespace for vacancy repository

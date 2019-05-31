@@ -34,6 +34,12 @@ use Veslo\AnthillBundle\Entity\Vacancy\MappedSuperclass\SynchronizableDataFields
  *             name="anthill_vacancy_roadmap_name_external_identifier_uq",
  *             columns={"roadmap_name", "external_identifier"}
  *         )
+ *     },
+ *     indexes={
+ *         @ORM\Index(
+ *             name="anthill_vacancy_synchronization_date_ix",
+ *             columns={"synchronization_date"}
+ *         )
  *     }
  * )
  * @ORM\Entity(repositoryClass="Veslo\AnthillBundle\Entity\Repository\VacancyRepository")

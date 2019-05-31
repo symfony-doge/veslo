@@ -16,6 +16,8 @@ parameters:
     doctrine.dbal.connections.sanity.database_user: '%env(string:POSTGRES_USER)%'
     doctrine.dbal.connections.sanity.database_password: '%env(string:POSTGRES_PASSWORD)%'
 
+    app.locale: en
+
     app.mailer_transport: smtp
     app.mailer_host: 127.0.0.1
     app.mailer_user: ~

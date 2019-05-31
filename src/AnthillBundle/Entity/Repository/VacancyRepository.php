@@ -45,6 +45,20 @@ class VacancyRepository extends BaseEntityRepository implements PaginateableInte
     public const PAGINATION_HINT_CATEGORY = 'category';
 
     /**
+     * A hint for the pagination building process to include a sync date after filter statement
+     *
+     * @const string
+     */
+    public const PAGINATION_HINT_SYNC_DATE_AFTER = 'synchronization_date_after';
+
+    /**
+     * A hint for the pagination building process to include a sync date before filter statement
+     *
+     * @const string
+     */
+    public const PAGINATION_HINT_SYNC_DATE_BEFORE = 'synchronization_date_before';
+
+    /**
      * Modifies vacancy search query to provide data in small bunches
      *
      * @var PaginatorInterface
@@ -137,7 +151,7 @@ class VacancyRepository extends BaseEntityRepository implements PaginateableInte
             ->addSelect('c')
             // inner join for company is required; due to fixtures loading logic there are some cases
             // when a deletion date can be set in company and not present in related vacancies at the same time.
-            // it leads to inconsistent state in test environment; normally, a soft delete logic should be
+            // it leads to inconsistent state in the test environment; normally, a soft delete logic should be
             // properly applied for all relations at once.
             ->leftJoin('e.categories', 'ct')
             ->addSelect('ct')
@@ -179,7 +193,27 @@ class VacancyRepository extends BaseEntityRepository implements PaginateableInte
 
             $queryBuilder
                 ->andWhere($queryBuilder->expr()->isMemberOf(':category', 'e.categories'))
-                ->setParameter(':category', $category)
+                ->setParameter('category', $category)
+            ;
+        }
+
+        // Hint: sync date before.
+        if (array_key_exists(self::PAGINATION_HINT_SYNC_DATE_BEFORE, $paginationHints)) {
+            $syncDateUpperBound = $paginationHints[self::PAGINATION_HINT_SYNC_DATE_BEFORE];
+
+            $queryBuilder
+                ->andWhere($queryBuilder->expr()->lt('e.synchronizationDate', ':syncDateUpperBound'))
+                ->setParameter('syncDateUpperBound', $syncDateUpperBound)
+            ;
+        }
+
+        // Hint: sync date after.
+        if (array_key_exists(self::PAGINATION_HINT_SYNC_DATE_AFTER, $paginationHints)) {
+            $syncDateLowerBound = $paginationHints[self::PAGINATION_HINT_SYNC_DATE_AFTER];
+
+            $queryBuilder
+                ->andWhere($queryBuilder->expr()->gte('e.synchronizationDate', ':syncDateLowerBound'))
+                ->setParameter('syncDateLowerBound', $syncDateLowerBound)
             ;
         }
 

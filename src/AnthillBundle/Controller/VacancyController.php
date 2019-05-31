@@ -21,6 +21,7 @@ use Symfony\Component\Templating\EngineInterface;
 use Veslo\AnthillBundle\Entity\Vacancy;
 use Veslo\AnthillBundle\Entity\Vacancy\Category;
 use Veslo\AnthillBundle\Enum\Route;
+use Veslo\AnthillBundle\Vacancy\Provider\Archive;
 use Veslo\AnthillBundle\Vacancy\Provider\Journal;
 use Veslo\SanityBundle\Entity\Repository\Vacancy\IndexRepository;
 
@@ -44,6 +45,13 @@ class VacancyController
     private $vacancyJournal;
 
     /**
+     * Provides archived vacancies, uses pagination internally
+     *
+     * @var Archive
+     */
+    private $vacancyArchive;
+
+    /**
      * Sanity index repository
      *
      * @var IndexRepository
@@ -55,22 +63,25 @@ class VacancyController
      *
      * @param EngineInterface $templateEngine  Template engine
      * @param Journal         $vacancyJournal  Provides vacancies by a simple abstract concept of journal with pages
+     * @param Archive         $vacancyArchive  Provides archived vacancies, uses pagination internally
      * @param IndexRepository $indexRepository Sanity index repository
      */
     public function __construct(
         EngineInterface $templateEngine,
         Journal $vacancyJournal,
+        Archive $vacancyArchive,
         IndexRepository $indexRepository
     ) {
         $this->templateEngine  = $templateEngine;
         $this->vacancyJournal  = $vacancyJournal;
+        $this->vacancyArchive  = $vacancyArchive;
         $this->indexRepository = $indexRepository;
     }
 
     /**
      * Renders a list of vacancies
      *
-     * @param int $page Page in vacancy journal
+     * @param int $page Page in the vacancy journal
      *
      * @return Response
      */
@@ -96,7 +107,7 @@ class VacancyController
      * Renders a list of vacancies for a target category
      *
      * @param Category $category Vacancy category
-     * @param int      $page     Page in vacancy journal
+     * @param int      $page     Page in the vacancy journal
      *
      * @return Response
      *
@@ -105,6 +116,31 @@ class VacancyController
     public function listByCategory(Category $category, int $page): Response
     {
         $pagination = $this->vacancyJournal->readCategory($category, $page);
+
+        $content = $this->templateEngine->render(
+            '@VesloAnthill/Vacancy/list.html.twig',
+            [
+                'pagination'                     => $pagination,
+                'route_vacancy_show'             => Route::VACANCY_SHOW,
+                'route_vacancy_list_by_category' => Route::VACANCY_LIST_BY_CATEGORY,
+            ]
+        );
+
+        $response = new Response($content);
+
+        return $response;
+    }
+
+    /**
+     * Renders a list of archived vacancies
+     *
+     * @param int $page Page in the vacancy archive
+     *
+     * @return Response
+     */
+    public function listArchive(int $page): Response
+    {
+        $pagination = $this->vacancyArchive->read($page);
 
         $content = $this->templateEngine->render(
             '@VesloAnthill/Vacancy/list.html.twig',

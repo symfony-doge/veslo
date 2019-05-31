@@ -3,7 +3,7 @@
     @extend .nav;
 
     .nav-item:not(.first) {
-        padding-left: $nav-link-padding-y * 4;
+        padding-left: $nav-link-padding-y * 6;
     }
 }
 

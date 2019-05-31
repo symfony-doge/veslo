@@ -32,6 +32,23 @@ anthill_vacancy_list_by_category_page:
     requirements:
         page: \d+
 
+anthill_vacancy_archive:
+    path: /archive
+    defaults:
+        _controller: veslo.anthill.vacancy_controller:listArchive
+        page: 1
+    methods:
+        - GET
+
+anthill_vacancy_archive_page:
+    path: /archive/page/{page}
+    defaults:
+        _controller: veslo.anthill.vacancy_controller:listArchive
+    methods:
+        - GET
+    requirements:
+        page: \d+
+
 anthill_vacancy_show:
     path: /vacancy/{vacancySlug}
     defaults:

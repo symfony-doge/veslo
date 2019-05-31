@@ -3,4 +3,10 @@ services:
         class: Veslo\AnthillBundle\Vacancy\Provider\Journal
         arguments:
             - '@veslo.anthill.vacancy_repository'
-            - '%veslo.anthill.vacancy.provider.options%'
+            - '%veslo.anthill.vacancy.provider.journal.options%'
+
+    veslo.anthill.vacancy.provider.archive:
+        class: Veslo\AnthillBundle\Vacancy\Provider\Archive
+        arguments:
+            - '@veslo.anthill.vacancy_repository'
+            - '%veslo.anthill.vacancy.provider.archive.options%'

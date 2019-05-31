@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Veslo\AnthillBundle\Menu;
 
 use Knp\Menu\ItemInterface;
+use Veslo\AnthillBundle\Enum\Route;
 
 /**
  * Anthill bundle menu builder
@@ -31,9 +32,27 @@ class Builder
      */
     public function appendTo(ItemInterface $root): void
     {
-        $root
-            ->addChild('homepage', ['route' => 'anthill_vacancy_index'])
-            ->setExtra('translation_domain', 'menu')
-        ;
+        $root->addChild(
+            'homepage',
+            [
+                'route'  => 'anthill_vacancy_index',
+                'extras' => [
+                    'translation_domain' => 'menu',
+                ],
+            ]
+        );
+
+        $root->addChild(
+            'archive',
+            [
+                'route'  => Route::VACANCY_ARCHIVE,
+                'extras' => [
+                    'routes'             => [
+                        ['route' => Route::VACANCY_ARCHIVE_PAGE],
+                    ],
+                    'translation_domain' => 'menu',
+                ],
+            ]
+        );
     }
 }
