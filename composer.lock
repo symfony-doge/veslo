@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cbc92cef8e3ffb556b71680b854ade89",
+    "content-hash": "a16c66fd330542e8716f6586e124c444",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -3664,16 +3664,16 @@
         },
         {
             "name": "symfony-doge/ministry-of-truth-client",
-            "version": "0.x-dev",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony-doge/ministry-of-truth-client.git",
-                "reference": "0c8458acfd690e68727f49e917dd3bb8832e47c5"
+                "reference": "2c293fa16d6a72a2b16b580de2eebc922d159508"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony-doge/ministry-of-truth-client/zipball/0c8458acfd690e68727f49e917dd3bb8832e47c5",
-                "reference": "0c8458acfd690e68727f49e917dd3bb8832e47c5",
+                "url": "https://api.github.com/repos/symfony-doge/ministry-of-truth-client/zipball/2c293fa16d6a72a2b16b580de2eebc922d159508",
+                "reference": "2c293fa16d6a72a2b16b580de2eebc922d159508",
                 "shasum": ""
             },
             "require": {
@@ -3695,7 +3695,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.x-dev"
+                    "dev-master": "0.1.1-dev"
                 }
             },
             "autoload": {
@@ -3719,7 +3719,7 @@
             ],
             "description": "An interface between vacancy aggregator & sanity index provider",
             "homepage": "https://github.com/symfony-doge/ministry-of-truth-client",
-            "time": "2019-05-27T10:43:42+00:00"
+            "time": "2019-05-31T14:12:28+00:00"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -4453,16 +4453,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.10.0",
+            "version": "v2.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "5240e21982885b76629552d83b4ebb6d41ccde6b"
+                "reference": "c344879ae57dc1487b1df3e3d8325936125ba2cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/5240e21982885b76629552d83b4ebb6d41ccde6b",
-                "reference": "5240e21982885b76629552d83b4ebb6d41ccde6b",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/c344879ae57dc1487b1df3e3d8325936125ba2cc",
+                "reference": "c344879ae57dc1487b1df3e3d8325936125ba2cc",
                 "shasum": ""
             },
             "require": {
@@ -4478,7 +4478,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.10-dev"
+                    "dev-master": "2.11-dev"
                 }
             },
             "autoload": {
@@ -4516,7 +4516,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-05-14T12:03:52+00:00"
+            "time": "2019-05-31T06:21:42+00:00"
         },
         {
             "name": "zendframework/zend-code",
@@ -6253,9 +6253,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "symfony-doge/ministry-of-truth-client": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
