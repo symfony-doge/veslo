@@ -159,8 +159,17 @@ $ docker-compose run --rm app bin/console veslo:anthill:collecting --iterations=
 
 Grabs a parsed vacancy data (instance of `AnthillBundle/Dto/Vacancy/RawDto`) 
 and decides whether should it be collected for analysis or not.
-Result will be persisted in local storage and offered to indexing queue
+Result will be persisted in the local storage and offered to the indexing queue
 (default `veslo.app.workflow.vacancy_research.to_index`)
+
+```
+$ docker-compose run --rm app bin/console veslo:sanity:indexing --iterations=1
+```
+
+Sends an accepted vacancy to the microservice for analysis (see `ANALYSER_HOST`, `ANALYSER_PORT`)
+and persists received metadata in the local storage. Remote service implements
+API defined by [symfony-doge/ministry-of-truth-client](https://github.com/symfony-doge/ministry-of-truth-client) bridge.
+Example (Go + Gin): [symfony-doge/ministry-of-truth-cis](https://github.com/symfony-doge/ministry-of-truth-cis).
 
 ### Currently supported roadmaps:
 
