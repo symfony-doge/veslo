@@ -7,13 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 
-- Upgrade to stable MoT client version
-- Inject a real MoT client instead of "Dummy"
-- Integration with Travis CI
+- No changes yet.
 
-Waiting for the Ministry of Truth microservice implementation (Go + gin-gonic)
-and Client fixes (auto-deserialization is not tested yet in 
-[symfony-doge/ministry-of-truth-client](https://github.com/symfony-doge/ministry-of-truth-client/tree/0.x)).
+## [0.5.0] - 2019-06-01
+### Added
+
+- New configurations for `hh` roadmap: `javascript`, `golang`, `python`, `java`, `c++`.
+- Expanding categories for a vacancy on-the-fly (if a duplicate has been found for multiple roadmap configurations).
+- Vacancy archive action.
+- Vacancy list by category action (based on roadmap configurations).
+- Submenu with vacancy categories.
+
+### Fixed
+
+- Switching to a stable [client](https://github.com/symfony-doge/ministry-of-truth-client) version for accessing API
+of the vacancy analyser microservice ([symfony-doge/ministry-of-truth-cis](https://github.com/symfony-doge/ministry-of-truth-cis)), integration tweaks.
+- Markup/icon fixes.
 
 ## [0.4.0] - 2019-04-13
 ### Added
@@ -82,7 +91,8 @@ and conveyor processing w/ [rabbitmq](https://github.com/rabbitmq)
 
 Vacancy data is shown "as is", w/o any ratings or transformations.
 
-[Unreleased]: https://github.com/symfony-doge/veslo/compare/0.4.0...0.x
+[Unreleased]: https://github.com/symfony-doge/veslo/compare/0.5.0...0.x
+[0.5.0]: https://github.com/symfony-doge/veslo/compare/0.4.0..0.5.0
 [0.4.0]: https://github.com/symfony-doge/veslo/compare/0.3.0..0.4.0
 [0.3.0]: https://github.com/symfony-doge/veslo/compare/0.2.0..0.3.0
 [0.2.0]: https://github.com/symfony-doge/veslo/compare/0.1.0..0.2.0
