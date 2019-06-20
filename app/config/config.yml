@@ -82,6 +82,7 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     globals:
+        app_name: '%app.name%'
         truncate_separator: '...'
 
 swiftmailer:

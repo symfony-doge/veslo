@@ -1,15 +1,15 @@
 {
-    "name": "Veslo.IT",
-    "short_name": "Veslo.IT",
+    "name": "Veslo",
+    "short_name": "Veslo",
     "icons": [
         {
-            "src": "/android-chrome-96x96.png?v=rMqNo0LrxY",
+            "src": "/android-chrome-96x96.png",
             "sizes": "96x96",
             "type": "image/png"
         }
     ],
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
-    "start_url": "https://veslo.it",
+    "start_url": "http://127.0.0.1:8080",
     "display": "standalone"
 }

@@ -38,6 +38,8 @@ you need to insert them manually with a separate command.
 $ docker-compose run --rm app bin/console doctrine:fixtures:load --group roadmap.configuration.parameters --append
 ```
 
+Up to 120 sec may be required for starting up the vacancy parsing process.
+
 ### Manual
 
 You can clone and deploy the application with your own environment
