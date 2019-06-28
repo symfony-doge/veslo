@@ -19,6 +19,7 @@
     }
 #}
 
+{% import '@VesloApp/Common/macro/date.html.twig' as date %}
 {% import '@VesloAnthill/Vacancy/macro/salary.html.twig' as salary %}
 {% import '@VesloAnthill/Vacancy/macro/categories.html.twig' as categories %}
 {% import '@VesloAnthill/Company/macro/name.html.twig' as companyName %}
@@ -69,7 +70,7 @@
                 {{ 'vacancy_posted_on'|trans }}
 
                 <mark>
-                    {{ vacancy.publicationDate|localizeddate }}
+                    {{ date.date(vacancy.publicationDate) }}
                 </mark>
 
                 <a href="{{- vacancy.url -}}" target="_blank" class="underline"></a>
@@ -87,7 +88,7 @@
                 {{ 'vacancy_has_found'|trans }}
 
                 <mark>
-                    {{- vacancy.synchronizationDate|localizeddate -}}
+                    {{ date.date(vacancy.synchronizationDate) }}
                 </mark>
 
                 {{ 'by_roadmap'|trans }}

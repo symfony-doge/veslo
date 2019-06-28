@@ -31,9 +31,9 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
     date
 
 COPY nginx.conf /etc/nginx/
-COPY veslo.it.conf /etc/nginx/sites-available/
+COPY veslo.conf /etc/nginx/sites-available/
 
-RUN ln -s /etc/nginx/sites-available/veslo.it.conf /etc/nginx/conf.d/veslo.it.conf && \
+RUN ln -s /etc/nginx/sites-available/veslo.conf /etc/nginx/conf.d/veslo.conf && \
     rm /etc/nginx/conf.d/default.conf
 
 RUN usermod -u ${HOST_UID} www-data

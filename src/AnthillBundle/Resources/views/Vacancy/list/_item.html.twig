@@ -21,6 +21,7 @@
     }
 #}
 
+{% import '@VesloApp/Common/macro/date.html.twig' as date %}
 {% import '@VesloAnthill/Vacancy/macro/salary.html.twig' as salary %}
 {% import '@VesloAnthill/Vacancy/macro/categories.html.twig' as categories %}
 {% import '@VesloAnthill/Company/macro/name.html.twig' as companyName %}
@@ -98,7 +99,7 @@
 
         <div class="row mt-2">
             <div class="col-md-12">
-                {{- vacancy.publicationDate|localizeddate -}}
+                {{ date.date(vacancy.publicationDate) }}
             </div>
         </div>
     </div>
