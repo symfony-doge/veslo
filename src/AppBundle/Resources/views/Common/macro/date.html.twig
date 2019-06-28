@@ -19,5 +19,5 @@
 #}
 
 {% macro date(date) %}
-    {{- date|localizeddate('medium', 'short') -}}
+    {{- date|localizeddate('medium', 'short', app.request.locale) -}}
 {% endmacro date %}

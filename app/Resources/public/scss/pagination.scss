@@ -1,0 +1,12 @@
+
+.pagination {
+    @extend .justify-content-center, .justify-content-md-start;
+
+    .page-item {
+        @extend .d-none, .d-md-block;
+    }
+
+    .page-item:first-child, .page-item.active, .page-item:last-child {
+        @extend .d-block;
+    }
+}

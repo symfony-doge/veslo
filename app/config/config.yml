@@ -117,6 +117,8 @@ nelmio_alice:
     max_unique_values_retry: 150
 
 knp_paginator:
+    template:
+        pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'
     page_range: 7
 
 symfony_doge_motc:

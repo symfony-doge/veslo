@@ -17,10 +17,7 @@
 {% endblock %}
 
 {% block body %}
-    {% set paginationHtml = knp_pagination_render(
-        pagination,
-        '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'
-    ) %}
+    {% set paginationHtml = knp_pagination_render(pagination) %}
 
     <div class="row">
         <div class="col-md-12">

@@ -22,7 +22,7 @@
     {% set isSalaryFromPresent = (vacancy.salaryFrom is defined and vacancy.salaryFrom is not empty) %}
 
     {% if isSalaryFromPresent %}
-        {{- vacancy.salaryFrom|localizednumber -}}
+        {{- vacancy.salaryFrom|localizednumber('decimal', 'default', app.request.locale) -}}
     {% endif %}
 
     {% set isSalaryToPresent = (vacancy.salaryTo is defined and vacancy.salaryTo is not empty) %}
@@ -32,7 +32,7 @@
             —
         {% endif %}
 
-        {{- vacancy.salaryTo|localizednumber -}}
+        {{- vacancy.salaryTo|localizednumber('decimal', 'default', app.request.locale) -}}
     {% endif %}
 
     {% set isSalaryCurrencyPresent = (vacancy.salaryCurrency is defined and vacancy.salaryCurrency is not empty) %}
