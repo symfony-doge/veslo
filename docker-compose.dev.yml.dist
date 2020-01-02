@@ -65,17 +65,6 @@ services:
         volumes:
             - redis_data:${REDIS_DATA_DIR}
 
-    redis-commander:
-        image: rediscommander/redis-commander:${REDIS_COMMANDER_VERSION}
-        networks:
-            backend:
-                ipv4_address: 172.101.9.1
-        environment:
-            REDIS_HOST: ${REDIS_HOST}
-            REDIS_PORT: ${REDIS_PORT}
-        ports:
-            - "${REDIS_COMMANDER_PORT}:8081"
-
     mq:
         build:
             context: ./docker/${APP_ENV}/mq
