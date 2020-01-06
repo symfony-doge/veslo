@@ -181,5 +181,9 @@ Example (Go + Gin): [symfony-doge/ministry-of-truth-cis](https://github.com/symf
 
 [www.veslo.it](https://veslo.it)
 
+## See also
+
+- [symfony-doge/management-kit](https://github.com/symfony-doge/management-kit) — A set of monitoring & management GUI tools to manage data & processes of this project.
+
 ## Changelog
 All notable changes to this project will be documented in [CHANGELOG.md](CHANGELOG.md).
