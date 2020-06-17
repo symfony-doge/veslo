@@ -4,44 +4,40 @@ doctrine:
         entity_managers:
             anthill:
                 connection: anthill
-                naming_strategy: doctrine.orm.naming_strategy.underscore
+                # https://github.com/doctrine/orm/blob/2.8.x/UPGRADE.md#deprecated-number-unaware-doctrineormmappingunderscorenamingstrategy
+                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
                 default_repository_class: Veslo\AppBundle\Entity\Repository\BaseEntityRepository
                 metadata_cache_driver:
-                    type: predis
-                    host: '%app.redis.host%'
-                    port: '%app.redis.port%'
-                    database: 1
+                    type: pool
+                    pool: cache.app.anthill
                 result_cache_driver:
-                    cache_provider: doctrine.orm.anthill_metadata_cache
+                    type: pool
+                    pool: cache.app.anthill
                 query_cache_driver:
-                    cache_provider: doctrine.orm.anthill_metadata_cache
+                    type: pool
+                    pool: cache.app.anthill
                 second_level_cache:
                     region_cache_driver:
-                        cache_provider: doctrine.orm.anthill_metadata_cache
+                        type: pool
+                        pool: cache.app.anthill
                     region_lifetime: 14400
                     regions:
                         roadmap_parameters_head_hunter:
                             type: filelock
                             cache_driver:
-                                type: predis
-                                host: '%app.redis.host%'
-                                port: '%app.redis.port%'
-                                database: 2
+                                type: pool
+                                pool: cache.app.anthill
                         vacancies:
                             type: default
                             cache_driver:
-                                type: predis
-                                host: '%app.redis.host%'
-                                port: '%app.redis.port%'
-                                database: 3
+                                type: pool
+                                pool: cache.app.anthill
                             lifetime: '%anthill.vacancies.cache_lifetime%'
                         history:
                             type: default
                             cache_driver:
-                                type: predis
-                                host: '%app.redis.host%'
-                                port: '%app.redis.port%'
-                                database: 4
+                                type: pool
+                                pool: cache.app.anthill
                 mappings:
                     # is_bundle is considered a legacy option, so we use "Outside of a Bundle" style
                     # all bundles can potentially be moved to project dependencies category
@@ -57,29 +53,28 @@ doctrine:
                         enabled: true
             sanity:
                 connection: sanity
-                naming_strategy: doctrine.orm.naming_strategy.underscore
+                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
                 default_repository_class: Veslo\AppBundle\Entity\Repository\BaseEntityRepository
                 metadata_cache_driver:
-                    type: predis
-                    host: '%app.redis.host%'
-                    port: '%app.redis.port%'
-                    database: 5
+                    type: pool
+                    pool: cache.app.sanity
                 result_cache_driver:
-                    cache_provider: doctrine.orm.sanity_metadata_cache
+                    type: pool
+                    pool: cache.app.sanity
                 query_cache_driver:
-                    cache_provider: doctrine.orm.sanity_metadata_cache
+                    type: pool
+                    pool: cache.app.sanity
                 second_level_cache:
                     region_cache_driver:
-                        cache_provider: doctrine.orm.sanity_metadata_cache
+                        type: pool
+                        pool: cache.app.sanity
                     region_lifetime: 14400
                     regions:
                         index:
                             type: default
                             cache_driver:
-                                type: predis
-                                host: '%app.redis.host%'
-                                port: '%app.redis.port%'
-                                database: 6
+                                type: pool
+                                pool: cache.app.sanity
                             lifetime: 0
                 mappings:
                     VesloSanityBundle:
