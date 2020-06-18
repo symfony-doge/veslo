@@ -9,7 +9,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - No changes yet.
 
-## [0.5.0] - 2019-06-01
+## [0.5.1] - 2020-06-18
+### Added
+
+- "Fork me on GitHub" ribbon button.
+
+### Changed
+
+- Date and time representation is now in the short format, seconds are gone.
+- Localized number format for salaries.
+
+### Fixed
+
+- Pagination block is shortened for the small screen resolutions to prevent overflows.
+- README.md and translation fixes.
+
+### Security
+    
+- Core components from the Symfony LTS environment have updated to the date, deprecation warnings are resolved.
+
+Versions `0.4.0` and `0.5.0` are now considered as YANKED, because of removing a temporary package from the packagist.
+Actually, it isn't so critical to the whole application (was a dependency for the `dev` scope), but a set of tests
+in these versions may not work as expected.
+
+## [0.5.0] - 2019-06-01 [YANKED]
 ### Added
 
 - New configurations for `hh` roadmap: `javascript`, `golang`, `python`, `java`, `c++`.
@@ -24,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 of the vacancy analyser microservice ([symfony-doge/ministry-of-truth-cis](https://github.com/symfony-doge/ministry-of-truth-cis)), integration tweaks.
 - Markup/icon fixes.
 
-## [0.4.0] - 2019-04-13
+## [0.4.0] - 2019-04-13 [YANKED]
 ### Added
 
 - Dynamic proxy rotation by fetching a list with endpoints by URI
@@ -91,7 +114,8 @@ and conveyor processing w/ [rabbitmq](https://github.com/rabbitmq)
 
 Vacancy data is shown "as is", w/o any ratings or transformations.
 
-[Unreleased]: https://github.com/symfony-doge/veslo/compare/0.5.0...0.x
+[Unreleased]: https://github.com/symfony-doge/veslo/compare/0.5.1...0.x
+[0.5.1]: https://github.com/symfony-doge/veslo/compare/0.5.0..0.5.1
 [0.5.0]: https://github.com/symfony-doge/veslo/compare/0.4.0..0.5.0
 [0.4.0]: https://github.com/symfony-doge/veslo/compare/0.3.0..0.4.0
 [0.3.0]: https://github.com/symfony-doge/veslo/compare/0.2.0..0.3.0
