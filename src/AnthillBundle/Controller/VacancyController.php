@@ -133,12 +133,17 @@ class VacancyController
     {
         $pagination = $this->vacancyJournal->readCategory($category, $page);
 
+        $messageVacanciesNotFound = $this->translator->trans('fresh_vacancies_are_not_found');
+
         $content = $this->templateEngine->render(
             '@VesloAnthill/Vacancy/list.html.twig',
             [
                 'pagination'                     => $pagination,
                 'route_vacancy_show'             => Route::VACANCY_SHOW,
                 'route_vacancy_list_by_category' => Route::VACANCY_LIST_BY_CATEGORY,
+                'messages'                       => [
+                    'vacancies_not_found' => $messageVacanciesNotFound,
+                ],
             ]
         );
 
