@@ -47,6 +47,6 @@ class VacancyShowCest
         $I->click($vacancyLinkSelector, $vacancyListSelector);
 
         $I->expectTo('see a vacancy page');
-        $I->see('Опубликована');
+        $I->see('Posted on');
     }
 }

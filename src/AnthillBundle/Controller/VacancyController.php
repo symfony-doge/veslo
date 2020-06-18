@@ -18,6 +18,7 @@ namespace Veslo\AnthillBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 use Veslo\AnthillBundle\Entity\Vacancy;
 use Veslo\AnthillBundle\Entity\Vacancy\Category;
 use Veslo\AnthillBundle\Enum\Route;
@@ -59,23 +60,33 @@ class VacancyController
     private $indexRepository;
 
     /**
+     * Translates the given message using locale
+     *
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    /**
      * VacancyController constructor.
      *
-     * @param EngineInterface $templateEngine  Template engine
-     * @param Journal         $vacancyJournal  Provides vacancies by a simple abstract concept of journal with pages
-     * @param Archive         $vacancyArchive  Provides archived vacancies, uses pagination internally
-     * @param IndexRepository $indexRepository Sanity index repository
+     * @param EngineInterface     $templateEngine  Template engine
+     * @param Journal             $vacancyJournal  Provides vacancies by an abstract concept of journal
+     * @param Archive             $vacancyArchive  Provides archived vacancies, uses pagination internally
+     * @param IndexRepository     $indexRepository Sanity index repository
+     * @param TranslatorInterface $translator      Translates the given message using locale
      */
     public function __construct(
         EngineInterface $templateEngine,
         Journal $vacancyJournal,
         Archive $vacancyArchive,
-        IndexRepository $indexRepository
+        IndexRepository $indexRepository,
+        TranslatorInterface $translator
     ) {
         $this->templateEngine  = $templateEngine;
         $this->vacancyJournal  = $vacancyJournal;
         $this->vacancyArchive  = $vacancyArchive;
         $this->indexRepository = $indexRepository;
+        $this->translator      = $translator;
     }
 
     /**
@@ -89,12 +100,17 @@ class VacancyController
     {
         $pagination = $this->vacancyJournal->read($page);
 
+        $messageVacanciesNotFound = $this->translator->trans('fresh_vacancies_are_not_found');
+
         $content = $this->templateEngine->render(
             '@VesloAnthill/Vacancy/list.html.twig',
             [
                 'pagination'                     => $pagination,
                 'route_vacancy_show'             => Route::VACANCY_SHOW,
                 'route_vacancy_list_by_category' => Route::VACANCY_LIST_BY_CATEGORY,
+                'messages'                       => [
+                    'vacancies_not_found' => $messageVacanciesNotFound,
+                ],
             ]
         );
 
@@ -142,12 +158,17 @@ class VacancyController
     {
         $pagination = $this->vacancyArchive->read($page);
 
+        $messageVacanciesNotFound = $this->translator->trans('vacancies_are_not_found');
+
         $content = $this->templateEngine->render(
             '@VesloAnthill/Vacancy/list.html.twig',
             [
                 'pagination'                     => $pagination,
                 'route_vacancy_show'             => Route::VACANCY_SHOW,
                 'route_vacancy_list_by_category' => Route::VACANCY_LIST_BY_CATEGORY,
+                'messages'                       => [
+                    'vacancies_not_found' => $messageVacanciesNotFound,
+                ],
             ]
         );
 

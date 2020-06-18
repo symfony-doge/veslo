@@ -7,3 +7,4 @@ services:
             - '@veslo.anthill.vacancy.provider.journal'
             - '@veslo.anthill.vacancy.provider.archive'
             - '@veslo.sanity.vacancy.index_repository'
+            - '@translator'

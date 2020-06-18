@@ -1,6 +1,7 @@
 vacancies_are_not_found: 'Vacancies are not found.'
+fresh_vacancies_are_not_found: 'Fresh vacancies are not found.'
 vacancy_is_not_found: 'Vacancy is not found.'
-vacancy_has_found: 'Vacancy has found'
+vacancy_is_found: 'Vacancy is found'
 vacancy_posted_on: 'Posted on'
 no_categories_assigned: 'No categories assigned'
 by_roadmap: 'by roadmap'
