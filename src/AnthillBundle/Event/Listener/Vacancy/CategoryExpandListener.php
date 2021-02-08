@@ -52,7 +52,7 @@ class CategoryExpandListener
      *
      * @return void
      */
-    public function onDecisionAppliedEvent(AppliedEvent $event): void
+    public function onDecisionApplied(AppliedEvent $event): void
     {
         $decision = $event->getDecision();
 

@@ -78,7 +78,12 @@ class Company
      *
      * @var Collection<Vacancy>
      *
-     * @ORM\OneToMany(targetEntity="Veslo\AnthillBundle\Entity\Vacancy", mappedBy="company", cascade={"remove"})
+     * @ORM\OneToMany(
+     *     targetEntity="Veslo\AnthillBundle\Entity\Vacancy",
+     *     mappedBy="company",
+     *     fetch="EXTRA_LAZY",
+     *     cascade={"remove"}
+     * )
      */
     private $vacancies;
 

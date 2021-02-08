@@ -54,7 +54,7 @@ class Category
      *
      * @var Collection<Vacancy>
      *
-     * @ORM\ManyToMany(targetEntity="Veslo\AnthillBundle\Entity\Vacancy", mappedBy="categories")
+     * @ORM\ManyToMany(targetEntity="Veslo\AnthillBundle\Entity\Vacancy", mappedBy="categories", fetch="EXTRA_LAZY")
      */
     private $vacancies;
 
@@ -117,10 +117,6 @@ class Category
      */
     public function addVacancy(Vacancy $vacancy): void
     {
-        if ($this->vacancies->contains($vacancy)) {
-            return;
-        }
-
         $this->vacancies->add($vacancy);
         $vacancy->addCategory($this);
     }

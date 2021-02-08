@@ -15,4 +15,4 @@ services:
         tags:
             -   name: 'kernel.event_listener'
                 event: !php/const Veslo\AnthillBundle\Event\Vacancy\Decision\AppliedEvent::NAME
-                method: 'onDecisionAppliedEvent'
+                method: 'onDecisionApplied'

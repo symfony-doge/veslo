@@ -50,7 +50,6 @@ use Veslo\AnthillBundle\Entity\Vacancy\MappedSuperclass\SynchronizableDataFields
 class Vacancy extends SynchronizableDataFields
 {
     // Note: traits are not used for better contextual readability, all fields should be explicit in one scope.
-
     /**
      * Vacancy identifier
      *
@@ -121,7 +120,11 @@ class Vacancy extends SynchronizableDataFields
      *
      * @var Collection<Category>
      *
-     * @ORM\ManyToMany(targetEntity="Veslo\AnthillBundle\Entity\Vacancy\Category", inversedBy="vacancies")
+     * @ORM\ManyToMany(
+     *     targetEntity="Veslo\AnthillBundle\Entity\Vacancy\Category",
+     *     inversedBy="vacancies",
+     *     fetch="EXTRA_LAZY"
+     * )
      * @ORM\JoinTable(
      *     name="anthill_vacancy_anthill_vacancy_category",
      *     joinColumns={@ORM\JoinColumn(name="vacancy_id", referencedColumnName="id")},
@@ -248,6 +251,15 @@ class Vacancy extends SynchronizableDataFields
      */
     public function setCompany(Company $company): void
     {
+        if ($this->company instanceof Company) {
+            $companyIdNew = $company->getId();
+            $companyId    = $this->company->getId();
+
+            if ($companyIdNew === $companyId) {
+                return;
+            }
+        }
+
         $this->company = $company;
 
         $company->addVacancy($this);
