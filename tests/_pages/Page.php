@@ -36,7 +36,7 @@ abstract class Page
         $pageRoute = static::getRoute();
 
         $I->amOnPage($pageRoute);
-        $I->dontSee(HttpCode::NOT_FOUND);
+        $I->dontSee(404);
     }
 
     /**

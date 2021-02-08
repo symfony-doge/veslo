@@ -34,7 +34,9 @@ RUN apt-get update && apt-get install --no-install-recommends -qy \
         unzip \
         build-essential \
         libpq-dev \
-        gnupg
+        gnupg \
+        # for webdriver
+        libzip-dev
 
 # nodejs & yarn
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
@@ -72,6 +74,9 @@ COPY docker-php-ext-igbinary.ini /usr/local/etc/php/conf.d/docker-php-ext-igbina
 # https://github.com/php-ds/ext-ds
 RUN pecl install ds && docker-php-ext-enable ds
 COPY docker-php-ext-ds.ini /usr/local/etc/php/conf.d/docker-php-ext-ds.ini
+
+# zip (for webdriver)
+RUN docker-php-ext-install zip
 
 # db
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \

@@ -188,9 +188,15 @@ networks:
                 -    subnet: 172.100.0.0/16
                      gateway: 172.100.0.1
     # Endpoints: app, supervisor (background tasks)
+    #
+    # Xdebug < 3.0.0:
     # docker-compose run --rm --no-deps app -d xdebug.remote_autostart=1 -d xdebug.remote_host=172.101.0.1 bin/console
-    # Alias 'host-machine' can be used for xdebug.remote_host parameter instead of IP (see 'services.app.extra_hosts')
-    # xdebug.remote_autostart=1 will be enough for starting a debug session (see docker-php-ext-xdebug.ini for app)
+    #
+    # Xdebug >= 3.0.0:
+    # docker-compose run --rm --no-deps app -d xdebug.start_with_request=1 bin/console
+    #
+    # Alias 'host-machine' can be used for xdebug.remote_host (client_host for >= 3.0.0) parameter instead of IP.
+    # See "services.app.extra_hosts".
     backend:
         driver: bridge
         ipam:

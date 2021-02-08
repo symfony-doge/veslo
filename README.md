@@ -29,13 +29,15 @@ Run an automated deploy script for local development with Docker.
 $ bin/deploy_dev.sh
 ```
 
-![installation asciicast](https://github.com/symfony-doge/veslo/blob/master/.github/images/installation.gif)
+![installation asciicast](.github/images/installation.gif)
 
 Roadmap configurations were not automatically loaded by the script,
 you need to insert them manually with a separate command.
 
 ```
-$ docker-compose run --rm app bin/console doctrine:fixtures:load --group roadmap.configuration.parameters --append
+$ docker-compose run --rm app bin/console doctrine:fixtures:load \
+    --group roadmap.configuration.parameters \
+    --append
 ```
 
 Up to 120 sec may be required for starting up the vacancy parsing process.
@@ -103,7 +105,7 @@ $ cp parameters.codeception.dev.yml.dist parameters.codeception.yml
 Executing tests.
 
 ```
-$ docker-compose run --rm --no-deps app bin/codecept run --steps
+$ docker-compose run --rm app bin/codecept run --steps
 ```
 
 ### Workflow
