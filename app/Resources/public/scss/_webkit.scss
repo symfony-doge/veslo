@@ -1,0 +1,18 @@
+
+::-webkit-scrollbar {
+    background-color: $color-scrollbar-background;
+    color: $color-scrollbar;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: $color-scrollbar-corner-background;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: $color-scrollbar-thumb-background;
+}
+
+::selection {
+    background-color: $color-text-selected;
+    color: $color-navigation-text;
+}

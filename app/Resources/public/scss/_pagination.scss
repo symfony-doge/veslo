@@ -1,0 +1,34 @@
+
+.pagination {
+    @extend .justify-content-center, .justify-content-md-start;
+
+    .page-item {
+        @extend .d-none, .d-md-block;
+    }
+
+    .page-item:first-child, .page-item.active, .page-item:last-child {
+        @extend .d-block;
+    }
+
+    .page-link {
+        color: $color-link;
+        background-color: $color-background;
+        border-color: $color-navigation-link-border;
+    }
+
+    .page-link:hover {
+        background-color: $color-navigation-link-background-hover;
+    }
+
+    .page-item.active .page-link {
+        color: $color-navigation-text;
+        background-color: $color-roadmap;
+        border-color: $color-roadmap;
+    }
+
+    .page-item.disabled .page-link {
+        color: $color-navigation-link-disabled;
+        background-color: $color-background;
+        border-color: $color-navigation-link-border;
+    }
+}

@@ -1,15 +1,19 @@
+
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
 ### Changed
 
-- No changes yet.
+- No description yet.
 
 ## [0.5.1] - 2020-06-18
+
 ### Added
 
 - "Fork me on GitHub" ribbon button.
@@ -33,6 +37,7 @@ Actually, it isn't so critical to the whole application (was a dependency for th
 in these versions may not work as expected.
 
 ## [0.5.0] - 2019-06-01 [YANKED]
+
 ### Added
 
 - New configurations for `hh` roadmap: `javascript`, `golang`, `python`, `java`, `c++`.
@@ -48,6 +53,7 @@ of the vacancy analyser microservice ([symfony-doge/ministry-of-truth-cis](https
 - Markup/icon fixes.
 
 ## [0.4.0] - 2019-04-13 [YANKED]
+
 ### Added
 
 - Dynamic proxy rotation by fetching a list with endpoints by URI
@@ -55,6 +61,7 @@ of the vacancy analyser microservice ([symfony-doge/ministry-of-truth-cis](https
 - Integration with [Scrutinizer CA](https://scrutinizer-ci.com/continuous-analysis)
 
 ## [0.3.0] - 2019-03-27
+
 ### Added
 
 - Localization of sanity tag entity fields.
@@ -84,6 +91,7 @@ between website and external microservice that performs vacancy contextual analy
 Vacancy indexing is still under development.
 
 ## [0.2.0] - 2019-03-06
+
 ### Security
 
 - Webpack encore environment has upgraded.
@@ -103,6 +111,7 @@ Vacancy indexing is still under development.
 - Fixed tests logic when all cases indicates an error if just a single one fails.
 
 ## [0.1.0] - 2019-03-02
+
 ### Added
 
 - Vacancy aggregation environment based on [Symfony Workflow](https://symfony.com/doc/current/workflow.html) 
@@ -114,7 +123,8 @@ and conveyor processing w/ [rabbitmq](https://github.com/rabbitmq)
 
 Vacancy data is shown "as is", w/o any ratings or transformations.
 
-[Unreleased]: https://github.com/symfony-doge/veslo/compare/0.5.1...0.x
+[Unreleased]: https://github.com/symfony-doge/veslo/compare/0.5.2...0.x
+[0.5.2]: https://github.com/symfony-doge/veslo/compare/0.5.1..0.5.2
 [0.5.1]: https://github.com/symfony-doge/veslo/compare/0.5.0..0.5.1
 [0.5.0]: https://github.com/symfony-doge/veslo/compare/0.4.0..0.5.0
 [0.4.0]: https://github.com/symfony-doge/veslo/compare/0.3.0..0.4.0

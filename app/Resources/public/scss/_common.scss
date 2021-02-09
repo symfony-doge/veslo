@@ -1,0 +1,78 @@
+
+html, body {
+    font-family: 'Fira Sans', sanf-serif, serif;
+    font-size: 1.05rem;
+    background-color: $color-background;
+    color: $color-text;
+}
+
+h1, .h1 {
+    font-size: 1.8rem;
+}
+
+h2, .h2 {
+    font-size: 1.2rem;
+}
+
+a {
+    color: $color-link;
+}
+
+a:hover {
+    color: $color-link-hover;
+}
+
+a[target='_blank']:after {
+    content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABCklEQVQ4jY2Sv0oDQRCHP5cUFiJiLSJW4qMEG1tbWwuxECtB7hlEjIW+kIVgCh9AJCgeKMfhv3wW2chlub04MOwyM79vZpZdIGPqOnALLDXC4+R+n9NPIX31w7zVnYAI2VG/coCgoh6qQ/VJHUU/i4xNoNfV4SjSftR3tVQv1KAedIw/WUF9iHtuJ+B54j/AszpKxHtxopxNc3XI7LcPhMzWA2AX+Jx2K1smOMl0vlJDrOmrZQ6Aep6IL40P26jbagU0IKfqXTyDeqxWaWEroM2c/JMZQAC+/yNu1I/TwBuwom7M6b4GLAOvzXgPuAYKYKi+dDBWgUXgJiUHtVAf1UqtW7yK+UKd+Te/5WXMeXD4NXsAAAAASUVORK5CYII=');
+    margin-left: 5px;
+}
+
+pre {
+    color: $color-text;
+}
+
+.underline {
+    text-decoration: underline;
+    text-decoration-color: $color-link;
+}
+
+.active.underline {
+    text-decoration: none;
+}
+
+.badge {
+    padding: .45em .6em;
+    font-size: 85%;
+}
+
+.badge-primary {
+    background-color: $color-roadmap;
+}
+
+.badge-info {
+    background-color: $color-category;
+}
+
+.btn-secondary {
+    color: $color-navigation-text;
+    background-color: $color-navigation-background;
+    border-color: $color-navigation-border;
+}
+
+.btn-secondary:focus, .btn-secondary:hover {
+    color: $color-navigation-text;
+    background-color: $color-navigation-background-focus;
+    border-color: $color-navigation-border-focus;
+}
+
+.github-ribbon-block {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+
+    img {
+        width: 180px;
+        height: 180px;
+    }
+}

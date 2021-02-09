@@ -70,7 +70,7 @@
                 {{ 'vacancy_posted_on'|trans }}
 
                 <mark>
-                    {{ date.date(vacancy.publicationDate) }}
+                    {{- date.date(vacancy.publicationDate) -}}
                 </mark>
 
                 <a href="{{- vacancy.url -}}" target="_blank" class="underline"></a>
@@ -88,7 +88,7 @@
                 {{ 'vacancy_is_found'|trans }}
 
                 <mark>
-                    {{ date.date(vacancy.synchronizationDate) }}
+                    {{- date.date(vacancy.synchronizationDate) -}}
                 </mark>
 
                 {{ 'by_roadmap'|trans }}

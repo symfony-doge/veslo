@@ -8,6 +8,7 @@
     "dependencies": {
         "bootstrap": "^4.1.1",
         "jquery": "^3.4.0",
+        "pace-js-amd-fix": "^1.0.5",
         "popper.js": "^1.14.3"
     },
     "scripts": {
