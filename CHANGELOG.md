@@ -12,6 +12,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - No description yet.
 
+## [0.5.2] - 2021-02-09
+
+### Fixed
+
+- Performance fix: removing eager loading for the vacancy-category relation to prevent out-of-memory errors in
+supervisor tasks, when the table size goes wild.
+- Missed translation messages for the vacancy category page.
+- Fixes for the deployment pipeline: `.scrutinizer.yml`, updating packages for compatibility with Composer 2.x.
+- Test suite maintenance: migrating to the [Codeception](https://github.com/Codeception/Codeception) 4.x (from the
+deprecated 2.x), configuration for Xdebug 3.x.
+
+### Changed
+
+- Front: `_variables.scss` with dark theme color palette by default, refactoring for styles and some other assets.
+
 ## [0.5.1] - 2020-06-18
 
 ### Added
